@@ -41,21 +41,27 @@ class Player:
         self.emissions: int = emissions
         self.can_travel: bool = True
 
-    def fly(self, destination: str, price: int) -> None:
+    def fly(self, destination: str, price: int) -> tuple[str, str]:
         # Laske lennon emissiot ja hinta
         # Varmista onko lentokohde oikea
-        # if
+        if destination not in rotta.destination_list:
+            self.can_travel = False
 
+        start: str = self.location
         self.location = destination
         self.money -= price
         # self.emissions += emissiot lennosta
 
-    def work(self, workplace: str) -> None:
+        return (start, self.location)
+
+    def work(self, workplace: str) -> int:
         # Jos annettu työpaikka kusee
         if workplace not in ["burger", "exchange", "flower"]:
             return
 
-        self.money += 175
+        pay: int = 175 if self.can_travel else 200
+        self.money += pay
+        return pay
 
     def update(self) -> dict:
         return {
@@ -86,9 +92,7 @@ class HelpMenu:
 class Rotta:
     def __init__(self) -> None:
         icaos: list = list(DEST_ICAO)
-
         self.destination_list: list = []
-
         for x in range(1, 25, 5):
             rand: int = random.randint(0, 4)
             self.destination_list.append(icaos[x + rand])
