@@ -91,13 +91,20 @@ class HelpMenu:
 
 class Rotta:
     def __init__(self) -> None:
+        # Tehdään DEST_ICAOsta lista
         icaos: list = list(DEST_ICAO)
+        # Lista viidestä lentokentästä, jossa rotta on
+        # käynyt (on viidennessä)
         self.destination_list: list = []
+        # Tehdään flygariarvonta satunnaisten intien pohjalta
+        # X on taso ja y satunnainen kenttä tasolta
         for x in range(1, 25, 5):
-            rand: int = random.randint(0, 4)
-            self.destination_list.append(icaos[x + rand])
+            y: int = random.randint(0, 4)
+            # Lisätään icaos-listalta omaan listaan satunnaiset lentokentät
+            self.destination_list.append(icaos[x + y])
 
-        # Laske emissiot olemassa olevien lentokenttien perusteella
+        # Laske emissiot olemassa olevien lentokenttien
+        # perusteella
 
 
 class World:
@@ -106,7 +113,7 @@ class World:
         # Palauttaa halutun ICAOn ja indeksinumeron
         return (DEST_ICAO[icao], icao)
 
-    # - Funktio palauttaa listan kaikista pelaajalle
+    # Funktio palauttaa listan kaikista pelaajalle
     # mahdollisista lentokohteista.
     def possible_locations(self, current: str, can_travel: bool) -> list:
         # Lista, jossa kaikki ICAO-koodit DEST_ICAO-sanakirjasta
@@ -115,7 +122,7 @@ class World:
         cur: int = DEST_ICAO[current]
         # - Testataan pelaajan DEST_ICAO-arvonumeroa, jotta
         # voidaan asettaa oikeat rajat palautettavalle
-        # listalle.
+        # listalle mahdollisista lentomaista.
         # - Pelaaja-luokassa on can_travel-ominaisuus,
         # joka määrittää sen, voiko pelaaja edetä
         # seuraavan tason lentokentille, ja tämä funktio
@@ -130,11 +137,11 @@ class World:
             (s, e) = (16, 21) if can_travel else (11, 16)
         else:
             (s, e) = (21, 26) if can_travel else (16, 21)
-        # - Rakennetaan viiden sijainnin lista, jonka
+        # Rakennetaan viiden sijainnin lista, jonka
         # indeksit edellinen ehtopuu on määrittänyt.
         return [icaos[x] for x in range(s, e)]
 
 
-rotta = Rotta()
-
-print(rotta.destination_list)
+pelaaja: object = Player("Jari")
+rotta: object = Rotta()
+world: object = World()
