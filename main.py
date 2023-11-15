@@ -69,6 +69,9 @@ class Player:
             "money": self.money,
             "location": self.location,
             "emissions": self.emissions,
+            "possible_destinations": world.possible_locations(
+                pelaaja.location, pelaaja.can_travel
+            ),
         }
 
 
@@ -141,7 +144,22 @@ class World:
         # indeksit edellinen ehtopuu on määrittänyt.
         return [icaos[x] for x in range(s, e)]
 
+    def hint(self, current: str) -> None:
+        # Vedä tietokannasta vinkki seuraavaa kohdetta varten
+        pos_locs: list = world.possible_locations(current, pelaaja.can_travel)
+        dest_hint: str = ""
+        for x in rotta.destination_list:
+            if x in pos_locs:
+                dest_hint = x
+                break
+
+        # Hae SQL:stä vinkki
+        return dest_hint
+
 
 pelaaja: object = Player("Jari")
 rotta: object = Rotta()
 world: object = World()
+
+print(rotta.destination_list)
+print(world.hint("EKCH"))
