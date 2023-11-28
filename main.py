@@ -1,34 +1,35 @@
 import random
+import json
 
 
-DEST_ICAO = {
-    "EFHK": 1,  # Helsinki
-    "ESSA": 11,  # Ruotsi (HUOM Eka kiekka)
-    "ENGM": 12,  # Norja
-    "EVRA": 13,  # Latvia
-    "EKCH": 14,  # Tanska
-    "EYVI": 15,  # Liettua
-    "EPWA": 21,  # Puola (HUOM Toka kierros)
-    "EDDB": 22,  # Saksa
-    "EHAM": 23,  # Alankomaat
-    "LZIB": 24,  # Slovakia
-    "LKPR": 25,  # Tsekki
-    "LOWW": 31,  # Itävalta (HUOM Kolmas kierros)
-    "LHBP": 32,  # Unkari
-    "EBBR": 33,  # Belgia
-    "LYBE": 34,  # Serbia
-    "LDZA": 35,  # Kroatia
-    "LSZH": 41,  # Sveitsi (HUOM Neljäs kierros)
-    "LIRN": 42,  # Italia
-    "LFPO": 43,  # Ranska
-    "EGLL": 44,  # UK
-    "EIDW": 45,  # Irlanti
-    "LEBL": 51,  # Espanja (HUOM Viides kierros)
-    "LPPT": 52,  # Portugali
-    "GMMX": 53,  # Marokko
-    "HECA": 54,  # Egypti
-    "GCLP": 55,  # Gran Canaria
-}
+DEST_ICAO = [
+    "EFHK",  # Helsinki
+    "ESSA",  # Ruotsi (HUOM Eka kiekka)
+    "ENGM",  # Norja
+    "EVRA",  # Latvia
+    "EKCH",  # Tanska
+    "EYVI",  # Liettua
+    "EPWA",  # Puola (HUOM Toka kierros)
+    "EDDB",  # Saksa
+    "EHAM",  # Alankomaat
+    "LZIB",  # Slovakia
+    "LKPR",  # Tsekki
+    "LOWW",  # Itävalta (HUOM Kolmas kierros)
+    "LHBP",  # Unkari
+    "EBBR",  # Belgia
+    "LYBE",  # Serbia
+    "LDZA",  # Kroatia
+    "LSZH",  # Sveitsi (HUOM Neljäs kierros)
+    "LIRN",  # Italia
+    "LFPO",  # Ranska
+    "EGLL",  # UK
+    "EIDW",  # Irlanti
+    "LEBL",  # Espanja (HUOM Viides kierros)
+    "LPPT",  # Portugali
+    "GMMX",  # Marokko
+    "HECA",  # Egypti
+    "GCLP",  # Gran Canaria
+]
 
 
 class Player:
@@ -63,8 +64,9 @@ class Player:
         self.money += pay
         return pay
 
-    def update(self) -> dict:
-        return {
+    def update(self) -> str:
+        # Luodaan sanakirja pelaajan tämänhetkisistä tiedoista
+        output: dict = {
             "name": self.name,
             "money": self.money,
             "location": self.location,
@@ -73,6 +75,11 @@ class Player:
                 pelaaja.location, pelaaja.can_travel
             ),
         }
+
+        # Tehdään sanakirjasta tekstiksi formatoitu JSON
+        output_json: str = json.dumps(output)
+
+        return output_json
 
 
 class HelpMenu:
