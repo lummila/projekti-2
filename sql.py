@@ -109,7 +109,7 @@ class Sql:
             print("ERROR fetching hint in pull_hint()")
             return -1
         else:
-            return result[0]
+            return result[0][0]
 
 
 # example = Sql()

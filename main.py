@@ -37,11 +37,11 @@ class Player:
     def __init__(
         self, name: str, money: int = 1000, location: str = "EFHK", emissions: int = 0
     ) -> None:
-        self.name: str = name
-        self.money: int = money
-        self.location: str = location
-        self.emissions: int = emissions
-        self.can_travel: bool = True
+        self.name = name
+        self.money = money
+        self.location = location
+        self.emissions = emissions
+        self.can_travel = True
 
     def fly(self, destination: str, price: int) -> tuple[str, str]:
         # Laske lennon emissiot ja hinta
@@ -49,7 +49,7 @@ class Player:
         if destination not in rotta.destination_list:
             self.can_travel = False
 
-        start: str = self.location
+        start = self.location
         self.location = destination
         self.money -= price
         # self.emissions += emissiot lennosta
@@ -61,13 +61,13 @@ class Player:
         if workplace not in ["burger", "exchange", "flower"]:
             return
 
-        pay: int = 175 if self.can_travel else 200
+        pay = 175 if self.can_travel else 200
         self.money += pay
         return pay
 
     def update(self) -> str:
         # Luodaan sanakirja pelaajan tämänhetkisistä tiedoista
-        output: dict = {
+        output = {
             "name": self.name,
             "money": self.money,
             "location": self.location,
@@ -78,14 +78,14 @@ class Player:
         }
 
         # Tehdään sanakirjasta tekstiksi formatoitu JSON
-        output_json: str = json.dumps(output)
+        output_json = json.dumps(output)
 
         return output_json
 
 
 class HelpMenu:
     def __init__(self, name: str) -> None:
-        self.player_name: str = name
+        self.player_name = name
 
     def personal_score(self) -> None:
         pass
@@ -102,8 +102,6 @@ class HelpMenu:
 
 class Rotta:
     def __init__(self) -> None:
-        # Tehdään DEST_ICAOsta lista
-        icaos: list = list(DEST_ICAO)
         # Lista viidestä lentokentästä, jossa rotta on
         # käynyt (on viidennessä)
         self.destination_list: list = []
@@ -112,24 +110,16 @@ class Rotta:
         for x in range(1, 25, 5):
             y: int = random.randint(0, 4)
             # Lisätään icaos-listalta omaan listaan satunnaiset lentokentät
-            self.destination_list.append(icaos[x + y])
+            self.destination_list.append(DEST_ICAO[x + y])
 
         # Laske emissiot olemassa olevien lentokenttien
         # perusteella
 
 
 class World:
-    # Kun tarvitaan ICAO-koodi ja numero
-    def airport(self, icao: str) -> tuple[int, str]:
-        # Palauttaa halutun ICAOn ja indeksinumeron
-        return (DEST_ICAO[icao], icao)
-
     # Funktio palauttaa listan kaikista pelaajalle
     # mahdollisista lentokohteista.
     def possible_locations(self, current: str, can_travel: bool) -> list:
-        # Lista, jossa kaikki ICAO-koodit DEST_ICAO-sanakirjasta
-        icaos: list = DEST_ICAO
-
         # Pelaajan tämänhetkinen sijainti numerona
         cur = [i for i in range(len(DEST_ICAO)) if DEST_ICAO[i] == pelaaja.location][0]
 
@@ -152,12 +142,12 @@ class World:
             (s, e) = (21, 26) if can_travel else (16, 21)
         # Rakennetaan viiden sijainnin lista, jonka
         # indeksit edellinen ehtopuu on määrittänyt.
-        return [icaos[x] for x in range(s, e)]
+        return [DEST_ICAO[x] for x in range(s, e)]
 
     def hint(self, current: str) -> None:
         # Vedä tietokannasta vinkki seuraavaa kohdetta varten
-        pos_locs: list = world.possible_locations(current, pelaaja.can_travel)
-        dest_hint: str = ""
+        pos_locs = world.possible_locations(current, pelaaja.can_travel)
+        dest_hint = ""
         for x in rotta.destination_list:
             if x in pos_locs:
                 dest_hint = x
