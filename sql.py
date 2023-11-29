@@ -51,9 +51,9 @@ class Sql:
 
         # Haku ei palauta tuloksia.
         if not result:
-            return json.dumps({"ERROR": "Username not found, or PIN code was wrong."})
+            return -1
         else:
-            return json.dumps({"name": result[0][0], "location": result[0][1]})
+            return {"name": result[0][0], "location": result[0][1]}
 
     def register(self, username: str, pin_code: str) -> str:
         # Kaikki käyttäjätunnukset ovat isolla kirjoitettuja
@@ -110,6 +110,17 @@ class Sql:
             return -1
         else:
             return result[0][0]
+
+    def airport_info(self, icao: str):
+        sql = "select airport.name, country.name, latitude_deg, longitude_deg "
+        sql += f"where airport.ident = '{icao}' and airport.iso_country == country.iso_country;"
+
+        result = self.pull(sql)
+        if not result:
+            print("ERROR fetching airport information in airport_info()")
+            return -1
+
+        output = {"airport_name": result[0][0], "country_name": result[0][1]}
 
 
 # example = Sql()

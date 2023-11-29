@@ -65,22 +65,63 @@ class Player:
         self.money += pay
         return pay
 
-    def update(self) -> str:
+    def update(self) -> dict:
         # Luodaan sanakirja pelaajan tämänhetkisistä tiedoista
         output = {
             "name": self.name,
             "money": self.money,
             "location": self.location,
             "emissions": self.emissions,
-            "possible_destinations": world.possible_locations(
-                pelaaja.location, pelaaja.can_travel
+            "possible_destinations": self.possible_locations(
+                self.location, self.can_travel
             ),
         }
 
-        # Tehdään sanakirjasta tekstiksi formatoitu JSON
-        output_json = json.dumps(output)
+        return output
 
-        return output_json
+    # Funktio palauttaa listan kaikista pelaajalle
+    # mahdollisista lentokohteista.
+    def possible_locations(self, current: str, can_travel: bool) -> list:
+        # Pelaajan tämänhetkinen sijainti numerona
+        cur = [i for i in range(len(DEST_ICAO)) if DEST_ICAO[i] == self.location][0]
+
+        # - Testataan pelaajan DEST_ICAO-arvonumeroa, jotta
+        # voidaan asettaa oikeat rajat palautettavalle
+        # listalle mahdollisista lentomaista.
+        # - Pelaaja-luokassa on can_travel-ominaisuus,
+        # joka määrittää sen, voiko pelaaja edetä
+        # seuraavan tason lentokentille, ja tämä funktio
+        # testaa sen.
+        if cur < 10:
+            (s, e) = (1, 6)
+        elif 10 < cur < 20:
+            (s, e) = (6, 11) if can_travel else (1, 6)
+        elif 20 < cur < 30:
+            (s, e) = (11, 16) if can_travel else (6, 11)
+        elif 30 < cur < 40:
+            (s, e) = (16, 21) if can_travel else (11, 16)
+        else:
+            (s, e) = (21, 26) if can_travel else (16, 21)
+        # Rakennetaan viiden sijainnin lista, jonka
+        # indeksit edellinen ehtopuu on määrittänyt.
+        icaos = [DEST_ICAO[x] for x in range(s, e)]
+
+        for entry in icaos:
+            return
+
+    def hint(self, current: str) -> None:
+        # Vedä tietokannasta vinkki seuraavaa kohdetta varten
+        pos_locs = self.possible_locations(current, self.can_travel)
+        dest_hint = ""
+        for x in rotta.destination_list:
+            if x in pos_locs:
+                dest_hint = x
+                break
+
+        # HUOM: Testijuttu
+        print(dest_hint)
+        # Hae SQL:stä vinkki
+        return sql.pull_hint(dest_hint)
 
 
 class HelpMenu:
@@ -116,55 +157,10 @@ class Rotta:
         # perusteella
 
 
-class World:
-    # Funktio palauttaa listan kaikista pelaajalle
-    # mahdollisista lentokohteista.
-    def possible_locations(self, current: str, can_travel: bool) -> list:
-        # Pelaajan tämänhetkinen sijainti numerona
-        cur = [i for i in range(len(DEST_ICAO)) if DEST_ICAO[i] == pelaaja.location][0]
-
-        # - Testataan pelaajan DEST_ICAO-arvonumeroa, jotta
-        # voidaan asettaa oikeat rajat palautettavalle
-        # listalle mahdollisista lentomaista.
-        # - Pelaaja-luokassa on can_travel-ominaisuus,
-        # joka määrittää sen, voiko pelaaja edetä
-        # seuraavan tason lentokentille, ja tämä funktio
-        # testaa sen.
-        if cur < 10:
-            (s, e) = (1, 6)
-        elif 10 < cur < 20:
-            (s, e) = (6, 11) if can_travel else (1, 6)
-        elif 20 < cur < 30:
-            (s, e) = (11, 16) if can_travel else (6, 11)
-        elif 30 < cur < 40:
-            (s, e) = (16, 21) if can_travel else (11, 16)
-        else:
-            (s, e) = (21, 26) if can_travel else (16, 21)
-        # Rakennetaan viiden sijainnin lista, jonka
-        # indeksit edellinen ehtopuu on määrittänyt.
-        return [DEST_ICAO[x] for x in range(s, e)]
-
-    def hint(self, current: str) -> None:
-        # Vedä tietokannasta vinkki seuraavaa kohdetta varten
-        pos_locs = world.possible_locations(current, pelaaja.can_travel)
-        dest_hint = ""
-        for x in rotta.destination_list:
-            if x in pos_locs:
-                dest_hint = x
-                break
-
-        # HUOM: Testijuttu
-        print(dest_hint)
-        # Hae SQL:stä vinkki
-        return sql.pull_hint(dest_hint)
-
-
-pelaaja: object = Player("Aleksi")
-rotta: object = Rotta()
-world: object = World()
+rotta = Rotta()
 sql = Sql()
 
-print(rotta.destination_list)
-print(world.hint("EKCH"))
+# print(rotta.destination_list)
+# print(world.hint("EKCH"))
 
-print(sql.login(pelaaja.name, 1234))
+# print(sql.login(pelaaja.name, 1234))
