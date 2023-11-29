@@ -1,6 +1,6 @@
 import mysql.connector
 import json
-# from geopy import distance
+from geopy import distance
 
 
 class Sql:
@@ -8,7 +8,7 @@ class Sql:
         self.connect = mysql.connector.connect(
             host="127.0.0.1",
             port=3306,
-            database="flight_game",
+            database="velkajahti",
             user="root",
             password="metropolia",
             autocommit=True,
@@ -39,8 +39,8 @@ class Sql:
 
     # Kirjautumisfunktio
     def login(self, username: str, pin_code: str) -> str:
-        # Kaikki käyttäjätunnukset ovat pienellä kirjoitettuja
-        username = username.lower()
+        # Kaikki käyttäjätunnukset ovat isolla kirjoitettuja
+        username = username.upper()
 
         # Haetaan käyttäjänimen ja PIN-koodin mukaan käyttäjä
         sql = "select screen_name, location from game "
@@ -56,15 +56,15 @@ class Sql:
             return json.dumps({"name": result[0][0], "location": result[0][1]})
 
     def register(self, username: str, pin_code: str) -> str:
-        # Kaikki käyttäjätunnukset ovat pienellä kirjoitettuja
-        username = username.lower()
+        # Kaikki käyttäjätunnukset ovat isolla kirjoitettuja
+        username = username.upper()
 
         # Tarkistetaan, onko käyttäjänimi 30 merkkiä tai alle
         if len(username) > 30:
-            return json.dumps({"result": "Username too long."})
+            return json.dumps({"result": False, "info": "Username too long."})
         # Tarkistetaan, onko PIN-koodi numeroita
         if not pin_code.isdigit() and len(pin_code) != 4:
-            return json.dumps({"result": "PIN code error."})
+            return json.dumps({"result": False, "info": "PIN code error."})
 
         sql = "insert into game (location, screen_name, passcode) "
         sql += f"values ('EFHK', '{username}', {int(pin_code)})"
@@ -73,9 +73,46 @@ class Sql:
         result = self.push(sql)
 
         if result <= 0:
-            return json.dumps({"result": "Error storing credentials."})
+            return json.dumps({"result": False, "info": "Error storing credentials."})
         else:
-            return json.dumps({"result": "Registration successful!"})
+            return json.dumps({"result": True, "info": "Registration successful!"})
 
-    def coordinates(self, start: str, end: str) -> None:
-        return
+    def flight(self, start: str, end: str) -> tuple:
+        # Lista, jossa kahdet koordinaatit
+        coord_list = []
+
+        # Kaksi eri hakua, aloitusmaan ja päämäärän etäisyyden selvittämiseksi.
+        for x in range(2):
+            sql = "select longitude_deg, latitude_deg from airport "
+            # Jos x on 0, kyseessä on ensimmäinen haku, eli käytetään start-muuttujaa, ja toisella kerralla end-muuttujaa.
+            sql += f"where ident = '{start if x == 0 else end}';"
+
+            # SQL:n käyttö
+            result = self.pull(sql)
+
+            if not result:
+                print("ERROR calculating coordinates in sql_coordinate_query()")
+                return -1
+            else:
+                # Lisätään locationList-listaan tuple, jossa koordinaatit
+                coord_list.append(result[0])
+
+        # Palautetaan koordinaatit ja lennon matka kilometreinä
+        return coord_list, distance.distance(coord_list).km
+
+    def pull_hint(self, icao: str):
+        sql = "select hint from hints "
+        sql += f"where ident = '{icao}'"
+
+        result = self.pull(sql)
+        if not result:
+            print("ERROR fetching hint in pull_hint()")
+            return -1
+        else:
+            return result[0]
+
+
+# example = Sql()
+
+# example.connect()
+# print(example.login("aleksi", 1234))

@@ -1,5 +1,6 @@
 import random
 import json
+from sql import Sql
 
 
 DEST_ICAO = [
@@ -127,9 +128,11 @@ class World:
     # mahdollisista lentokohteista.
     def possible_locations(self, current: str, can_travel: bool) -> list:
         # Lista, jossa kaikki ICAO-koodit DEST_ICAO-sanakirjasta
-        icaos: list = list(DEST_ICAO)
+        icaos: list = DEST_ICAO
+
         # Pelaajan tämänhetkinen sijainti numerona
-        cur: int = DEST_ICAO[current]
+        cur = [i for i in range(len(DEST_ICAO)) if DEST_ICAO[i] == pelaaja.location][0]
+
         # - Testataan pelaajan DEST_ICAO-arvonumeroa, jotta
         # voidaan asettaa oikeat rajat palautettavalle
         # listalle mahdollisista lentomaista.
@@ -160,13 +163,18 @@ class World:
                 dest_hint = x
                 break
 
+        # HUOM: Testijuttu
+        print(dest_hint)
         # Hae SQL:stä vinkki
-        return dest_hint
+        return sql.pull_hint(dest_hint)
 
 
-pelaaja: object = Player("Jari")
+pelaaja: object = Player("Aleksi")
 rotta: object = Rotta()
 world: object = World()
+sql = Sql()
 
 print(rotta.destination_list)
 print(world.hint("EKCH"))
+
+print(sql.login(pelaaja.name, 1234))
