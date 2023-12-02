@@ -1,4 +1,7 @@
 import random
+import math
+from geopy import distance
+
 from sql import Sql
 
 
@@ -55,31 +58,36 @@ NEG_COINCIDENCES = [
 ]
 
 
-class Rotta:
+class Rotta(Sql):
     def __init__(self) -> None:
-        # Lista viidestä lentokentästä, jossa rotta on
-        # käynyt (on viidennessä)
+        # Tämä tuottaa .connect ominaisuuden, joka on SQL-yhteyden käynnistys.
+        Sql.__init__(self)
+        # Lista viidestä lentokentästä, jossa rotta on käynyt (on viidennessä).
         self.rotta_destination_list: list = []
-        # Tehdään flygariarvonta satunnaisten intien pohjalta
-        # X on taso ja y satunnainen kenttä tasolta
+        # Tehdään flygariarvonta satunnaisten intien pohjalta X on taso ja y satunnainen kenttä tasolta.
         for x in range(1, 25, 5):
             y: int = random.randint(0, 4)
-            # Lisätään icaos-listalta omaan listaan satunnaiset lentokentät
-            self.destination_list.append(DEST_ICAO[x + y])
+            # Lisätään icaos-listalta omaan listaan satunnaiset lentokentät.
+            self.rotta_destination_list.append(DEST_ICAO[x + y])
 
-        # Laske emissiot olemassa olevien lentokenttien
-        # perusteella
+        # Laske emissiot olemassa olevien lentokenttien perusteella.
         self.rotta_emissions: int = 0
 
-        for port in range(len(self.rotta_destination_list - 1)):
-            emissions = Sql.flight(
+        # Käydään läpi jokainen elementti rotta_destination_listissä ja lasketaan näiden välisten lentojen yhteisemissiot.
+        for port in range(len(self.rotta_destination_list) - 1):
+            coordinates, emission = self.flight(
                 self.rotta_destination_list[port], self.rotta_destination_list[port + 1]
             )
 
-            self.rotta_emissions += emissions[1] * 115
+            # Jos Sql.flight() tuottaa virheen, printataan konsoliin virhetila. Pitäisi olla mahdoton, jos peli toimii muuten normaalisti.
+            if coordinates == -1 or emission == 0:
+                print("Error in Rotta.__init__() emissions")
+
+            # Lisätään joka kierroksella yhden lennon emissiot kokonaismäärään.
+            self.rotta_emissions += emission * 115
 
 
-class Player(Sql, Rotta):
+class Player(Rotta):
     def __init__(
         self,
         name: str,
@@ -89,30 +97,43 @@ class Player(Sql, Rotta):
     ) -> None:
         Rotta.__init__(self)
 
+        # Käyttäjätunnuksen nimi
         self.name = name
+        # Rahamäärä, aina alussa 1000 €
         self.money = money
+        # Alkusijainti, Helsinki-Vantaa eli EFHK
         self.location = location
+        # Tuotetut emissiot, aina 0 aluksi.
         self.emissions = emissions
+        # Voiko pelaaja matkustaa seuraavan tason lentokentille, boolean.
         self.can_travel = True
+        # Pelaajan kierrokset, jos näitä on 10, peli päättyy.
         self.round = 0
 
-    def fly(self, destination: str, price: int) -> tuple[str, str]:
-        # Laske lennon emissiot ja hinta
-        # Varmista onko lentokohde oikea
+    # Lentofunktio, siirtää pelaajan paikasta A paikkaan B.
+    def fly(self, destination: str) -> tuple[str, str]:
+        # Varmista onko lentokohde oikeaan suuntaan.
         if destination not in self.rotta_destination_list:
             self.can_travel = False
+
+        # Laske lennon emissiot ja hinta
+        coordinates, emissions = self.flight(self.location, destination)
+        # Lennon pituus kilometreissä
+        dist = distance.distance(coordinates).km
+        # Lennon hinta, 100 € + (etäisyys jaettuna viidellätoista)
+        price = math.floor(100 + dist / 15)
 
         start = self.location
         self.location = destination
         self.money -= price
-        # self.emissions += emissiot lennosta
+        self.emissions += emissions
 
         return (start, self.location)
 
     def work(self, workplace: str) -> int:
         # Jos annettu työpaikka kusee
         if workplace not in ["burger", "exchange", "flower"]:
-            return
+            return -1
 
         pay = 175 if self.can_travel else 200
         self.money += pay
@@ -157,12 +178,9 @@ class Player(Sql, Rotta):
             (s, e) = (21, 26) if can_travel else (16, 21)
         # Rakennetaan viiden sijainnin lista, jonka
         # indeksit edellinen ehtopuu on määrittänyt.
-        icaos = [DEST_ICAO[x] for x in range(s, e)]
+        return [DEST_ICAO[x] for x in range(s, e)]
 
-        for entry in icaos:
-            return
-
-    def hint(self, current: str) -> None:
+    def hint(self, current: str):
         # Vedä tietokannasta vinkki seuraavaa kohdetta varten
         pos_locs = self.possible_locations(current, self.can_travel)
         dest_hint = ""

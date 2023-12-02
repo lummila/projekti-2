@@ -15,7 +15,7 @@ class Sql:
         )
 
     # Tiedon tuonti tietokannasta
-    def pull(self, sql_code: str) -> list:
+    def pull(self, sql_code: str):
         cursor = self.connect.cursor()
 
         cursor.execute(sql_code)
@@ -38,7 +38,7 @@ class Sql:
         return cursor.rowcount
 
     # Kirjautumisfunktio
-    def login(self, username: str, pin_code: str) -> str:
+    def login(self, username: str, pin_code: str):
         # Kaikki käyttäjätunnukset ovat isolla kirjoitettuja
         username = username.upper()
 
@@ -77,7 +77,7 @@ class Sql:
         else:
             return json.dumps({"result": True, "info": "Registration successful!"})
 
-    def flight(self, start: str, end: str) -> tuple:
+    def flight(self, start: str, end: str):
         # Lista, jossa kahdet koordinaatit
         coord_list = []
 
@@ -92,7 +92,7 @@ class Sql:
 
             if not result:
                 print("ERROR calculating coordinates in sql_coordinate_query()")
-                return -1
+                return [-1, 0]
             else:
                 # Lisätään locationList-listaan tuple, jossa koordinaatit
                 coord_list.append(result[0])

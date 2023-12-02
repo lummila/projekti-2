@@ -9,7 +9,7 @@ CORS(app)
 
 @app.route("/<name>/<pincode>")
 def play(name, pincode):
-    pelaaja = game.Player()
+    pelaaja = game.Player("")
 
     login = pelaaja.login(name, pincode)
 
