@@ -120,10 +120,8 @@ class Sql:
             print("ERROR fetching airport information in airport_info()")
             return -1
 
-        output = {"airport_name": result[0][0], "country_name": result[0][1]}
-
-
-# example = Sql()
-
-# example.connect()
-# print(example.login("aleksi", 1234))
+        return {
+            "airport_name": result[0][0],
+            "country_name": result[0][1],
+            "coordinates": [result[0][2], result[0][3]],
+        }

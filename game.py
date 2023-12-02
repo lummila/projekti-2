@@ -1,5 +1,4 @@
 import random
-import json
 from sql import Sql
 
 
@@ -33,7 +32,7 @@ DEST_ICAO = [
 ]
 
 
-class Player:
+class Player(Sql):
     def __init__(
         self, name: str, money: int = 1000, location: str = "EFHK", emissions: int = 0
     ) -> None:
@@ -121,7 +120,7 @@ class Player:
         # HUOM: Testijuttu
         print(dest_hint)
         # Hae SQL:stä vinkki
-        return sql.pull_hint(dest_hint)
+        return self.pull_hint(dest_hint)
 
 
 class HelpMenu:
@@ -158,7 +157,6 @@ class Rotta:
 
 
 rotta = Rotta()
-sql = Sql()
 
 # print(rotta.destination_list)
 # print(world.hint("EKCH"))
