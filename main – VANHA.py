@@ -726,10 +726,9 @@ def help_menu():
 # Arpoo pelaajalle sattuman, joka voi tapahtua lentäessä.
 def coincidence(positive: bool):
     weights = [80, 20] if positive else [20, 80]
-    coincidences_list = random.choices(
-        [POS_COINCIDENCES, NEG_COINCIDENCES], weights=weights
+    choice = random.choice(
+        random.choices([POS_COINCIDENCES, NEG_COINCIDENCES], weights=weights)[0]
     )
-    choice = random.choice(coincidences_list[0])
 
     for index, text in enumerate(POS_COINCIDENCES):
         if choice == text:
