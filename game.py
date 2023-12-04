@@ -90,7 +90,7 @@ class Rotta(Sql):
 class Player(Rotta):
     def __init__(
         self,
-        name: str,
+        name: str = "",
         money: int = 1000,
         location: str = "EFHK",
         emissions: int = 0,
@@ -130,17 +130,19 @@ class Player(Rotta):
 
         return (start, self.location)
 
-    def work(self, workplace: str) -> int:
-        # Jos annettu työpaikka kusee
-        if workplace not in ["burger", "exchange", "flower"]:
-            return -1
-
+    def work(self) -> int:
         self.money += 175
         return self.money
 
-    def update(self) -> dict:
+    def update(self, fly) -> dict:
+        # Tapahtuuko sattuma?
+        if fly:
+            event = self.coincidence(self.can_travel)
+        else:
+            # Jos pelaaja ei koe sattumaa, tämä on oletusarvo.
+            event = "Nothing of note has happened."
         # Luodaan sanakirja pelaajan tämänhetkisistä tiedoista
-        output = {
+        return {
             "name": self.name,
             "money": self.money,
             "location": self.location,
@@ -148,9 +150,10 @@ class Player(Rotta):
             "possible_destinations": self.possible_locations(
                 self.location, self.can_travel
             ),
+            "hint": self.hint(),
+            "round": self.round,
+            "coincidence": event,
         }
-
-        return output
 
     # Funktio palauttaa listan kaikista pelaajalle
     # mahdollisista lentokohteista.
@@ -179,9 +182,9 @@ class Player(Rotta):
         # indeksit edellinen ehtopuu on määrittänyt.
         return [DEST_ICAO[x] for x in range(s, e)]
 
-    def hint(self, current: str):
+    def hint(self):
         # Vedä tietokannasta vinkki seuraavaa kohdetta varten
-        pos_locs = self.possible_locations(current, self.can_travel)
+        pos_locs = self.possible_locations(self.location, self.can_travel)
         dest_hint = ""
         for x in self.rotta_destination_list:
             if x in pos_locs:
@@ -193,7 +196,7 @@ class Player(Rotta):
         # Hae SQL:stä vinkki
         return self.pull_hint(dest_hint)
 
-    def coincidence(self, positive=bool):
+    def coincidence(self, positive):
         weights = [80, 20] if positive else [20, 80]
         choice = random.choice(
             random.choices([POS_COINCIDENCES, NEG_COINCIDENCES], weights=weights)[0]
@@ -226,8 +229,3 @@ class Player(Rotta):
 
     def rotta(self):
         return [self.rotta_destination_list, self.rotta_emissions]
-
-
-pelaaja = Player("Jari")
-
-print(pelaaja.rotta())

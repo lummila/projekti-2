@@ -1,25 +1,41 @@
-from flask import Flask, Response
+from flask import Flask, Response, request
 from flask_cors import CORS
-import game
+from game import Player
 import json
 
 app = Flask(__name__)
 CORS(app)
 
 
-@app.route("/<name>/<pincode>")
-def play(name, pincode):
-    pelaaja = game.Player("")
+@app.route("/register")  # type: ignore
+def register():
+    # Rekisteröityminen
+    args = request.args
 
-    login = pelaaja.login(name, pincode)
+    username = str(args.get("username"))
+    pin_code = str(args.get("password"))
 
+    # Luodaan kirjautuvasta pelaajasta uusi instanssi
+    pelaaja = Player()
+
+    pelaaja.name = username.upper()
+
+    login = pelaaja.login(username, pin_code)
     if login == -1:
-        error_json = json.dumps({"ERROR": "Username not found, or PIN code was wrong."})
-        return Response(response=error_json, status=400)
+        output = {"ERROR": "Login failed"}
+        status_code = 200
+    else:
+        output = pelaaja.update(True)
+        status_code = 200
 
-    update_json = json.dumps(pelaaja.update())
+    output_json = json.dumps(output)
+    return Response(output_json, status_code, mimetype="application/json")
 
-    return Response(response=update_json, status=200)
+
+# @app.route("/action")  # type: ignore
+# def action():
+#     # Lentäminen ja työskentely
+#     return
 
 
 if __name__ == "__main__":
