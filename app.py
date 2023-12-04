@@ -1,4 +1,4 @@
-from flask import Flask, Response
+from flask import Flask, Response, request
 from flask_cors import CORS
 import game
 import json
@@ -7,19 +7,17 @@ app = Flask(__name__)
 CORS(app)
 
 
-@app.route("/<name>/<pincode>")
-def play(name, pincode):
-    pelaaja = game.Player("")
+@app.route("/")  # type: ignore
+def register():
+    # Rekisteröityminen
+    args = request.args
+    return
 
-    login = pelaaja.login(name, pincode)
 
-    if login == -1:
-        error_json = json.dumps({"ERROR": "Username not found, or PIN code was wrong."})
-        return Response(response=error_json, status=400)
-
-    update_json = json.dumps(pelaaja.update())
-
-    return Response(response=update_json, status=200)
+@app.route("/action")  # type: ignore
+def action():
+    # Lentäminen ja työskentely
+    return
 
 
 if __name__ == "__main__":

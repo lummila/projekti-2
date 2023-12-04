@@ -130,15 +130,11 @@ class Player(Rotta):
 
         return (start, self.location)
 
-    def work(self, workplace: str) -> int:
-        # Jos annettu työpaikka kusee
-        if workplace not in ["burger", "exchange", "flower"]:
-            return -1
-
+    def work(self) -> int:
         self.money += 175
         return self.money
 
-    def update(self) -> dict:
+    def update(self, fly, bool) -> dict:
         # Luodaan sanakirja pelaajan tämänhetkisistä tiedoista
         output = {
             "name": self.name,
@@ -148,7 +144,11 @@ class Player(Rotta):
             "possible_destinations": self.possible_locations(
                 self.location, self.can_travel
             ),
+            "hint": self.hint(),
         }
+
+        if fly:
+            output["coincidence"] = self.coincidence(self.can_travel)
 
         return output
 
@@ -179,9 +179,9 @@ class Player(Rotta):
         # indeksit edellinen ehtopuu on määrittänyt.
         return [DEST_ICAO[x] for x in range(s, e)]
 
-    def hint(self, current: str):
+    def hint(self):
         # Vedä tietokannasta vinkki seuraavaa kohdetta varten
-        pos_locs = self.possible_locations(current, self.can_travel)
+        pos_locs = self.possible_locations(self.location, self.can_travel)
         dest_hint = ""
         for x in self.rotta_destination_list:
             if x in pos_locs:
@@ -193,7 +193,7 @@ class Player(Rotta):
         # Hae SQL:stä vinkki
         return self.pull_hint(dest_hint)
 
-    def coincidence(self, positive=bool):
+    def coincidence(self, positive):
         weights = [80, 20] if positive else [20, 80]
         choice = random.choice(
             random.choices([POS_COINCIDENCES, NEG_COINCIDENCES], weights=weights)[0]
