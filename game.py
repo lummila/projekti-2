@@ -135,9 +135,8 @@ class Player(Rotta):
         if workplace not in ["burger", "exchange", "flower"]:
             return -1
 
-        pay = 175 if self.can_travel else 200
-        self.money += pay
-        return pay
+        self.money += 175
+        return self.money
 
     def update(self) -> dict:
         # Luodaan sanakirja pelaajan tämänhetkisistä tiedoista
