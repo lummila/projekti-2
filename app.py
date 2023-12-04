@@ -25,7 +25,7 @@ def register():
         output = {"ERROR": "Login failed"}
         status_code = 200
     else:
-        output = pelaaja.update(True)
+        output = pelaaja.update(False)
         status_code = 200
 
     output_json = json.dumps(output)
