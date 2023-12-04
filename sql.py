@@ -97,8 +97,9 @@ class Sql:
                 # Lisätään locationList-listaan tuple, jossa koordinaatit
                 coord_list.append(result[0])
 
+        kilometers = distance.distance(coord_list[0], coord_list[1]).km
         # Palautetaan koordinaatit ja lennon matka kilometreinä
-        return coord_list, distance.distance(coord_list).km
+        return coord_list, kilometers
 
     def pull_hint(self, icao: str):
         sql = "select hint from hints "

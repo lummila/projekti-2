@@ -90,7 +90,7 @@ class Rotta(Sql):
 class Player(Rotta):
     def __init__(
         self,
-        name: str,
+        name: str = "",
         money: int = 1000,
         location: str = "EFHK",
         emissions: int = 0,
@@ -134,9 +134,15 @@ class Player(Rotta):
         self.money += 175
         return self.money
 
-    def update(self, fly, bool) -> dict:
+    def update(self, fly) -> dict:
+        # Tapahtuuko sattuma?
+        if fly:
+            event = self.coincidence(self.can_travel)
+        else:
+            # Jos pelaaja ei koe sattumaa, tämä on oletusarvo.
+            event = "Nothing of note has happened."
         # Luodaan sanakirja pelaajan tämänhetkisistä tiedoista
-        output = {
+        return {
             "name": self.name,
             "money": self.money,
             "location": self.location,
@@ -145,12 +151,9 @@ class Player(Rotta):
                 self.location, self.can_travel
             ),
             "hint": self.hint(),
+            "round": self.round,
+            "coincidence": event,
         }
-
-        if fly:
-            output["coincidence"] = self.coincidence(self.can_travel)
-
-        return output
 
     # Funktio palauttaa listan kaikista pelaajalle
     # mahdollisista lentokohteista.
@@ -226,8 +229,3 @@ class Player(Rotta):
 
     def rotta(self):
         return [self.rotta_destination_list, self.rotta_emissions]
-
-
-pelaaja = Player("Jari")
-
-print(pelaaja.rotta())
