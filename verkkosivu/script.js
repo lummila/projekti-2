@@ -1,7 +1,12 @@
 "use strict";
 
-const user_username = document.querySelector(".query-user");
-const user_password = document.querySelector(".query-pass");
+const user_username = document.querySelector("#query-user");
+const user_password = document.querySelector("#query-pass");
+
+const login = document.querySelector(".login");
+const register = document.querySelector(".register");
+
+const result = document.querySelector(".result");
 
 async function getLogin(username) {
   try {
@@ -34,5 +39,14 @@ async function doLogin(event) {
   }
 }
 //Ongelma: miten saada formien molemmat arvot syötettyä samalle reitille?
-const username = document.querySelector("form")[0].addEventListener("submit");
-document.querySelector("form")[1].addEventListener("submit", doLogin);
+// const username = document.querySelector("form")[0].addEventListener("submit");
+
+login.addEventListener("click", (e) => {
+  e.preventDefault();
+  result.textContent = "LOGIN";
+});
+
+register.addEventListener("click", (e) => {
+  e.preventDefault();
+  result.textContent = "REGISTER";
+});
