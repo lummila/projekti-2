@@ -1,5 +1,4 @@
 import mysql.connector
-import json
 from geopy import distance
 
 
@@ -51,20 +50,14 @@ class Sql:
 
         # Haku ei palauta tuloksia.
         if not result:
-            return -1
+            return False
         else:
-            return {"name": result[0][0], "location": result[0][1]}
+            self.name = username
+            return True
 
-    def register(self, username: str, pin_code: str) -> str:
+    def register(self, username: str, pin_code: str):
         # Kaikki käyttäjätunnukset ovat isolla kirjoitettuja
         username = username.upper()
-
-        # Tarkistetaan, onko käyttäjänimi 30 merkkiä tai alle
-        if len(username) > 30:
-            return json.dumps({"result": False, "info": "Username too long."})
-        # Tarkistetaan, onko PIN-koodi numeroita
-        if not pin_code.isdigit() and len(pin_code) != 4:
-            return json.dumps({"result": False, "info": "PIN code error."})
 
         sql = "insert into game (location, screen_name, passcode) "
         sql += f"values ('EFHK', '{username}', {int(pin_code)})"
@@ -73,9 +66,9 @@ class Sql:
         result = self.push(sql)
 
         if result <= 0:
-            return json.dumps({"result": False, "info": "Error storing credentials."})
+            return False
         else:
-            return json.dumps({"result": True, "info": "Registration successful!"})
+            return True
 
     def flight(self, start: str, end: str):
         # Lista, jossa kahdet koordinaatit

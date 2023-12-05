@@ -7,23 +7,26 @@ app = Flask(__name__)
 CORS(app)
 
 
-@app.route("/register")  # type: ignore
-def register():
-    # Rekisteröityminen
+def stringify_credentials(username, password):
+    return str(username), str(password)
+
+
+# Kirjautuminen
+@app.route("/login")  # type: ignore
+def login():
     args = request.args
 
-    username = str(args.get("username"))
-    pin_code = str(args.get("password"))
+    username, pin_code = stringify_credentials(
+        args.get("username"), args.get("password")
+    )
 
     # Luodaan kirjautuvasta pelaajasta uusi instanssi
     pelaaja = Player()
 
-    pelaaja.name = username.upper()
-
     login = pelaaja.login(username, pin_code)
-    if login == -1:
+    if not login:
         output = {"ERROR": "Login failed"}
-        status_code = 200
+        status_code = 400
     else:
         output = pelaaja.update(False)
         status_code = 200
@@ -32,10 +35,27 @@ def register():
     return Response(output_json, status_code, mimetype="application/json")
 
 
-# @app.route("/action")  # type: ignore
-# def action():
-#     # Lentäminen ja työskentely
-#     return
+@app.route("/register")  # type: ignore
+def register():
+    args = request.args
+
+    username, pin_code = stringify_credentials(
+        args.get("username"), args.get("password")
+    )
+
+    # Luodaan pelaajan instanssi
+    pelaaja = Player()
+
+    register = pelaaja.register(username, pin_code)
+    if not register:
+        output = {"ERROR": "Register failed"}
+        status_code = 400
+    else:
+        output = pelaaja.update(False)
+        status_code = 200
+
+    output_json = json.dumps(output)
+    return Response(output_json, status_code, mimetype="application/json")
 
 
 if __name__ == "__main__":
