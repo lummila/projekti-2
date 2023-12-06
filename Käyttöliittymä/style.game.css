@@ -1,0 +1,68 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #d8f8e9;
+    font-family: "Georgia Pro Black";
+}
+
+.container {
+    width: 90%;
+    margin: auto;
+}
+
+.flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.page-header {
+    background-color: #8fb065;
+    color: #2f173f;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #2f173f;
+}
+
+.title {
+    font-size: 45px;
+    padding-left: 6rem;
+}
+
+nav {
+    display: flex;
+    padding-right: 3rem;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.button {
+    color: rgba(216, 248, 233, 0.87);
+    padding: 2rem;
+    display: block;
+    background-color: #c56af5;
+    text-decoration: none;
+    border-radius: 6px;
+    border: 1px solid #2f173f;
+}
+
+.map {
+    height: auto;
+    width: 100%;
+}
+
+#map {
+    width: 500px;
+    height: 500px;
+    max-width: 60%;
+}
+
+.game-elements {
+    width: 50%;
+}
+
+.box {
+    padding: 1rem;
+}

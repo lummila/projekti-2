@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""/>
+    <link href="style.game.css" rel="stylesheet">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin="" defer></script>
+    <script src="game.script.js" defer></script>
+    <title>Velkajahti</title>
+</head>
+
+<body>
+<div class="container">
+    <header class="page-header">
+        <h1 class="title">
+            $ VELKAJAHTI $
+        </h1>
+        <nav>
+            <ul class="flex-wrap">
+                <li>
+                    <a class="button" href="">Instructions</a>
+                </li>
+                <li>
+                    <a class="button" href="">Tutorial</a>
+                </li>
+                <li>
+                    <a class="button" href="">Exit</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="flex-wrap">
+        <div class="game-elements">
+            <section class="box">
+                <header id="hint">
+                    <h3>Hint for your next location........</h3>
+                </header>
+                <p>
+                    <span id="next-hint"></span>
+                </p>
+            </section>
+            <section class="box">
+                <header>
+                    <h3>Coincidence</h3>
+                </header>
+                <p>
+                    <span id="given-coincidence"></span>
+                </p>
+            </section>
+            <section>
+                <ul id="icao-codes">
+                    <li>Icao + airport</li>
+                    <li>Icao + airport</li>
+                    <li>Icao + airport</li>
+                    <li>Icao + airport</li>
+                    <li>Icao + airport</li>
+                </ul>
+            </section>
+            <aside id="work">
+                <h3>Stay + work</h3>
+            </aside>
+            <section class="box">
+                <header>
+                    <h3>Current status</h3>
+                </header>
+                <table>
+                    <tr>
+                        <td>Money</td>
+                        <td>Emissions</td>
+                        <td>Round</td>
+                    </tr>
+                    <tr>
+                        <td id="emissions"></td>
+                        <td id="money"></td>
+                        <td id="round"></td>
+                    </tr>
+                </table>
+            </section>
+            <section class="map">
+                <div id="map"></div>
+            </section>
+        </div>
+    </main>
+</div>
+</body>
+
+</html>
