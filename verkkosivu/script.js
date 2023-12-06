@@ -46,11 +46,11 @@ async function doLogin(event) {
 login.addEventListener("click", (e) => {
   e.preventDefault();
   result.textContent = user_username.value + " " +  user_password.value;
-  const promise = getLogin();
+  const promise = doLogin();
 });
 
 register.addEventListener("click", (e) => {
   e.preventDefault();
   result.textContent = user_username.value + " " +  user_password.value;
-  const promise = getLogin();
+  const promise = doLogin();
 });
