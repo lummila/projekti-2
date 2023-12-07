@@ -36,8 +36,8 @@
         </nav>
     </header>
 
-    <main class="flex-wrap">
-        <div class="game-elements">
+    <main>
+        <div class="elements">
             <section class="hint">
                 <header>
                     <h3>Hint for your next location........</h3>
@@ -46,35 +46,38 @@
                     <span id="next-hint"></span>
                 </p>
             </section>
-            <section class="coincidence">
-                <header>
-                    <h3>Coincidence</h3>
-                </header>
-                <p>
-                    <span id="given-coincidence"></span>
-                </p>
-            </section>
             <section class="icao-buttons">
-                <ul>
-                    <li class="icao-button"> Icao + airport</li>
-                    <li class="icao-button"> Icao + airport</li>
-                    <li class="icao-button">Icao + airport</li>
-                    <li class="icao-button">Icao + airport</li>
-                    <li class="icao-button">Icao + airport</li>
-                </ul>
+                <div>
+                    <button type="button" class="icao-button"> Icao + airport</button>
+                    <button type="button" class="icao-button"> Icao + airport</button>
+                    <button type="button" class="icao-button">Icao + airport</button>
+                    <button type="button" class="icao-button">Icao + airport</button>
+                    <button type="button" class="icao-button">Icao + airport</button>
+                </div>
             </section>
-            <aside class="work">
-                <h3>Stay + work</h3>
-            </aside>
+            <section class="work-button">
+                <div>
+                    <button type="button" class="work">
+                        <h3>Stay + work</h3>
+                    </button>
+                </div>
+            </section>
+            <section class="coincidence-box">
+                <div class="coincidence">
+                    <header>
+                        <h3>Coincidence</h3>
+                    </header>
+                    <p>
+                        <span id="given-coincidence"></span>
+                    </p>
+                </div>
+            </section>
             <section class="status">
-                <header>
-                    <h3>Current status</h3>
-                </header>
-                <table>
+                <table id="player-status">
                     <tr>
-                        <td>Money</td>
-                        <td>Emissions</td>
-                        <td>Round</td>
+                        <td>Money left:</td>
+                        <td>CO2 emissions:</td>
+                        <td>Round:</td>
                     </tr>
                     <tr>
                         <td id="emissions"></td>
@@ -83,6 +86,8 @@
                     </tr>
                 </table>
             </section>
+        </div>
+        <div class="game-map">
             <section class="map">
                 <div id="map"></div>
             </section>
