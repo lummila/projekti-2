@@ -1,14 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Login page</title>
-    <meta name="viewport" content="width=device=width, initial-scale=1.0">
-    <meta name="description" content="The login page of the project MK2">
-    <link href="styling.css" rel="stylesheet">
-    <script src="" defer></script>
-</head>
-<body>
+    <link rel="stylesheet" href="styling.css"/>
+    <script src="script.js" defer></script>
+  </head>
+  <body class="loginBody">
+  <header>
+        <nav class="navBar">
+            <a href="startPage.html"><button type="button">EXIT</button></a>
+        </nav>
+    </header>
+  <main class="loginMain">
+      <form class="loginForm">
+      <input id="query-user" name="username" type="text" placeholder="USERNAME"/>
+      <input id="query-pass" name="password" type="text" placeholder="PASSWORD"/>
+      <input class="login" type="submit" value="Login" />
+      <input class="register" type="submit" value="Register" />
+    </form>
+    <div class="result"></div>
+  </main>
 
-</body>
+  </body>
 </html>
