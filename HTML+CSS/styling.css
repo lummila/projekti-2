@@ -7,6 +7,9 @@ ourColorPalette {
     color: #E99B5D;
 }
 
+@font-face {
+    font-family: Verdana, sans-serif;
+}
 
 /*
 -----------------------------------------------------------------------------------
@@ -65,6 +68,7 @@ ourColorPalette {
 
 .exit button {
     justify-content: flex-end;
+    font-family: inherit;
 }
 
 .navBar {
@@ -75,6 +79,8 @@ ourColorPalette {
     display: flex;
     justify-content: flex-end;
     padding-top: 1rem;
+    border: 5px solid #392E3E;
+    border-radius: 5px;
 }
 
 .navBar button {
@@ -82,6 +88,7 @@ ourColorPalette {
     height: 50px;
     margin-right: 2rem;
     border-radius: 5px;
+    font-family: inherit;
 
 }
 
@@ -117,4 +124,9 @@ ourColorPalette {
 
 .loginForm input {
     height: 25px;
+}
+
+.loginNav2 {
+    background-color: #E99B5D;
+    height: 3rem;
 }
