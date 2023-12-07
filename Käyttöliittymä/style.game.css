@@ -27,7 +27,6 @@ main {
     justify-content: space-between;
     border-radius: 6px;
     box-shadow: #392E3E 3px 3px 10px;
-    border: 1px solid #392E3E;
 }
 
 .title {
@@ -82,14 +81,13 @@ ul {
 .icao-buttons {
     padding: 1rem 0 1rem 0;
     box-sizing: border-box;
-    width: 50%;
     display: flex;
 }
 
 .work-button {
     display: inline-flex;
     box-sizing: border-box;
-    width: 30%;
+    padding: 1rem;
 }
 
 .work {
@@ -120,6 +118,7 @@ ul {
     border-radius: 6px;
     box-shadow: #392E3E 3px 3px 10px;
     border: 1px solid #392E3E;
+    color: #392E3E;
 }
 
 #player-status {
@@ -147,7 +146,7 @@ ul {
 #map {
     border-radius: 6px;
     width: 650px;
-    height: 625px;
+    height: 600px;
 }
 
 .elements {
