@@ -9,8 +9,8 @@ function hideFunction() {
   }
 }
 
-document.getElementById("query-pass").maxLength = "4";
-document.getElementById("query-user").maxLength = "10";
+// document.getElementById("query-pass").maxLength = "4";
+// document.getElementById("query-user").maxLength = "10";
 
 let aboutPopup = document.getElementById("aboutPop");
 
