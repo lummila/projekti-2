@@ -1,12 +1,23 @@
 'use strict';
 
 function hideFunction() {
-  const x = document.getElementById("query-pass");
-  if (x.type === "password") {
-    x.type = "text";
+  const pass = document.getElementById("query-pass");
+  if (pass.type === "password") {
+    pass.type = "text";
   } else {
-    x.type = "password";
+    pass.type = "password";
   }
 }
 
 document.getElementById("query-pass").maxLength = "4";
+document.getElementById("query-user").maxLength = "10";
+
+let aboutPopup = document.getElementById("aboutPop");
+
+function openAboutpop(){
+  aboutPopup.classList.add('openAbout');
+}
+
+function closeAboutpop() {
+  aboutPopup.classList.remove('openAbout');
+}
