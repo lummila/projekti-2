@@ -173,12 +173,13 @@ ul {
 
 .help-content, .instruction-content, .work-content {
     background-color: #85C094;
-    margin: 15% auto;
+    margin: auto;
     padding: 2rem;
     border: 1px solid #392E3E;
     border-radius: 6px;
-    width: 70%;
+    width: 80%;
     color: #392E3E;
+    line-height: 2rem;
 }
 
 .close {
