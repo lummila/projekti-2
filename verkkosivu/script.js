@@ -25,10 +25,40 @@ async function getLogin() {
   }
 }
 
-
-
 async function doLogin(event) {
   const response = await getLogin();
+  if (response) {
+    console.log(response);
+    console.log("success");
+    return response;
+  } else {
+    console.log("some error");
+    return response.error;
+  }
+}
+
+
+async function getRegister() {
+  try {
+    const username = user_username.value;
+    const password = user_password.value;
+
+    const response = await fetch(
+      `http://localhost:5000/register?username=${username}&password=${password}`
+    );
+    const json = await response.json();
+    console.log(json);
+    return json.name;
+  } catch (error) {
+    console.error("doLogin fail", error);
+    return error;
+  }
+}
+
+
+
+async function doRegister(event) {
+  const response = await getRegister();
   if (response) {
     console.log(response);
     console.log("success");
@@ -52,5 +82,5 @@ login.addEventListener("click", (e) => {
 register.addEventListener("click", (e) => {
   e.preventDefault();
   result.textContent = user_username.value + " " +  user_password.value;
-  const promise = doLogin();
+  const promise = doRegister();
 });
