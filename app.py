@@ -40,7 +40,7 @@ def register():
     args = request.args
 
     username, pin_code = stringify_credentials(
-        args.get("username"), args.get("password")
+        request.args.get("username"), request.args.get("password")
     )
 
     # Luodaan pelaajan instanssi

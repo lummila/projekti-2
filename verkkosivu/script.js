@@ -16,7 +16,7 @@ async function getLogin() {
     const response = await fetch(
       `http://localhost:5000/register?username=${username}&password=${password}`
     );
-    const json = response.json();
+    const json = await response.json();
     console.log(json);
     return json.name;
   } catch (error) {
