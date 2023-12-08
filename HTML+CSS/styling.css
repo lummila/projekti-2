@@ -172,3 +172,6 @@ ourColorPalette {
     scale: 200%;
 }
 
+.hide {
+    display: flex;
+}
