@@ -16,10 +16,12 @@
       <form class="loginForm">
       <input id="query-user" name="username" type="text" placeholder="Username"/>
       <input id="query-pass" name="password" type="password" placeholder="4-digit PIN"/>
-      <input class="hide" type="checkbox" onclick="hideFunction()">Show password
+          <div class="hidePass">
+      <input type="checkbox" onclick="hideFunction()">Show password
+              </div>
           <div class="logSubmit">
-            <input class="login" type="submit" value="Login" />
-            <input class="register" type="submit" value="Register" />
+            <input class="login" type="submit" value="LOGIN"/>
+            <input class="register" type="submit" value="REGISTER"/>
           </div>
     </form>
     <div class="result"></div>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device=width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Velkajahti: Home</title>
     <meta name="description" content="Starting page for the project MK2">
     <link href="styling.css" rel="stylesheet">
@@ -10,22 +10,34 @@
 </head>
 <body>
 <div class="start_container">
+
     <header>
         <nav class="navBar">
-            <button type="button">ABOUT</button>
+            <button class="aboutUs" type="submit" onclick="openAboutpop()">ABOUT US</button>
         </nav>
     </header>
+
     <main>
+
+        <div class="aboutPop" id="aboutPop">
+            <img src="https://placehold.co/600x400" alt="placeholder image">
+            <h1>HAISTA VITTU</h1>
+            <button type="button" class="aboutOk" onclick="closeAboutpop()">OK</button>
+        </div>
+
         <h1>CHASE THE RAT</h1>
+
         <div class="btn_container">
             <a href="loginPage.html"><button type="button"><img src="IMG/game_pad.jpg" alt="login image"/></button></a>
             <button type="button"><img src="IMG/instructions.jpg" alt="instructions img"/></button>
             <button type="button"><img src="IMG/tutorial.jpg" alt="instructions img"/></button>
         </div>
+
     </main>
     <nav class="exit">
     </nav>
 </div>
 
 </body>
+
 </html>

@@ -17,9 +17,9 @@ class Sql:
            self.connect = mysql.connector.connect(
     host='127.0.0.1',
     port=3306,
-    database='flight_game',
-    user= 'suvi',
-    password = 'HarmaaPoyta123',
+    database='velkajahti22',
+    user= "root",
+    password = "",
     autocommit = True
     )
 
@@ -53,7 +53,7 @@ class Sql:
         username = username.upper()
 
         # Haetaan käyttäjänimen ja PIN-koodin mukaan käyttäjä
-        sql = "select screen_name, location from game "
+        sql = "select screen_name, location, passcode from game "
         sql += f"where screen_name = '{username}' and passcode = '{pin_code}';"
 
         # Vedetään käyttäjätiedot tietokannasta.
@@ -69,6 +69,8 @@ class Sql:
     def register(self, username: str, pin_code: str):
         # Kaikki käyttäjätunnukset ovat isolla kirjoitettuja
         username = username.upper()
+
+        self.name = username
 
         sql = "insert into game (location, screen_name, passcode) "
         sql += f"values ('EFHK', '{username}', {int(pin_code)})"
