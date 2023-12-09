@@ -88,23 +88,18 @@ class Rotta(Sql):
 
 
 class Player(Rotta):
-    def __init__(
-        self,
-        name: str = "",
-        money: int = 1000,
-        location: str = "EFHK",
-        emissions: int = 0,
-    ) -> None:
-        Rotta.__init__(self)
+    connection_id = 0
 
+    def __init__(self) -> None:
+        Rotta.__init__(self)
         # Käyttäjätunnuksen nimi
-        self.name = name
+        self.name = ""
         # Rahamäärä, aina alussa 1000 €
-        self.money = money
+        self.money = 1000
         # Alkusijainti, Helsinki-Vantaa eli EFHK
-        self.location = location
+        self.location = "EFHK"
         # Tuotetut emissiot, aina 0 aluksi.
-        self.emissions = emissions
+        self.emissions = 0
         # Voiko pelaaja matkustaa seuraavan tason lentokentille, boolean.
         self.can_travel = True
         # Pelaajan kierrokset, jos näitä on 10, peli päättyy.
@@ -134,12 +129,13 @@ class Player(Rotta):
         self.money += 175
         return self.money
 
-    def update(self, fly) -> dict:
-        # Tapahtuuko sattuma?
+    def update(self, fly: bool) -> dict:
+        # Tapahtuuko sattuma, eli lennetäänkö?
         if fly:
             event = self.coincidence(self.can_travel)
         else:
-            # Jos pelaaja ei koe sattumaa, tämä on oletusarvo.
+            # Jos pelaaja ei koe sattumaa, hän työskentelee.
+            self.work()
             event = "Nothing of note has happened."
         # Luodaan sanakirja pelaajan tämänhetkisistä tiedoista
         return {

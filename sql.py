@@ -3,7 +3,7 @@ from geopy import distance
 
 
 class Sql:
-    '''def __init__(self) -> None:
+    def __init__(self) -> None:
         self.connect = mysql.connector.connect(
             host="127.0.0.1",
             port=3306,
@@ -12,17 +12,16 @@ class Sql:
             password="metropolia",
             autocommit=True,
         )
-'''
-    def __init__(self) -> None:
-           self.connect = mysql.connector.connect(
-    host='127.0.0.1',
-    port=3306,
-    database='velkajahti22',
-    user= "root",
-    password = "",
-    autocommit = True
-    )
 
+    """def __init__(self) -> None:
+        self.connect = mysql.connector.connect(
+            host="127.0.0.1",
+            port=3306,
+            database="velkajahti22",
+            user="root",
+            password="",
+            autocommit=True,
+        )"""
 
     # Tiedon tuonti tietokannasta
     def pull(self, sql_code: str):
@@ -70,8 +69,6 @@ class Sql:
         # Kaikki käyttäjätunnukset ovat isolla kirjoitettuja
         username = username.upper()
 
-        self.name = username
-
         sql = "insert into game (location, screen_name, passcode) "
         sql += f"values ('EFHK', '{username}', {int(pin_code)})"
 
@@ -81,6 +78,7 @@ class Sql:
         if result <= 0:
             return False
         else:
+            self.name = username
             return True
 
     def flight(self, start: str, end: str):
