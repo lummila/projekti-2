@@ -62,11 +62,11 @@ function hideFunction() {
 
 let aboutPopup = document.getElementById("aboutPop");
 
-function openAboutpop() {
+function openAboutPop() {
   aboutPopup.classList.add("openAbout");
 }
 
-function closeAboutpop() {
+function closeAboutPop() {
   aboutPopup.classList.remove("openAbout");
 }
 
