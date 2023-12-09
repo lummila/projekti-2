@@ -106,7 +106,7 @@ class Player(Rotta):
         self.round = 0
 
     # Lentofunktio, siirtää pelaajan paikasta A paikkaan B.
-    def fly(self, destination: str) -> tuple[str, str]:
+    def fly(self, destination: str):
         # Varmista onko lentokohde oikeaan suuntaan.
         if destination not in self.rotta_destination_list:
             self.can_travel = False
@@ -118,34 +118,44 @@ class Player(Rotta):
         # Lennon hinta, 100 € + (etäisyys jaettuna viidellätoista)
         price = math.floor(100 + dist / 15)
 
-        start = self.location
+        if self.money < price:
+            return False
+
         self.location = destination
         self.money -= price
         self.emissions += emissions
+        self.round += 1
 
-        return (start, self.location)
+        return True
 
     def work(self) -> int:
         self.money += 175
+        self.round += 1
         return self.money
 
-    def update(self, fly: bool) -> dict:
+    def update(self, fly: bool, work: bool) -> dict:
         # Tapahtuuko sattuma, eli lennetäänkö?
         if fly:
             event = self.coincidence(self.can_travel)
         else:
-            # Jos pelaaja ei koe sattumaa, hän työskentelee.
-            self.work()
             event = "Nothing of note has happened."
+
+        if work:
+            self.work()
+
+        # Listataan pelaajalle mahdolliset lentokohteet
+        destinations = self.possible_locations(self.location, self.can_travel)
+        destinations_dict = {}
+        for i in range(len(destinations)):
+            destinations_dict[destinations[i]] = self.airport_info(destinations[i])
+
         # Luodaan sanakirja pelaajan tämänhetkisistä tiedoista
         return {
             "name": self.name,
             "money": self.money,
             "location": self.location,
             "emissions": self.emissions,
-            "possible_destinations": self.possible_locations(
-                self.location, self.can_travel
-            ),
+            "possible_destinations": destinations_dict,
             "hint": self.hint(),
             "round": self.round,
             "coincidence": event,

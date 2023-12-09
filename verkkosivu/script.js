@@ -1,11 +1,14 @@
 "use strict";
 
+// Käyttäjän kirjoittama nimi ja PIN-koodi
 const user_username = document.querySelector("#query-user");
 const user_password = document.querySelector("#query-pass");
 
+// Kirjautumis- ja rekisteröitymisnappulat
 const login = document.querySelector(".login");
 const register = document.querySelector(".register");
 
+// Debug-tarkoituksiin
 const result = document.querySelector(".result");
 
 function update(person) {
@@ -58,7 +61,7 @@ async function getRegister() {
   }
 }
 
-async function doRegister(event) {
+async function doRegister() {
   const response = await getRegister();
   if (response) {
     console.log(response);

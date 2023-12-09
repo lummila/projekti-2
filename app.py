@@ -19,6 +19,7 @@ def stringify_credentials(username, password):
 
 
 # Kirjautuminen
+# /login?username=_&password=_
 @app.route("/login")  # type: ignore
 def login():
     # Käyttäjänimi ja PIN-koodi otetaan ehdoista
@@ -37,24 +38,14 @@ def login():
         output = {"ERROR": "Login failed"}
         status_code = 400
     else:
-        output = {
-            "name": pelaaja.name,
-            "money": pelaaja.money,
-            "location": pelaaja.location,
-            "emissions": pelaaja.emissions,
-            "possible_destinations": pelaaja.possible_locations(
-                pelaaja.location, pelaaja.can_travel
-            ),
-            "hint": pelaaja.hint(),
-            "round": pelaaja.round,
-            "coincidence": "Nothing of note has happened.",
-        }
+        output = pelaaja.update(False, False)
         status_code = 200
 
     output_json = json.dumps(output)
     return Response(output_json, status_code, mimetype="application/json")
 
 
+# /register?username=_&password=_
 @app.route("/register")  # type: ignore
 def register():
     username, pin_code = stringify_credentials(
@@ -72,40 +63,48 @@ def register():
         output = {"ERROR": "Register failed"}
         status_code = 400
     else:
-        output = {
-            "name": pelaaja.name,
-            "money": pelaaja.money,
-            "location": pelaaja.location,
-            "emissions": pelaaja.emissions,
-            "possible_destinations": pelaaja.possible_locations(
-                pelaaja.location, pelaaja.can_travel
-            ),
-            "hint": pelaaja.hint(),
-            "round": pelaaja.round,
-            "coincidence": "Nothing of note has happened.",
-        }
+        output = pelaaja.update(False, False)
         status_code = 200
 
     output_json = json.dumps(output)
     return Response(output_json, status_code, mimetype="application/json")
 
 
+# /update?fly=_&work=_
 @app.route("/update")  # type: ignore
 def update():
-    flying = str(request.args.get("fly"))
+    args = request.args
+
+    # Määrittää, lentääkö pelaaja, eli generoidaanko sattuma
+    flying = True if str(args.get("fly")) == "yes" else False
+    # Määrittää, työskenteleekö pelaaja
+    working = True if str(args.get("work")) == "yes" else False
 
     # Ilman globalia pelaaja on funktion sisäinen muuttuja johon ei pääse sen ulkopuolelta.
     global pelaaja
 
-    # Onko pelaaja lentämässä paikasta toiseen?
-    if flying == "yes":
-        # update() pyöräyttää sattuman onnenpyörää eli lennetään
-        output = json.dumps(pelaaja.update(True))
-    else:
-        # update() ei pyöräytä sattuman onnenpyörää eli työskennellään
-        output = json.dumps(pelaaja.update(False))
+    # flying ja working ovat ehtoja, joilla päivitetään pelaajan tiedot.
+    output = json.dumps(pelaaja.update(flying, working))
 
     return Response(output, 200, mimetype="application/json")
+
+
+# /fly?dest=_
+@app.route("/fly")  # type: ignore
+def fly():
+    destination = str(request.args.get("dest"))
+
+    # Ilman globalia pelaaja on funktion sisäinen muuttuja johon ei pääse sen ulkopuolelta.
+    global pelaaja
+
+    flight = pelaaja.fly(destination)
+    if not flight:
+        output = {"ERROR": "Not enough money"}
+    else:
+        output = pelaaja.update(True, False)
+
+    output_json = json.dumps(output)
+    return Response(output_json, 200, mimetype="application/json")
 
 
 if __name__ == "__main__":

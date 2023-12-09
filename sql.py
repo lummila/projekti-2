@@ -117,8 +117,8 @@ class Sql:
             return result[0][0]
 
     def airport_info(self, icao: str):
-        sql = "select airport.name, country.name, latitude_deg, longitude_deg "
-        sql += f"where airport.ident = '{icao}' and airport.iso_country == country.iso_country;"
+        sql = "select airport.name, country.name, latitude_deg, longitude_deg from airport, country "
+        sql += f"where airport.ident = '{icao}' and airport.iso_country = country.iso_country;"
 
         result = self.pull(sql)
         if not result:
