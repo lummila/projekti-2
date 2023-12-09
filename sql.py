@@ -7,22 +7,21 @@ class Sql:
         self.connect = mysql.connector.connect(
             host="127.0.0.1",
             port=3306,
-            database="flight_game",
-            user="username",
-            password="password",
+            database="velkajahti",
+            user="root",
+            password="metropolia",
             autocommit=True,
         )
-'
-    def __init__(self) -> None:
-           self.connect = mysql.connector.connect(
-    host='127.0.0.1',
-    port=3306,
-    database='velkajahti22',
-    user= "root",
-    password = "",
-    autocommit = True
-    )
 
+    """def __init__(self) -> None:
+        self.connect = mysql.connector.connect(
+            host="127.0.0.1",
+            port=3306,
+            database="velkajahti22",
+            user="root",
+            password="",
+            autocommit=True,
+        )"""
 
     # Tiedon tuonti tietokannasta
     def pull(self, sql_code: str):
@@ -70,8 +69,6 @@ class Sql:
         # Kaikki käyttäjätunnukset ovat isolla kirjoitettuja
         username = username.upper()
 
-        self.name = username
-
         sql = "insert into game (location, screen_name, passcode) "
         sql += f"values ('EFHK', '{username}', {int(pin_code)})"
 
@@ -81,6 +78,7 @@ class Sql:
         if result <= 0:
             return False
         else:
+            self.name = username
             return True
 
     def flight(self, start: str, end: str):
@@ -119,8 +117,8 @@ class Sql:
             return result[0][0]
 
     def airport_info(self, icao: str):
-        sql = "select airport.name, country.name, latitude_deg, longitude_deg "
-        sql += f"where airport.ident = '{icao}' and airport.iso_country == country.iso_country;"
+        sql = "select airport.name, country.name, latitude_deg, longitude_deg from airport, country "
+        sql += f"where airport.ident = '{icao}' and airport.iso_country = country.iso_country;"
 
         result = self.pull(sql)
         if not result:
