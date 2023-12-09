@@ -38,27 +38,50 @@ html, body {
     margin: auto;
     text-align: center;
     background-color: #DBEAE7;
+    padding-bottom: 5rem;
 }
 
 .btn_container {
-    padding-top: 5rem;
     padding-bottom: 15rem;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     margin: auto 3rem;
+}
+
+.pad {
+    border-bottom: 4px solid #392E3E;
+    border-top: 4px solid #392E3E;
+    border-left: 4px solid #392E3E
+
+}
+
+.quest {
+    border-top: 4px solid #392E3E;
+    border-bottom: 4px solid #392E3E
+}
+
+.hands {
+    border-top: 4px solid #392E3E;
+    border-right: 4px solid #392E3E;
+    border-bottom: 4px solid #392E3E;
 }
 
 .btn_container img {
     border-radius: 4px;
-    border: 8px outset #392E3E;
     background-color: #392E3E;
+    transition: transform .3s ease-in-out;
 }
 
 .btn_container img:hover {
-    transform: scale(102%);
+    transform: scale(102%) translateY(-15px);
     opacity: 80%;
     box-shadow: 3px 3px 10px #B164B4;
 }
+
+.startHeader {
+    padding-bottom: 2rem;
+}
+
 
 .start_container h1 {
     font-size: 62px;
