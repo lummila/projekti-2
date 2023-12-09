@@ -7,6 +7,8 @@ app = Flask(__name__)
 CORS(app)
 
 
+# Tämä on koodieditoria varten luotu funktio, joka varmistaa että annetut ehdot ovat tekstiä.
+# Muuten editori kohtelee näitä tuntemattomina tyyppeinä
 def stringify_credentials(username, password):
     return str(username), str(password)
 
@@ -14,8 +16,7 @@ def stringify_credentials(username, password):
 # Kirjautuminen
 @app.route("/login")  # type: ignore
 def login():
-    args = request.args
-
+    # Käyttäjänimi ja PIN-koodi otetaan ehdoista
     username, pin_code = stringify_credentials(
         request.args.get("username"), request.args.get("password")
     )
@@ -23,6 +24,7 @@ def login():
     # Luodaan kirjautuvasta pelaajasta uusi instanssi
     pelaaja = Player()
 
+    # Login palauttaa 
     login = pelaaja.login(username, pin_code)
     if not login:
         output = {"ERROR": "Login failed"}
@@ -37,8 +39,6 @@ def login():
 
 @app.route("/register")  # type: ignore
 def register():
-    args = request.args
-
     username, pin_code = stringify_credentials(
         request.args.get("username"), request.args.get("password")
     )
