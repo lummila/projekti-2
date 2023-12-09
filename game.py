@@ -124,11 +124,13 @@ class Player(Rotta):
         self.location = destination
         self.money -= price
         self.emissions += emissions
+        self.round += 1
 
         return True
 
     def work(self) -> int:
         self.money += 175
+        self.round += 1
         return self.money
 
     def update(self, fly: bool, work: bool) -> dict:
