@@ -29,15 +29,26 @@ def login():
     # Ilman globalia pelaaja on funktion sisäinen muuttuja johon ei pääse sen ulkopuolelta.
     global pelaaja
 
-    # Login palauttaa
+    # Nollataan pelaajan tiedot ennen uutta kirjautumista sekaannuksen välttämiseksi.
+    pelaaja = Player()
+    # Login palauttaa True jos kirjautuminen onnistuu
     login = pelaaja.login(username, pin_code)
     if not login:
         output = {"ERROR": "Login failed"}
         status_code = 400
     else:
-        # Nollataan pelaajan tiedot ennen uutta kirjautumista sekaannuksen välttämiseksi.
-        pelaaja = Player()
-        output = pelaaja.update(False)
+        output = {
+            "name": pelaaja.name,
+            "money": pelaaja.money,
+            "location": pelaaja.location,
+            "emissions": pelaaja.emissions,
+            "possible_destinations": pelaaja.possible_locations(
+                pelaaja.location, pelaaja.can_travel
+            ),
+            "hint": pelaaja.hint(),
+            "round": pelaaja.round,
+            "coincidence": "Nothing of note has happened.",
+        }
         status_code = 200
 
     output_json = json.dumps(output)
@@ -53,13 +64,26 @@ def register():
     # Ilman globalia pelaaja on funktion sisäinen muuttuja johon ei pääse sen ulkopuolelta.
     global pelaaja
 
+    # Nollataan pelaajan tiedot ennen uutta kirjautumista sekaannuksen välttämiseksi.
+    pelaaja = Player()
+    # Register palauttaa True, jos rekisteröityminen onnistui
     register = pelaaja.register(username, pin_code)
     if not register:
         output = {"ERROR": "Register failed"}
         status_code = 400
     else:
-        pelaaja = Player()
-        output = pelaaja.update(False)
+        output = {
+            "name": pelaaja.name,
+            "money": pelaaja.money,
+            "location": pelaaja.location,
+            "emissions": pelaaja.emissions,
+            "possible_destinations": pelaaja.possible_locations(
+                pelaaja.location, pelaaja.can_travel
+            ),
+            "hint": pelaaja.hint(),
+            "round": pelaaja.round,
+            "coincidence": "Nothing of note has happened.",
+        }
         status_code = 200
 
     output_json = json.dumps(output)

@@ -1,31 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Velkajahti: Login</title>
-    <link rel="stylesheet" href="styling.css"/>
+    <link rel="stylesheet" href="styling.css" />
     <script src="myScript.js" defer></script>
   </head>
   <body class="loginBody">
-  <header>
-    </header>
-  <main class="loginMain">
+    <header></header>
+    <main class="loginMain">
       <form class="loginForm">
-      <input id="query-user" name="username" type="text" placeholder="Username"/>
-      <input id="query-pass" name="password" type="password" placeholder="4-digit PIN"/>
-          <div class="hidePass">
-      <input type="checkbox" onclick="hideFunction()">Show password
-              </div>
-          <div class="logSubmit">
-            <input class="login" type="submit" value="LOGIN"/>
-            <input class="register" type="submit" value="REGISTER"/>
-          </div>
-    </form>
-    <div class="result"></div>
-  </main>
-  <div class="exitBtn">
-      <a href="startPage.html"><button class="button-85" role="button">RETURN</button></a>
-          </div>
+        <input
+          id="query-user"
+          name="username"
+          type="text"
+          placeholder="Username"
+        />
+        <input
+          id="query-pass"
+          name="password"
+          type="password"
+          placeholder="4-digit PIN"
+        />
+        <div class="hidePass">
+          <input type="checkbox" onclick="hideFunction()" />Show password
+        </div>
+        <div class="logSubmit">
+          <input class="login" type="submit" value="LOGIN" />
+          <input class="register" type="submit" value="REGISTER" />
+        </div>
+      </form>
+      <div class="result"></div>
+    </main>
+    <div class="exitBtn">
+      <a href="startPage.html"
+        ><button class="button-85" role="button">RETURN</button></a
+      >
+    </div>
   </body>
 </html>

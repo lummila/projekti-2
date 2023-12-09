@@ -9,8 +9,7 @@ const register = document.querySelector(".register");
 const result = document.querySelector(".result");
 
 function update(person) {
-  document.querySelector('#next-hint').innerHTML = person.hint;
-
+  document.querySelector("#next-hint").innerHTML = person.hint;
 }
 async function getLogin() {
   try {
@@ -42,7 +41,6 @@ async function doLogin(event) {
   }
 }
 
-
 async function getRegister() {
   try {
     const username = user_username.value;
@@ -60,14 +58,12 @@ async function getRegister() {
   }
 }
 
-
-
 async function doRegister(event) {
   const response = await getRegister();
   if (response) {
     console.log(response);
     console.log("success");
-    update
+    update;
     return response;
   } else {
     console.log("some Register error");
@@ -75,18 +71,17 @@ async function doRegister(event) {
   }
 }
 
-
 //Ongelma: miten saada formien molemmat arvot syötettyä samalle reitille?
 // const username = document.querySelector("form")[0].addEventListener("submit");
 
 login.addEventListener("click", (e) => {
   e.preventDefault();
-  result.textContent = user_username.value + " " +  user_password.value;
+  result.textContent = user_username.value + " " + user_password.value;
   const promise = doLogin();
 });
 
 register.addEventListener("click", (e) => {
   e.preventDefault();
-  result.textContent = user_username.value + " " +  user_password.value;
+  result.textContent = user_username.value + " " + user_password.value;
   const promise = doRegister();
 });
