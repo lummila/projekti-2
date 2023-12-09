@@ -8,18 +8,23 @@
     <link href="styling.css" rel="stylesheet">
     <script src="myScript.js" defer></script>
 </head>
-<body>
+<body class="startBody">
 <div class="start_container">
 
     <header>
         <nav class="navBar">
-            <button class="aboutUs" type="submit" onclick="openAboutpop()">ABOUT US</button>
+            <button
+                    class="aboutUs"
+                    type="submit"
+                    onclick="openAboutpop()">ABOUT US
+            </button>
         </nav>
     </header>
 
     <main>
 
-        <div class="aboutPop" id="aboutPop">
+        <div class="aboutPop"
+             id="aboutPop">
             <h2>What is this all about?</h2>
             <p>"Chase The Rat"© or "Velkajahti" is a game developed by a small indie developer studio consisting of
              four first year IT students based in Metropolia University of Applied Sciences.<br><br>
@@ -27,15 +32,47 @@
             It all started from an idea in early fall when four ambitious students embarked on a journey to obtain a high
              paying job. Someone had to lift the cat on the table... Anyways there will be plenty more where this came from. Stay tuned!
             <br><br></p>
-            <button class="button-61" role="button" onclick="closeAboutpop()">Gotcha</button>
+            <button class="button-61"
+                    role="button"
+                    onclick="closeAboutpop()">Gotcha
+            </button>
         </div>
+
+        <div class="instructionsPop"
+             id="instructionsPop">
+            <p>Welcome to Chase The Rat!<br><br><em>This guide is not required, but may help you understand the game.</em><br><br>
+                                You'll need to enter an existing username and a PIN-code to play with your user OR<br>
+                                you can create new username and a PIN-code.<br><br>
+                                In this game you'll travel between different airports, trying to find the Rat who owes you money.<br>
+                                The rat has done some airport-hopping and the game will give you clues of his route and final location.<br>
+                                Each game will draw a new route of five airports, the fifth being the current location of the Rat.<br>
+                                You'll need to unravel the clues and follow the route that the rat took.<br><br>
+                                There are a total of ten rounds in each game for you to try to find the Rat and each time you travel you'll use one round.<br>
+                                You have a limited amount of money to spend on your trip and your emissions will alter your final score in the game.<br><br>
+                                The game will give you your first clue and after unraveling it you can start travelling to the first airport.<br>
+                                If you get the given clue correct the game will give you a clue to reach the next airport.<br><br>
+                                With the clues, you also have a chance to be given a positive OR negative coincidence.<br>
+                                If you solve the clue the possibility to get a positive coincidence is much higher<br>
+                                AND if you travel to the wrong airport you are more likely to experience negative coincidence.<br><br>
+                                If you reach the final destination where the Rat is within the given rounds: <em>you'll win.</em><br><br>
+                                After reaching the goal the game will calculate your final points:<br>
+                                <em>Your money * rounds left + Emission budget - actual emissions.</em><br><br>
+                If you don't find the Rat within the ten rounds: <em>you'll lose.</em></p>
+
+            <button class="button-61"
+                    role="button"
+                    onclick="closeInstrPop()">Gotcha
+            </button>
+        </div>
+
+
 
         <h1>CHASE THE RAT</h1>
 
         <div class="btn_container">
-            <a href="loginPage.html"><button type="button"><img src="IMG/game_pad.jpg" alt="login image"/></button></a>
-            <button type="button"><img src="IMG/instructions.jpg" alt="instructions img"/></button>
-            <button type="button"><img src="IMG/tutorial.jpg" alt="instructions img"/></button>
+            <a href="loginPage.html"><img src="IMG/gamepad.jpg" alt="login image"/></a>
+            <img src="IMG/question.jpg" alt="instructions img" onClick="openInstrPop()"/>
+            <img src="IMG/hands.jpg" alt="instructions img"/>
         </div>
 
     </main>

@@ -57,9 +57,6 @@ function hideFunction() {
   }
 }
 
-// document.getElementById("query-pass").maxLength = "4";
-// document.getElementById("query-user").maxLength = "10";
-
 let aboutPopup = document.getElementById("aboutPop");
 
 function openAboutpop() {
@@ -68,6 +65,16 @@ function openAboutpop() {
 
 function closeAboutpop() {
   aboutPopup.classList.remove("openAbout");
+}
+
+let instrPop = document.getElementById("instructionsPop");
+
+function openInstrPop() {
+  instrPop.classList.add("openInstr");
+}
+
+function closeInstrPop() {
+  instrPop.classList.remove("openInstr");
 }
 
 loginButton.addEventListener("click", (e) => {
