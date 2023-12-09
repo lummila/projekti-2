@@ -106,7 +106,7 @@ class Player(Rotta):
         self.round = 0
 
     # Lentofunktio, siirtää pelaajan paikasta A paikkaan B.
-    def fly(self, destination: str) -> tuple[str, str]:
+    def fly(self, destination: str):
         # Varmista onko lentokohde oikeaan suuntaan.
         if destination not in self.rotta_destination_list:
             self.can_travel = False
@@ -118,12 +118,14 @@ class Player(Rotta):
         # Lennon hinta, 100 € + (etäisyys jaettuna viidellätoista)
         price = math.floor(100 + dist / 15)
 
-        start = self.location
+        if self.money < price:
+            return False
+
         self.location = destination
         self.money -= price
         self.emissions += emissions
 
-        return (start, self.location)
+        return True
 
     def work(self) -> int:
         self.money += 175

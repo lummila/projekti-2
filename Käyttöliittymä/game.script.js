@@ -1,13 +1,20 @@
 "use strict";
 
+// Pelaajan vinkki seuraavaan kohteeseen
 const hint = document.querySelector("#next-hint");
+
+// Elementtilista kaikista lentokenttänappuloista
 const icaoButtons = document.querySelectorAll(".icao-button");
+
+// Pelaajan viimeisin sattuma
 const coincidence = document.querySelector("#given-coincidence");
+
+// Pelaajan raha-, päästö- ja kierrostilanteet
 const money = document.querySelector("#money");
 const emissions = document.querySelector("#emissions");
 const round = document.querySelector("#round");
 
-// GAME INITIALIZATION AND UPDATING
+// PELILOGIIKAN KÄSITTELY
 const gameLogic = {
   async fetchInfo() {
     try {
