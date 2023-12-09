@@ -48,6 +48,15 @@ const handleCredentials = {
   },
 };
 
+loginButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  handleCredentials.login();
+});
+registerButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  handleCredentials.register();
+});
+
 function hideFunction() {
   const pass = document.getElementById("query-pass");
   if (pass.type === "password") {
@@ -69,12 +78,3 @@ function openAboutpop() {
 function closeAboutpop() {
   aboutPopup.classList.remove("openAbout");
 }
-
-loginButton.addEventListener("click", (e) => {
-  e.preventDefault();
-  handleCredentials.login();
-});
-registerButton.addEventListener("click", (e) => {
-  e.preventDefault();
-  handleCredentials.register();
-});
