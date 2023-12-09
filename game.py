@@ -129,23 +129,29 @@ class Player(Rotta):
         self.money += 175
         return self.money
 
-    def update(self, fly: bool) -> dict:
+    def update(self, fly: bool, work: bool) -> dict:
         # Tapahtuuko sattuma, eli lennetäänkö?
         if fly:
             event = self.coincidence(self.can_travel)
         else:
-            # Jos pelaaja ei koe sattumaa, hän työskentelee.
-            self.work()
             event = "Nothing of note has happened."
+
+        if work:
+            self.work()
+
+        # Listataan pelaajalle mahdolliset lentokohteet
+        destinations = self.possible_locations(self.location, self.can_travel)
+        destinations_dict = {}
+        for i in range(len(destinations)):
+            destinations_dict[destinations[i]] = self.airport_info(destinations[i])
+
         # Luodaan sanakirja pelaajan tämänhetkisistä tiedoista
         return {
             "name": self.name,
             "money": self.money,
             "location": self.location,
             "emissions": self.emissions,
-            "possible_destinations": self.possible_locations(
-                self.location, self.can_travel
-            ),
+            "possible_destinations": destinations_dict,
             "hint": self.hint(),
             "round": self.round,
             "coincidence": event,
