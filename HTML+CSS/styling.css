@@ -132,9 +132,9 @@ html, body {
     position: absolute;
     height: 100%;
     width: 100%;
-    top: 50%;
+    top: 0;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(0.1);
     text-align: center;
     visibility: hidden;
     transition: transform 0.4s, top 0.4s;
@@ -172,9 +172,9 @@ html, body {
     position: absolute;
     height: 100%;
     width: 100%;
-    top: 50%;
+    top: 0;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(0.1);
     text-align: center;
     visibility: hidden;
     transition: transform 0.4s, top 0.4s;
@@ -252,8 +252,7 @@ html, body {
 
 .logSubmit {
     display: flex;
-    margin: auto;
-    margin-top: 1rem;
+    margin: 1rem auto auto;
     font-family: inherit;
 }
 
@@ -281,7 +280,7 @@ html, body {
 }
 
 .exitBtn button {
-    border: 1.5px solid #392E3E;
+    border: 2px solid #392E3E;
     border-radius: 4px;
     scale: 200%;
     box-shadow: 1px 1px 1px 1px #392E3E;
