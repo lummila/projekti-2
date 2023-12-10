@@ -48,15 +48,6 @@ const handleCredentials = {
   },
 };
 
-loginButton.addEventListener("click", (e) => {
-  e.preventDefault();
-  handleCredentials.login();
-});
-registerButton.addEventListener("click", (e) => {
-  e.preventDefault();
-  handleCredentials.register();
-});
-
 function hideFunction() {
   const pass = document.getElementById("query-pass");
   if (pass.type === "password") {
@@ -71,10 +62,29 @@ function hideFunction() {
 
 let aboutPopup = document.getElementById("aboutPop");
 
-function openAboutpop() {
+function openAboutPop() {
   aboutPopup.classList.add("openAbout");
 }
 
-function closeAboutpop() {
+function closeAboutPop() {
   aboutPopup.classList.remove("openAbout");
 }
+
+let instrPop = document.getElementById('instructionsPop');
+
+function openInstrPop() {
+  instrPop.classList.add('openInstr');
+}
+
+function closeInstrPop() {
+  instrPop.classList.remove('openInstr');
+}
+
+loginButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  handleCredentials.login();
+});
+registerButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  handleCredentials.register();
+});

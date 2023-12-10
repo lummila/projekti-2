@@ -63,18 +63,7 @@ def register():
         output = {"ERROR": "Register failed"}
         status_code = 400
     else:
-        output = {
-            "name": pelaaja.name,
-            "money": pelaaja.money,
-            "location": pelaaja.location,
-            "emissions": pelaaja.emissions,
-            "possible_destinations": pelaaja.possible_locations(
-                pelaaja.location, pelaaja.can_travel
-            ),
-            "hint": pelaaja.hint(),
-            "round": pelaaja.round,
-            "coincidence": "Nothing of note has happened.",
-        }
+        output = pelaaja.update(False, False)
         status_code = 200
 
     output_json = json.dumps(output)
