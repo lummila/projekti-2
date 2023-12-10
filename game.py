@@ -79,10 +79,6 @@ class Rotta(Sql):
                 self.rotta_destination_list[port], self.rotta_destination_list[port + 1]
             )
 
-            # Jos Sql.flight() tuottaa virheen, printataan konsoliin virhetila. Pitäisi olla mahdoton, jos peli toimii muuten normaalisti.
-            if coordinates == -1 or emission == 0:
-                print("Error in Rotta.__init__() emissions")
-
             # Lisätään joka kierroksella yhden lennon emissiot kokonaismäärään.
             self.rotta_emissions += emission * 115
 

@@ -105,6 +105,7 @@ def fly():
     return Response(output_json, 200, mimetype="application/json")
 
 
+# /work
 @app.route("/work")
 def work():
     # Ilman globalia pelaaja on funktion sisäinen muuttuja johon ei pääse sen ulkopuolelta.
@@ -119,6 +120,7 @@ def work():
     return Response(output, 200, mimetype="application/json")
 
 
+# /gameover
 @app.route("/gameover")
 def game_over():
     # Ilman globalia pelaaja on funktion sisäinen muuttuja johon ei pääse sen ulkopuolelta.
@@ -130,6 +132,38 @@ def game_over():
     # Viedään käyttäjälle kaikki tiedot ja uusi pistemäärä
     output = pelaaja.update(False)
     output["final_score"] = final_score
+
+    output_json = json.dumps(output)
+
+    return Response(output_json, 200, mimetype="application/json")
+
+
+# /highscore?personal=_
+@app.route("/highscore")
+def high_score():
+    # Omat jos personal=yes
+    personal_score = True if request.args.get("personal") == "yes" else False
+
+    # Ilman globalia pelaaja on funktion sisäinen muuttuja johon ei pääse sen ulkopuolelta.
+    global pelaaja
+
+    output = {}
+    if personal_score:
+        scores = pelaaja.personal_high_score(pelaaja.name)
+
+        if len(scores) > 0:
+            for entry in scores:
+                output[entry[0]] = entry[1]
+        else:
+            output = {pelaaja.name: "No high scores available"}
+    else:
+        scores = pelaaja.high_score()
+
+        if len(scores) > 0:
+            for entry in scores:
+                output[entry[0]] = entry[1]
+        else:
+            output = {"Empty": "No high scores available"}
 
     output_json = json.dumps(output)
 
