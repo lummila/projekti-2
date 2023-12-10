@@ -133,15 +133,12 @@ class Player(Rotta):
         self.round += 1
         return self.money
 
-    def update(self, fly: bool, work: bool) -> dict:
+    def update(self, fly: bool) -> dict:
         # Tapahtuuko sattuma, eli lennetäänkö?
         if fly:
             event = self.coincidence(self.can_travel)
         else:
             event = "Nothing of note has happened."
-
-        if work:
-            self.work()
 
         # Listataan pelaajalle mahdolliset lentokohteet
         destinations = self.possible_locations(self.location, self.can_travel)
@@ -235,3 +232,15 @@ class Player(Rotta):
 
     def rotta(self):
         return [self.rotta_destination_list, self.rotta_emissions]
+
+    def game_over(self):
+        final_score = math.floor(
+            self.money * (10 - self.round if self.round < 10 else 1)
+            + (self.rotta_emissions - self.emissions) / 1000
+        )
+
+        result = self.push_score(self.name, final_score if final_score > 0 else 0)
+        if result:
+            return final_score
+        else:
+            return False
