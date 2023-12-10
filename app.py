@@ -101,6 +101,16 @@ def fly():
     else:
         output = pelaaja.update(True)
 
+    # HUOM JOS PELAAJAN SIJAINTI ON SAMA KUIN ROTAN VIIMEINEN = PELI ON VOITETTU!
+    if pelaaja.location == pelaaja.rotta_destination_list[4]:
+        # Pelaajan pisteet tallennetaan tietokantaan ja pisteet palautetaan
+        final_score = pelaaja.game_over()
+
+        # Viedään käyttäjälle kaikki tiedot ja uusi pistemäärä
+        output = pelaaja.update(False)
+        # Käyttöliittymän tulee tarkistaa, sisältääkö json final_scoren
+        output["final_score"] = final_score
+
     output_json = json.dumps(output)
     return Response(output_json, 200, mimetype="application/json")
 
@@ -120,24 +130,6 @@ def work():
     return Response(output, 200, mimetype="application/json")
 
 
-# /gameover
-@app.route("/gameover")
-def game_over():
-    # Ilman globalia pelaaja on funktion sisäinen muuttuja johon ei pääse sen ulkopuolelta.
-    global pelaaja
-
-    # Pelaajan pisteet tallennetaan tietokantaan ja pisteet palautetaan
-    final_score = pelaaja.game_over()
-
-    # Viedään käyttäjälle kaikki tiedot ja uusi pistemäärä
-    output = pelaaja.update(False)
-    output["final_score"] = final_score
-
-    output_json = json.dumps(output)
-
-    return Response(output_json, 200, mimetype="application/json")
-
-
 # /highscore?personal=_
 @app.route("/highscore")
 def high_score():
@@ -151,6 +143,7 @@ def high_score():
     if personal_score:
         scores = pelaaja.personal_high_score(pelaaja.name)
 
+        # Jos omia huippupisteitä on olemassa
         if len(scores) > 0:
             for entry in scores:
                 output[entry[0]] = entry[1]
@@ -159,6 +152,7 @@ def high_score():
     else:
         scores = pelaaja.high_score()
 
+        # Jos huippupisteitä on olemassa
         if len(scores) > 0:
             for entry in scores:
                 output[entry[0]] = entry[1]
