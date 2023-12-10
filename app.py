@@ -58,9 +58,12 @@ def register():
     # Nollataan pelaajan tiedot ennen uutta kirjautumista sekaannuksen välttämiseksi.
     pelaaja = Player()
     # Register palauttaa True, jos rekisteröityminen onnistui
-    pelaaja.register(username, pin_code)
+    register = pelaaja.register(username, pin_code)
 
-    output = pelaaja.update(False)
+    if not register:
+        output = {"ERROR": "Username already exists."}
+    else:
+        output = pelaaja.update(False)
 
     output_json = json.dumps(output)
     return Response(output_json, 200, mimetype="application/json")

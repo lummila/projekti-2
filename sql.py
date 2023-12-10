@@ -63,6 +63,14 @@ class Sql:
         # Kaikki käyttäjätunnukset ovat isolla kirjoitettuja
         username = username.upper()
 
+        # Ensin tarkistetaan, onko tietokannassa jo samanniminen käyttäjä
+        sql = f"select screen_name from game where screen_name = '{username}'"
+        result = self.pull(sql)
+
+        if result:
+            return False
+
+        # Jos ei ole, tallennetaan uuden käyttäjän tiedot tietokantaan
         sql = "insert into game (location, screen_name, passcode) "
         sql += f"values ('EFHK', '{username}', {int(pin_code)})"
 
