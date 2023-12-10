@@ -50,6 +50,11 @@ html, body {
     display: flex;
     justify-content: center;
     margin: auto 3rem;
+    visibility: visible;
+}
+
+.btnContainerV {
+    visibility: hidden;
 }
 
 

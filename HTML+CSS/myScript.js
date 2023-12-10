@@ -88,3 +88,5 @@ registerButton.addEventListener("click", (e) => {
   e.preventDefault();
   handleCredentials.register();
 });
+
+
