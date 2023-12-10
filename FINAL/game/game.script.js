@@ -73,11 +73,14 @@ const helpButton = document.querySelector("#help-button");
 const helpSpan = document.getElementsByClassName("close")[0];
 
 helpButton.onclick = function () {
+  // Piilotetaan kartta
   mapElement.classList.add("hidden");
   helpModal.style.display = "block";
 };
 
 helpSpan.onclick = function () {
+  // Näytetään kartta taas
+  mapElement.classList.remove("hidden");
   helpModal.style.display = "none";
 };
 
@@ -92,11 +95,14 @@ const instructionButton = document.querySelector("#instruction-button");
 const instructionSpan = document.getElementsByClassName("close")[1];
 
 instructionButton.onclick = function () {
+  // Piilotetaan kartta
   mapElement.classList.add("hidden");
   instructionModal.style.display = "block";
 };
 
 instructionSpan.onclick = function () {
+  // Näytetään kartta taas
+  mapElement.classList.remove("hidden");
   instructionModal.style.display = "none";
 };
 
@@ -111,11 +117,14 @@ const workButton = document.querySelector("#work-button");
 const workSpan = document.getElementsByClassName("close")[2];
 
 workButton.onclick = function () {
+  // Piilotetaan kartta
   mapElement.classList.add("hidden");
   workModal.style.display = "block";
 };
 
 workSpan.onclick = function () {
+  // Näytetään kartta taas
+  mapElement.classList.remove("hidden");
   workModal.style.display = "none";
 };
 

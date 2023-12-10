@@ -146,7 +146,7 @@ class Player(Rotta):
         return {
             "name": self.name,
             "money": self.money,
-            "location": self.location,
+            "location": self.airport_info(self.location),
             "emissions": self.emissions,
             "possible_destinations": destinations_dict,
             "hint": self.hint(),

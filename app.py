@@ -35,7 +35,7 @@ def login():
     # Login palauttaa True jos kirjautuminen onnistuu
     login = pelaaja.login(username, pin_code)
     if not login:
-        output = {"ERROR": "Login failed"}
+        output = {"ERROR": "No user information found. Please check you credentials."}
         status_code = 400
     else:
         output = pelaaja.update(False)
@@ -58,16 +58,12 @@ def register():
     # Nollataan pelaajan tiedot ennen uutta kirjautumista sekaannuksen välttämiseksi.
     pelaaja = Player()
     # Register palauttaa True, jos rekisteröityminen onnistui
-    register = pelaaja.register(username, pin_code)
-    if not register:
-        output = {"ERROR": "Register failed"}
-        status_code = 400
-    else:
-        output = pelaaja.update(False)
-        status_code = 200
+    pelaaja.register(username, pin_code)
+
+    output = pelaaja.update(False)
 
     output_json = json.dumps(output)
-    return Response(output_json, status_code, mimetype="application/json")
+    return Response(output_json, 200, mimetype="application/json")
 
 
 # /update?fly=_&work=_
