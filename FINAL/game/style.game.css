@@ -25,13 +25,16 @@ main {
   flex-wrap: wrap;
 }
 
+.hover:hover {
+  color: #dbeae7;
+}
+
 .page-header {
   background-color: #392e3e;
   color: #dbeae7;
   display: flex;
   justify-content: space-between;
   border-radius: 6px;
-  box-shadow: #392e3e 3px 3px 10px;
 }
 
 .title {
@@ -65,7 +68,6 @@ ul {
 .hint {
   background-color: #85c094;
   border-radius: 6px;
-  box-shadow: #392e3e 3px 3px 10px;
   border: 1px solid #392e3e;
   color: #392e3e;
   padding: 1rem;
@@ -77,7 +79,7 @@ ul {
   padding: 1rem;
   text-decoration: none;
   border-radius: 6px;
-  box-shadow: #392e3e 3px 3px 10px;
+  box-shadow: #392e3e 3px 3px 5px;
   border: 1px solid #392e3e;
   font-family: "Georgia Pro Black", verdana, sans-serif;
   display: flex;
@@ -97,7 +99,7 @@ ul {
 
 .work {
   border-radius: 6px;
-  box-shadow: #392e3e 3px 3px 10px;
+  box-shadow: #392e3e 3px 3px 5px;
   border: 1px solid #392e3e;
   color: #392e3e;
   background-color: #b164b4;
@@ -111,7 +113,6 @@ ul {
 
 .coincidence {
   border-radius: 6px;
-  box-shadow: #392e3e 3px 3px 10px;
   border: 1px solid #392e3e;
   color: #392e3e;
   background-color: #b164b4;
@@ -121,7 +122,6 @@ ul {
 .status {
   background-color: #85c094;
   border-radius: 6px;
-  box-shadow: #392e3e 3px 3px 10px;
   border: 1px solid #392e3e;
   color: #392e3e;
 }
@@ -145,7 +145,7 @@ ul {
 
 .map {
   border-radius: 6px;
-  box-shadow: #392e3e 3px 3px 10px;
+  box-shadow: #392e3e 3px 3px 5px;
   border: 1px solid #392e3e;
 }
 
@@ -219,7 +219,6 @@ ul {
   background-color: #dbeae7;
   border: 1px solid #392e3e;
   border-radius: 6px;
-  box-shadow: #392e3e 3px 3px 10px;
   padding-left: 1rem;
 }
 
@@ -237,24 +236,21 @@ ul {
   background-color: #b164b4;
   padding: 0.5rem;
   border-radius: 6px;
-  border: 1px solid #dbeae7;
-  box-shadow: #392e3e 3px 3px 10px;
+  border: 1px solid #392e3e;
 }
 
 .burger-button {
   background-color: #e99b5d;
   padding: 0.5rem;
   border-radius: 6px;
-  border: 1px solid #dbeae7;
-  box-shadow: #392e3e 3px 3px 10px;
+  border: 1px solid #392e3e;
 }
 
 .exchange-button {
   background-color: #357654;
   padding: 0.5rem;
   border-radius: 6px;
-  border: 1px solid #dbeae7;
-  box-shadow: #392e3e 3px 3px 10px;
+  border: 1px solid #392e3e;
 }
 
 #select-flower,
@@ -265,6 +261,13 @@ ul {
   color: #dbeae7;
   padding: 1rem;
   border-radius: 6px;
+  box-shadow: #392e3e 3px 3px 5px;
+}
+
+#select-flower:hover,
+#select-burger:hover,
+#select-exchange:hover {
+  color: #85c094;
 }
 
 .selected-job {
