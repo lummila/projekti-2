@@ -68,9 +68,53 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
 
 // MODALS
 
+const personalModal = document.querySelector("#personal-modal");
+const personalButton = document.querySelector("#personal-button");
+const personalSpan = document.getElementsByClassName("close")[0];
+
+personalButton.onclick = function () {
+  // Piilotetaan kartta
+  mapElement.classList.add("hidden");
+  personalModal.style.display = "block";
+};
+
+personalSpan.onclick = function () {
+  // Näytetään kartta taas
+  mapElement.classList.remove("hidden");
+  personalModal.style.display = "none";
+};
+
+window.onclick = function (event) {
+  if (event.target == personalModal) {
+    personalModal.style.display = "none";
+  }
+};
+
+const leaderModal = document.querySelector("#leader-modal");
+const leaderButton = document.querySelector("#leader-button");
+const leaderSpan = document.getElementsByClassName("close")[1];
+
+leaderButton.onclick = function () {
+  // Piilotetaan kartta
+  mapElement.classList.add("hidden");
+  leaderModal.style.display = "block";
+};
+
+leaderSpan.onclick = function () {
+  // Näytetään kartta taas
+  mapElement.classList.remove("hidden");
+  leaderModal.style.display = "none";
+};
+
+window.onclick = function (event) {
+  if (event.target == leaderModal) {
+    leaderModal.style.display = "none";
+  }
+};
+
 const helpModal = document.querySelector("#help-modal");
 const helpButton = document.querySelector("#help-button");
-const helpSpan = document.getElementsByClassName("close")[0];
+const helpSpan = document.getElementsByClassName("close")[3];
 
 helpButton.onclick = function () {
   // Piilotetaan kartta
@@ -92,7 +136,7 @@ window.onclick = function (event) {
 
 const instructionModal = document.querySelector("#instruction-modal");
 const instructionButton = document.querySelector("#instruction-button");
-const instructionSpan = document.getElementsByClassName("close")[1];
+const instructionSpan = document.getElementsByClassName("close")[2];
 
 instructionButton.onclick = function () {
   // Piilotetaan kartta
@@ -114,7 +158,7 @@ window.onclick = function (event) {
 
 const workModal = document.querySelector("#work-modal");
 const workButton = document.querySelector("#work-button");
-const workSpan = document.getElementsByClassName("close")[2];
+const workSpan = document.getElementsByClassName("close")[4];
 
 workButton.onclick = function () {
   // Piilotetaan kartta
