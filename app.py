@@ -155,7 +155,7 @@ def high_score():
             for entry in scores:
                 output[entry[0]] = entry[1]
         else:
-            output = {pelaaja.name: "No high scores available"}
+            output = {"Empty": "No high scores available"}
     else:
         scores = pelaaja.high_score()
 
