@@ -16,12 +16,15 @@
           name="username"
           type="text"
           placeholder="Username"
+          maxlength="10"
         />
         <input
           id="query-pass"
           name="password"
           type="password"
           placeholder="4-digit PIN"
+          minlength="4"
+          maxlength="4"
         />
         <div class="hidePass">
           <input type="checkbox" onclick="hideFunction()" />Show password

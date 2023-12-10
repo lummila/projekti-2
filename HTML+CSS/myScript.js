@@ -1,23 +1,20 @@
 "use strict";
 
-// Käyttäjän kirjoittama nimi ja PIN-koodi
 const usernameInput = document.querySelector("#query-user");
 const passwordInput = document.querySelector("#query-pass");
 
-// Kirjautumis- ja rekisteröitymisnappulat
 const loginButton = document.querySelector(".login");
 const registerButton = document.querySelector(".register");
 
 const handleCredentials = {
-  // Lyhyt funktio, joka palauttaa tekstikenttien arvot eli kirjatut tekstit
   input() {
     return [usernameInput.value, passwordInput.value];
   },
-  // fetch-osoite, action on joko login tai register, ja muut tulevat käyttäjän tekstistä
+
   server(action, username, password) {
     return `http://127.0.0.1:5000/${action}?username=${username}&password=${password}`;
   },
-  // Kirjautumisfunktio, joka palauttaa pelaajan tiedot
+
   async login() {
     try {
       const [username, password] = this.input();
@@ -33,7 +30,7 @@ const handleCredentials = {
       return error;
     }
   },
-  // Sama kuin ylempi, mutta rekisteröityminen
+
   async register() {
     try {
       const [username, password] = this.input();
@@ -51,17 +48,6 @@ const handleCredentials = {
   },
 };
 
-// EventListenerit kirjautumiselle ja rekisteröitymiselle.
-// preventDefault estää HTML-osoitteen muuttumisen, JS käsittelee pyynnön
-loginButton.addEventListener("click", (e) => {
-  e.preventDefault();
-  handleCredentials.login();
-});
-registerButton.addEventListener("click", (e) => {
-  e.preventDefault();
-  handleCredentials.register();
-});
-
 function hideFunction() {
   const pass = document.getElementById("query-pass");
   if (pass.type === "password") {
@@ -76,10 +62,29 @@ function hideFunction() {
 
 let aboutPopup = document.getElementById("aboutPop");
 
-function openAboutpop() {
+function openAboutPop() {
   aboutPopup.classList.add("openAbout");
 }
 
-function closeAboutpop() {
+function closeAboutPop() {
   aboutPopup.classList.remove("openAbout");
 }
+
+let instrPop = document.getElementById('instructionsPop');
+
+function openInstrPop() {
+  instrPop.classList.add('openInstr');
+}
+
+function closeInstrPop() {
+  instrPop.classList.remove('openInstr');
+}
+
+loginButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  handleCredentials.login();
+});
+registerButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  handleCredentials.register();
+});

@@ -8,13 +8,16 @@ ourColorPalette {
 }
 
 @font-face {
-    font-family: sans-serif;
+    font-family: "Georgia Pro Black", verdana, sans-serif;
 }
 
 html, body {
     max-width: 100%;
     overflow-x: hidden;
     overflow-y: hidden;
+    height: auto;
+    width: auto;
+    font-family: inherit;
 }
 
 /*
@@ -22,6 +25,11 @@ html, body {
 ---------------STYLING OF THE START-PAGE WILL BE HERE------------------------------
 -----------------------------------------------------------------------------------
  */
+
+.startBody {
+    background-color: #DBEAE7;
+}
+
 .start_container {
     max-width: 100%;
     max-height: 100%;
@@ -30,37 +38,57 @@ html, body {
     margin: auto;
     text-align: center;
     background-color: #DBEAE7;
+    padding-bottom: 5rem;
 }
 
 .btn_container {
-    padding-top: 5rem;
     padding-bottom: 15rem;
     display: flex;
-    margin: auto;
-    justify-content: space-evenly;
+    justify-content: center;
+    margin: auto 3rem;
 }
 
-.btn_container button {
-    border-radius: 8px;
-    border-color: #392E3E;
-    border-width: .4rem;
+.pad {
+    border-bottom: 4px solid #392E3E;
+    border-top: 4px solid #392E3E;
+    border-left: 4px solid #392E3E
+
+}
+
+.quest {
+    border-top: 4px solid #392E3E;
+    border-bottom: 4px solid #392E3E
+}
+
+.hands {
+    border-top: 4px solid #392E3E;
+    border-right: 4px solid #392E3E;
+    border-bottom: 4px solid #392E3E;
+}
+
+.btn_container img {
+    border-radius: 4px;
     background-color: #392E3E;
-    transition: transform 0.4s ease-in-out;
+    transition: transform .3s ease-in-out;
 }
 
-.btn_container button:hover {
-    transform: scale(105%);
-    opacity: 60%;
+.btn_container img:hover {
+    transform: scale(102%) translateY(-15px);
+    opacity: 80%;
+    box-shadow: 3px 3px 10px #B164B4;
 }
+
+.startHeader {
+    padding-bottom: 2rem;
+}
+
 
 .start_container h1 {
-    font-family: Verdana;
     font-size: 62px;
     color: #392E3E;
 }
 
 .btn_container img {
-    padding: 0;
     background-size: cover;
 }
 
@@ -82,20 +110,20 @@ html, body {
     width: 100%;
     height: 4rem;
     margin: auto;
-    background-color: #E99B5D;
+    background-color: #392E3E;
     display: flex;
     justify-content: flex-end;
-    padding-top: 1rem;
-    border: 5px solid #392E3E;
     border-radius: 5px;
+    padding-top: 1rem;
+    box-shadow: 3px 3px 6px #B164B4;
 }
 
 .navBar button {
-    width: 100px;
-    height: 50px;
+    display: flex;
     margin-right: 2rem;
-    border-radius: 30px;
-    font-family: inherit;
+    justify-content: center;
+    scale: 110%;
+    margin-top: .5rem;
 }
 
 .aboutPop {
@@ -104,9 +132,9 @@ html, body {
     position: absolute;
     height: 100%;
     width: 100%;
-    top: 50%;
+    top: 0;
     left: 50%;
-    transform: translate(-50%, -50%) scale (0.1);
+    transform: translate(-50%, -50%) scale(0.1);
     text-align: center;
     visibility: hidden;
     transition: transform 0.4s, top 0.4s;
@@ -138,6 +166,46 @@ html, body {
 }
 
 
+.instructionsPop {
+    background-color: #DBEAE7;
+    border-radius: 6px;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.1);
+    text-align: center;
+    visibility: hidden;
+    transition: transform 0.4s, top 0.4s;
+}
+
+.instructionsPop p {
+    width: 80%;
+    margin: auto;
+    padding-top: 3rem;
+    font-family: "Georgia Pro Black", verdana, sans-serif;
+    padding-bottom: 5rem;
+}
+
+.instructionsPop h2 {
+    padding-top: 4rem;
+    font-family: "Georgia Pro Black", verdana, sans-serif
+}
+
+.instructionsPop button {
+    border-radius: 3px;
+    scale: 200%;
+    background-color: #DBEAE7;
+    display: flex;
+    margin: auto;
+}
+
+.openInstr {
+    visibility: visible;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1);
+}
 
 
 /*
@@ -158,6 +226,8 @@ html, body {
     background-color: #DBEAE7;
     border: 15px outset #85C094;
     border-radius: 8px;
+    font-family: inherit;
+    box-shadow: 3px 3px 7px 3px #B164B4;
 }
 
 .loginBody {
@@ -170,6 +240,7 @@ html, body {
     margin: auto;
     border: 3px solid #357654;
     border-radius: 15px;
+
 }
 
 .loginNav2 {
@@ -181,8 +252,8 @@ html, body {
 
 .logSubmit {
     display: flex;
-    margin: auto;
-    margin-top: 1rem;
+    margin: 1rem auto auto;
+    font-family: inherit;
 }
 
 .logSubmit input {
@@ -203,13 +274,13 @@ html, body {
 
 .exitBtn {
     display: flex;
-    margin auto;
+    margin: auto;
     padding-bottom: 4rem;
     justify-content: center;
 }
 
 .exitBtn button {
-    border: 1.5px solid #392E3E;
+    border: 2px solid #392E3E;
     border-radius: 4px;
     scale: 200%;
     box-shadow: 1px 1px 1px 1px #392E3E;
@@ -220,76 +291,78 @@ html, body {
     margin: auto;
     justify-content: center;
     padding: 1.5rem;
+    font-family: inherit;
 }
 
 /* BUTTONS HERE */
 /* CSS */
 /* credit: https://getcssscan.com/css-buttons-examples */
 .button-85 {
-  padding: 0.6em 2em;
-  border: none;
-  outline: none;
-  color: rgb(255, 255, 255);
-  background: #111;
-  cursor: pointer;
-  position: relative;
-  z-index: 0;
-  border-radius: 10px;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
+    padding: 0.6em 2em;
+    border: none;
+    outline: none;
+    color: #DBEAE7;
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
 }
 
+
 .button-85:before {
-  content: "";
-  background: linear-gradient(
-    45deg,
-    #ff0000,
-    #ff7300,
-    #fffb00,
-    #48ff00,
-    #00ffd5,
-    #002bff,
-    #7a00ff,
-    #ff00c8,
-    #ff0000
-  );
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  background-size: 400%;
-  z-index: -1;
-  filter: blur(5px);
-  -webkit-filter: blur(5px);
-  width: calc(100% + 4px);
-  height: calc(100% + 4px);
-  animation: glowing-button-85 20s linear infinite;
-  transition: opacity 0.3s ease-in-out;
-  border-radius: 10px;
+    content: "";
+    background: linear-gradient(
+            45deg,
+            #ff0000,
+            #ff7300,
+            #fffb00,
+            #48ff00,
+            #00ffd5,
+            #002bff,
+            #7a00ff,
+            #ff00c8,
+            #ff0000
+    );
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing-button-85 20s linear infinite;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 10px;
 }
 
 @keyframes glowing-button-85 {
-  0% {
-    background-position: 0 0;
-  }
-  50% {
-    background-position: 400% 0;
-  }
-  100% {
-    background-position: 0 0;
-  }
+    0% {
+        background-position: 0 0;
+    }
+    50% {
+        background-position: 400% 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
 }
 
 .button-85:after {
-  z-index: -1;
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: #222;
-  left: 0;
-  top: 0;
-  border-radius: 10px;
+    z-index: -1;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #222;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
 }
 
 /*--------------------------------------------------*/
@@ -297,59 +370,59 @@ html, body {
 
 /* CSS BUTTONS*/
 .button-61 {
-  align-items: center;
-  appearance: none;
-  border-radius: 4px;
-  border-style: none;
-  box-shadow: rgba(0, 0, 0, .2) 0 3px 1px -2px,rgba(0, 0, 0, .14) 0 2px 2px 0,rgba(0, 0, 0, .12) 0 1px 5px 0;
-  box-sizing: border-box;
-  color: #fff;
-  cursor: pointer;
-  display: inline-flex;
-  font-family: Roboto,sans-serif;
-  font-size: .875rem;
-  font-weight: 500;
-  height: 36px;
-  justify-content: center;
-  letter-spacing: .0892857em;
-  line-height: normal;
-  min-width: 64px;
-  outline: none;
-  overflow: visible;
-  padding: 0 16px;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1);
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  vertical-align: middle;
-  will-change: transform,opacity;
+    align-items: center;
+    appearance: none;
+    border-radius: 4px;
+    border-style: none;
+    box-shadow: rgba(0, 0, 0, .2) 0 3px 1px -2px, rgba(0, 0, 0, .14) 0 2px 2px 0, rgba(0, 0, 0, .12) 0 1px 5px 0;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: Roboto, sans-serif;
+    font-size: .875rem;
+    font-weight: 500;
+    height: 36px;
+    justify-content: center;
+    letter-spacing: .0892857em;
+    line-height: normal;
+    min-width: 64px;
+    outline: none;
+    overflow: visible;
+    padding: 0 16px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    will-change: transform, opacity;
 }
 
 .button-61:hover {
-  box-shadow: rgba(0, 0, 0, .2) 0 2px 4px -1px, rgba(0, 0, 0, .14) 0 4px 5px 0, rgba(0, 0, 0, .12) 0 1px 10px 0;
+    box-shadow: rgba(0, 0, 0, .2) 0 2px 4px -1px, rgba(0, 0, 0, .14) 0 4px 5px 0, rgba(0, 0, 0, .12) 0 1px 10px 0;
 }
 
 .button-61:disabled {
-  background-color: rgba(0, 0, 0, .12);
-  box-shadow: rgba(0, 0, 0, .2) 0 0 0 0, rgba(0, 0, 0, .14) 0 0 0 0, rgba(0, 0, 0, .12) 0 0 0 0;
-  color: rgba(0, 0, 0, .37);
-  cursor: default;
-  pointer-events: none;
+    background-color: rgba(0, 0, 0, .12);
+    box-shadow: rgba(0, 0, 0, .2) 0 0 0 0, rgba(0, 0, 0, .14) 0 0 0 0, rgba(0, 0, 0, .12) 0 0 0 0;
+    color: rgba(0, 0, 0, .37);
+    cursor: default;
+    pointer-events: none;
 }
 
 .button-61:not(:disabled) {
-  background-color: #6200ee;
+    background-color: #6200ee;
 }
 
 .button-61:focus {
-  box-shadow: rgba(0, 0, 0, .2) 0 2px 4px -1px, rgba(0, 0, 0, .14) 0 4px 5px 0, rgba(0, 0, 0, .12) 0 1px 10px 0;
+    box-shadow: rgba(0, 0, 0, .2) 0 2px 4px -1px, rgba(0, 0, 0, .14) 0 4px 5px 0, rgba(0, 0, 0, .12) 0 1px 10px 0;
 }
 
 .button-61:active {
-  box-shadow: rgba(0, 0, 0, .2) 0 5px 5px -3px, rgba(0, 0, 0, .14) 0 8px 10px 1px, rgba(0, 0, 0, .12) 0 3px 14px 2px;
-  background: #A46BF5;
+    box-shadow: rgba(0, 0, 0, .2) 0 5px 5px -3px, rgba(0, 0, 0, .14) 0 8px 10px 1px, rgba(0, 0, 0, .12) 0 3px 14px 2px;
+    background: #A46BF5;
 }
