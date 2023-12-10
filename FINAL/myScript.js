@@ -89,4 +89,18 @@ registerButton.addEventListener("click", (e) => {
   handleCredentials.register();
 });
 
+function checkPin() {
+    // Get the PIN input value
+    let pin = document.getElementById('query-pass').value;
+
+    // Define a regular expression to match exactly 4 digits
+    const checker = /^\d{4}$/;
+
+    // Test if the PIN matches the regular expression and does not contain letters
+    if (checker.test(pin) && !/[a-zA-Z]/.test(pin)) {
+        alert("Valid PIN: " + pin);
+    } else {
+        alert("Invalid PIN. Try again.");
+    }
+}
 

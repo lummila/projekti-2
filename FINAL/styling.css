@@ -42,7 +42,7 @@ html, body {
     background-color: #392E3E;
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
-    padding-bottom: 5rem;
+    padding-bottom: 30rem;
 }
 
 .btn_container {
@@ -153,7 +153,7 @@ html, body {
 }
 
 .aboutPop p {
-    width: 60%;
+    width: 40%;
     margin: auto;
     padding-top: 10rem;
     font-family: "Georgia Pro Black", verdana, sans-serif;
@@ -195,7 +195,7 @@ html, body {
 .instructionsPop p {
     width: 80%;
     margin: auto;
-    padding-top: 3rem;
+    padding-top: 5rem;
     font-family: "Georgia Pro Black", verdana, sans-serif;
     padding-bottom: 5rem;
 }
