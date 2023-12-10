@@ -58,6 +58,7 @@ const gameLogic = {
 gameLogic.update();
 
 const map = L.map("map").setView([60.31, 24.94], 13);
+const mapElement = document.querySelector("#map");
 
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 16,
@@ -72,6 +73,7 @@ const helpButton = document.querySelector("#help-button");
 const helpSpan = document.getElementsByClassName("close")[0];
 
 helpButton.onclick = function () {
+  mapElement.classList.add("hidden");
   helpModal.style.display = "block";
 };
 
@@ -90,6 +92,7 @@ const instructionButton = document.querySelector("#instruction-button");
 const instructionSpan = document.getElementsByClassName("close")[1];
 
 instructionButton.onclick = function () {
+  mapElement.classList.add("hidden");
   instructionModal.style.display = "block";
 };
 
@@ -108,6 +111,7 @@ const workButton = document.querySelector("#work-button");
 const workSpan = document.getElementsByClassName("close")[2];
 
 workButton.onclick = function () {
+  mapElement.classList.add("hidden");
   workModal.style.display = "block";
 };
 
@@ -123,20 +127,21 @@ window.onclick = function (event) {
 
 // SELECT WORK PLACE
 
-const flowerShop = document.querySelector('#select-flower');
-const burgerPlace = document.querySelector('#select-burger');
-const exchange = document.querySelector('#select-exchange');
-const selectedJob = document.querySelector('#selected');
-flowerShop.addEventListener('click', function(event){
-  selectedJob.innerHTML = 'You decided to go and wrap some flowers! Here is some cash to keep you going!'
+const flowerShop = document.querySelector("#select-flower");
+const burgerPlace = document.querySelector("#select-burger");
+const exchange = document.querySelector("#select-exchange");
+const selectedJob = document.querySelector("#selected");
+flowerShop.addEventListener("click", function (event) {
+  selectedJob.innerHTML =
+    "You decided to go and wrap some flowers! Here is some cash to keep you going!";
 });
 
-burgerPlace.addEventListener('click', function (event) {
-  selectedJob.innerHTML = 'You decided to work at the Burger Shack! Have some money!'
+burgerPlace.addEventListener("click", function (event) {
+  selectedJob.innerHTML =
+    "You decided to work at the Burger Shack! Have some money!";
 });
 
-exchange.addEventListener('click', function (event) {
-  selectedJob.innerHTML = 'We will trust that you count the bills correctly! Take some money!'
+exchange.addEventListener("click", function (event) {
+  selectedJob.innerHTML =
+    "We will trust that you count the bills correctly! Take some money!";
 });
-
-

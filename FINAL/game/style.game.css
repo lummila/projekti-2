@@ -1,0 +1,276 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #dbeae7;
+  font-family: "Georgia Pro Black", verdana, sans-serif;
+}
+
+main {
+  display: flex;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.container {
+  height: auto;
+  width: 100%;
+  background-color: #dbeae7;
+}
+
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.page-header {
+  background-color: #392e3e;
+  color: #dbeae7;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 6px;
+  box-shadow: #392e3e 3px 3px 10px;
+}
+
+.title {
+  font-size: 40px;
+  padding-left: 6rem;
+}
+
+nav {
+  display: flex;
+  padding-right: 3rem;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.buttons {
+  padding: 1rem;
+}
+
+.button {
+  color: #392e3e;
+  padding: 1rem;
+  display: block;
+  background-color: #e99b5d;
+  text-decoration: none;
+  border-radius: 6px;
+  border: 1px solid #dbeae7;
+}
+
+.hint {
+  background-color: #85c094;
+  border-radius: 6px;
+  box-shadow: #392e3e 3px 3px 10px;
+  border: 1px solid #392e3e;
+  color: #392e3e;
+  padding: 1rem;
+}
+
+.icao-button {
+  background-color: #e99b5d;
+  color: #392e3e;
+  padding: 1rem;
+  text-decoration: none;
+  border-radius: 6px;
+  box-shadow: #392e3e 3px 3px 10px;
+  border: 1px solid #392e3e;
+  font-family: "Georgia Pro Black", verdana, sans-serif;
+  display: flex;
+}
+
+.box {
+  box-sizing: border-box;
+  display: flex;
+  padding: 1rem;
+  justify-content: space-between;
+}
+
+.work-button {
+  display: inline-flex;
+  box-sizing: border-box;
+}
+
+.work {
+  border-radius: 6px;
+  box-shadow: #392e3e 3px 3px 10px;
+  border: 1px solid #392e3e;
+  color: #392e3e;
+  background-color: #b164b4;
+  text-align: center;
+  font-family: "Georgia Pro Black", verdana, sans-serif;
+}
+
+.coincidence-box {
+  padding: 1rem;
+}
+
+.coincidence {
+  border-radius: 6px;
+  box-shadow: #392e3e 3px 3px 10px;
+  border: 1px solid #392e3e;
+  color: #392e3e;
+  background-color: #b164b4;
+  padding: 1rem;
+}
+
+.status {
+  background-color: #85c094;
+  border-radius: 6px;
+  box-shadow: #392e3e 3px 3px 10px;
+  border: 1px solid #392e3e;
+  color: #392e3e;
+}
+
+#player-status {
+  border-spacing: 0;
+}
+
+#player-status td {
+  padding: 1rem 2rem 1rem 2rem;
+}
+
+#player-status td:first-child,
+#player-status td:nth-child(2) {
+  border-right: 1px solid #392e3e;
+}
+
+.game-map {
+  padding: 1.5rem;
+}
+
+.map {
+  border-radius: 6px;
+  box-shadow: #392e3e 3px 3px 10px;
+  border: 1px solid #392e3e;
+}
+
+#map {
+  border-radius: 6px;
+  width: 650px;
+  height: 600px;
+  /* visibility: hidden; */
+}
+
+.elements {
+  padding: 1.5rem;
+  width: 50%;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+}
+
+/* MODALS */
+
+.help-modal,
+.instruction-modal,
+.work-modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: #dbeae7;
+}
+
+.work-modal {
+  margin-top: 9%;
+}
+
+.help-content,
+.instruction-content,
+.work-content {
+  background-color: #85c094;
+  margin: auto;
+  padding: 2rem;
+  border: 1px solid #392e3e;
+  border-radius: 6px;
+  width: 80%;
+  color: #392e3e;
+  line-height: 2rem;
+}
+
+.close {
+  font-size: 28px;
+  font-weight: bold;
+  color: #392e3e;
+}
+
+.close:hover,
+.close:focus {
+  color: #392e3e;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* WORK BUTTONS */
+
+.stay-to-work {
+  padding-left: 1rem;
+}
+
+.work-box {
+  background-color: #dbeae7;
+  border: 1px solid #392e3e;
+  border-radius: 6px;
+  box-shadow: #392e3e 3px 3px 10px;
+  padding-left: 1rem;
+}
+
+.work-header {
+  color: #392e3e;
+  box-sizing: border-box;
+}
+
+.work-buttons {
+  display: flex;
+  padding: 1rem;
+}
+
+.flower-button {
+  background-color: #b164b4;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #dbeae7;
+  box-shadow: #392e3e 3px 3px 10px;
+}
+
+.burger-button {
+  background-color: #e99b5d;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #dbeae7;
+  box-shadow: #392e3e 3px 3px 10px;
+}
+
+.exchange-button {
+  background-color: #357654;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #dbeae7;
+  box-shadow: #392e3e 3px 3px 10px;
+}
+
+#select-flower,
+#select-burger,
+#select-exchange {
+  background-color: #392e3e;
+  border: 1px solid #dbeae7;
+  color: #dbeae7;
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+.selected-job {
+  background-color: #392e3e;
+  color: #dbeae7;
+  border-radius: 6px;
+  border: 1px solid #dbeae7;
+  padding: 1rem;
+}
