@@ -44,7 +44,7 @@ main {
 
 nav {
   display: flex;
-  padding-right: 3rem;
+  padding-right: 2rem;
 }
 
 ul {
@@ -52,7 +52,7 @@ ul {
 }
 
 .buttons {
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
 .button {
@@ -153,7 +153,6 @@ ul {
   border-radius: 6px;
   width: 650px;
   height: 600px;
-  /* visibility: hidden; */
 }
 
 .elements {
@@ -165,6 +164,8 @@ ul {
 
 /* MODALS */
 
+.personal-modal,
+.leader-modal,
 .help-modal,
 .instruction-modal,
 .work-modal {
@@ -180,9 +181,11 @@ ul {
 }
 
 .work-modal {
-  margin-top: 9%;
+  margin-top: 8%;
 }
 
+.personal-content,
+.leader-content,
 .help-content,
 .instruction-content,
 .work-content {
@@ -212,7 +215,7 @@ ul {
 /* WORK BUTTONS */
 
 .stay-to-work {
-  padding-left: 1rem;
+  padding-left: 0.5rem;
 }
 
 .work-box {
