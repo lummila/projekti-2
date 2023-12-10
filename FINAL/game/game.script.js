@@ -14,6 +14,16 @@ const money = document.querySelector("#money");
 const emissions = document.querySelector("#emissions");
 const round = document.querySelector("#round");
 
+const map = L.map("map").setView([60.31, 24.94], 13);
+const mapElement = document.querySelector("#map");
+
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  maxZoom: 16,
+  attribution:
+      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+}).addTo(map);
+
+
 // PELILOGIIKAN KÄSITTELY
 const gameLogic = {
   async fetchInfo() {
@@ -44,6 +54,14 @@ const gameLogic = {
       // e on ICAO-nappula ja siihen syötetään teksti airports-objektista icao-koodin avulla
       e.textContent = `${airports[icao].airport_name}, ${airports[icao].country_name}`;
     });
+    //kartta
+    const marker = L.marker(data.location.coordinates).addTo(map);
+    //possible flight locations
+    console.log(airports);
+    for (const i in airports){
+      console.log(airports[i].coordinates);
+      const dot = L.marker(airports[i].coordinates).addTo(map);
+    }
     // Sattumateksti
     coincidence.textContent = data.coincidence;
     // Rahamäärä
@@ -52,19 +70,12 @@ const gameLogic = {
     emissions.textContent = data.emissions;
     // Kierros
     round.textContent = data.round;
+    //kartta
   },
 };
 
 gameLogic.update();
 
-const map = L.map("map").setView([60.31, 24.94], 13);
-const mapElement = document.querySelector("#map");
-
-L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  maxZoom: 16,
-  attribution:
-    '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-}).addTo(map);
 
 // MODALS
 
