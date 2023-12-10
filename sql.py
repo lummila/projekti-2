@@ -26,23 +26,15 @@ class Sql:
     # Tiedon tuonti tietokannasta
     def pull(self, sql_code: str):
         cursor = self.connect.cursor()
-
         cursor.execute(sql_code)
         result = cursor.fetchall()
-
-        if not result:
-            print("-ERROR in sql_pull-")
 
         return result
 
     # Tiedon vienti tietokantaan
     def push(self, sql_code: str) -> int:
         cursor = self.connect.cursor()
-
         cursor.execute(sql_code)
-
-        if cursor.rowcount <= 0:
-            print("-ERROR in sql_push-")
 
         return cursor.rowcount
 
@@ -58,13 +50,15 @@ class Sql:
         # Vedetään käyttäjätiedot tietokannasta.
         result = self.pull(sql)
 
-        # Haku ei palauta tuloksia.
+        # Jos haku ei palauta tuloksia.
         if not result:
             return False
         else:
+            # SQL-luokalla ei ole name-ominaisuutta, tämä on Player-luokalla, jonka se muokkaa
             self.name = username
             return True
 
+    # Rekisteröi uuden käyttäjän tietokantaan
     def register(self, username: str, pin_code: str):
         # Kaikki käyttäjätunnukset ovat isolla kirjoitettuja
         username = username.upper()
@@ -73,14 +67,13 @@ class Sql:
         sql += f"values ('EFHK', '{username}', {int(pin_code)})"
 
         # Pusketaan uuden käyttäjän tiedot tietokantaan.
-        result = self.push(sql)
+        self.push(sql)
 
-        if result <= 0:
-            return False
-        else:
-            self.name = username
-            return True
+        # SQL-luokalla ei ole name-ominaisuutta, tämä on Player-luokalla, jonka se muokkaa
+        self.name = username
+        return True
 
+    # Palauttaa listan, missä listat alku- ja kohdemaan koordinaateista ja lennon pituuden kilometreissä
     def flight(self, start: str, end: str):
         # Lista, jossa kahdet koordinaatit
         coord_list = []
@@ -94,39 +87,54 @@ class Sql:
             # SQL:n käyttö
             result = self.pull(sql)
 
-            if not result:
-                print("ERROR calculating coordinates in sql_coordinate_query()")
-                return [-1, 0]
-            else:
-                # Lisätään locationList-listaan tuple, jossa koordinaatit
-                coord_list.append(result[0])
+            # Lisätään locationList-listaan tuple, jossa koordinaatit
+            coord_list.append(result[0])
 
         kilometers = distance.distance(coord_list[0], coord_list[1]).km
-        # Palautetaan koordinaatit ja lennon matka kilometreinä
+        # Palautetaan koordinaatit ja lennon matka kilometreissä
         return coord_list, kilometers
 
+    # Vetää hint-pöydästä pyydetyn kohteen vinkin
     def pull_hint(self, icao: str):
         sql = "select hint from hints "
         sql += f"where ident = '{icao}'"
 
         result = self.pull(sql)
-        if not result:
-            print("ERROR fetching hint in pull_hint()")
-            return -1
-        else:
-            return result[0][0]
+        # Palauttaa vinkin tekstinä
+        return result[0][0]
 
+    # Palauttaa lentokentän nimen, maan nimen ja listan, missä koordinaatit
     def airport_info(self, icao: str):
         sql = "select airport.name, country.name, latitude_deg, longitude_deg from airport, country "
         sql += f"where airport.ident = '{icao}' and airport.iso_country = country.iso_country;"
 
         result = self.pull(sql)
-        if not result:
-            print("ERROR fetching airport information in airport_info()")
-            return -1
 
         return {
             "airport_name": result[0][0],
             "country_name": result[0][1],
             "coordinates": [result[0][2], result[0][3]],
         }
+
+    # Palauttaa max. 10 riviä huippupisteitä laskevassa järjestyksessä
+    def high_score(self):
+        sql = "select screen_name, points from goal order by points desc limit 10;"
+
+        # Lista tupleja, joissa nimi ja pisteet
+        return self.pull(sql)
+
+    # Palauttaa max. 10 riviä huippupisteitä pyydetyltä pelaajalta laskevassa järjestyksessä
+    def personal_high_score(self, username: str):
+        sql = "select screen_name, points from goal "
+        sql += f"where screen_name = '{username}' order by points desc limit 10;"
+
+        # Lista tupleja, joissa nimi ja pisteet
+        return self.pull(sql)
+
+    # Pelin päätyttyä pelaajan huippupisteet tallennetaan, palauttaa True
+    def push_score(self, username: str, points: int):
+        sql = "insert into goal (screen_name, points) "
+        sql += f"values ('{username}', {points});"
+
+        self.push(sql)
+        return True

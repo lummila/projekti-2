@@ -20,7 +20,7 @@ def stringify_credentials(username, password):
 
 # Kirjautuminen
 # /login?username=_&password=_
-@app.route("/login")  # type: ignore
+@app.route("/login")
 def login():
     # Käyttäjänimi ja PIN-koodi otetaan ehdoista
     username, pin_code = stringify_credentials(
@@ -38,7 +38,7 @@ def login():
         output = {"ERROR": "Login failed"}
         status_code = 400
     else:
-        output = pelaaja.update(False, False)
+        output = pelaaja.update(False)
         status_code = 200
 
     output_json = json.dumps(output)
@@ -46,7 +46,7 @@ def login():
 
 
 # /register?username=_&password=_
-@app.route("/register")  # type: ignore
+@app.route("/register")
 def register():
     username, pin_code = stringify_credentials(
         request.args.get("username"), request.args.get("password")
@@ -63,7 +63,7 @@ def register():
         output = {"ERROR": "Register failed"}
         status_code = 400
     else:
-        output = pelaaja.update(False, False)
+        output = pelaaja.update(False)
         status_code = 200
 
     output_json = json.dumps(output)
@@ -71,26 +71,24 @@ def register():
 
 
 # /update?fly=_&work=_
-@app.route("/update")  # type: ignore
+@app.route("/update")
 def update():
     args = request.args
 
     # Määrittää, lentääkö pelaaja, eli generoidaanko sattuma
     flying = True if str(args.get("fly")) == "yes" else False
-    # Määrittää, työskenteleekö pelaaja
-    working = True if str(args.get("work")) == "yes" else False
 
     # Ilman globalia pelaaja on funktion sisäinen muuttuja johon ei pääse sen ulkopuolelta.
     global pelaaja
 
     # flying ja working ovat ehtoja, joilla päivitetään pelaajan tiedot.
-    output = json.dumps(pelaaja.update(flying, working))
+    output = json.dumps(pelaaja.update(flying))
 
     return Response(output, 200, mimetype="application/json")
 
 
 # /fly?dest=_
-@app.route("/fly")  # type: ignore
+@app.route("/fly")
 def fly():
     destination = str(request.args.get("dest"))
 
@@ -101,9 +99,68 @@ def fly():
     if not flight:
         output = {"ERROR": "Not enough money"}
     else:
-        output = pelaaja.update(True, False)
+        output = pelaaja.update(True)
+
+    # HUOM JOS PELAAJAN SIJAINTI ON SAMA KUIN ROTAN VIIMEINEN = PELI ON VOITETTU!
+    if pelaaja.location == pelaaja.rotta_destination_list[4]:
+        # Pelaajan pisteet tallennetaan tietokantaan ja pisteet palautetaan
+        final_score = pelaaja.game_over()
+
+        # Viedään käyttäjälle kaikki tiedot ja uusi pistemäärä
+        output = pelaaja.update(False)
+        # Käyttöliittymän tulee tarkistaa, sisältääkö json final_scoren
+        output["final_score"] = final_score
 
     output_json = json.dumps(output)
+    return Response(output_json, 200, mimetype="application/json")
+
+
+# /work
+@app.route("/work")
+def work():
+    # Ilman globalia pelaaja on funktion sisäinen muuttuja johon ei pääse sen ulkopuolelta.
+    global pelaaja
+
+    # Pelaaja saa 175 € tililleen
+    pelaaja.work()
+
+    # Päivitetään pelaajan tiedot käyttöliittymään (False = ei sattumaa)
+    output = json.dumps(pelaaja.update(False))
+
+    return Response(output, 200, mimetype="application/json")
+
+
+# /highscore?personal=_
+@app.route("/highscore")
+def high_score():
+    # Omat jos personal=yes
+    personal_score = True if request.args.get("personal") == "yes" else False
+
+    # Ilman globalia pelaaja on funktion sisäinen muuttuja johon ei pääse sen ulkopuolelta.
+    global pelaaja
+
+    output = {}
+    if personal_score:
+        scores = pelaaja.personal_high_score(pelaaja.name)
+
+        # Jos omia huippupisteitä on olemassa
+        if len(scores) > 0:
+            for entry in scores:
+                output[entry[0]] = entry[1]
+        else:
+            output = {"Empty": "No high scores available"}
+    else:
+        scores = pelaaja.high_score()
+
+        # Jos huippupisteitä on olemassa
+        if len(scores) > 0:
+            for entry in scores:
+                output[entry[0]] = entry[1]
+        else:
+            output = {"Empty": "No high scores available"}
+
+    output_json = json.dumps(output)
+
     return Response(output_json, 200, mimetype="application/json")
 
 

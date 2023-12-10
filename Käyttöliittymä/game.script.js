@@ -19,9 +19,7 @@ const gameLogic = {
   async fetchInfo() {
     try {
       //
-      const response = await fetch(
-        "http://127.0.0.1:5000/update?fly=no&work=no"
-      );
+      const response = await fetch("http://127.0.0.1:5000/update?fly=no");
       const response_json = await response.json();
 
       return response_json;
@@ -67,7 +65,7 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 }).addTo(map);
 
-// TUTORIAL MODAL
+// MODALS
 
 const helpModal = document.querySelector("#help-modal");
 const helpButton = document.querySelector("#help-button");
@@ -122,3 +120,23 @@ window.onclick = function (event) {
     workModal.style.display = "none";
   }
 };
+
+// SELECT WORK PLACE
+
+const flowerShop = document.querySelector('#select-flower');
+const burgerPlace = document.querySelector('#select-burger');
+const exchange = document.querySelector('#select-exchange');
+const selectedJob = document.querySelector('#selected');
+flowerShop.addEventListener('click', function(event){
+  selectedJob.innerHTML = 'You decided to go and wrap some flowers! Here is some cash to keep you going!'
+});
+
+burgerPlace.addEventListener('click', function (event) {
+  selectedJob.innerHTML = 'You decided to work at the Burger Shack! Have some money!'
+});
+
+exchange.addEventListener('click', function (event) {
+  selectedJob.innerHTML = 'We will trust that you count the bills correctly! Take some money!'
+});
+
+
