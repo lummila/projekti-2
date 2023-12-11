@@ -109,6 +109,23 @@ const gameLogic = {
     }
   },
 
+  async work() {
+    try {
+      const response = await fetch("http://127.0.0.1:5000/work");
+
+      if (!response.ok) {
+        console.error("Error in work()", response.error);
+      }
+
+      const response_json = response.json();
+      playerData.money = response_json.money;
+
+      this.update();
+    } catch (error) {
+      console.error("Error in fetching work()", error);
+    }
+  },
+
   async highScore(personal) {
     try {
       if (personal) {
@@ -308,6 +325,9 @@ addMoney.addEventListener("click", function (event) {
 flowerShop.addEventListener("click", function (event) {
   jobElement.classList.remove("hidden");
   continueGame.classList.remove("hidden");
+
+  gameLogic.work();
+
   selectedJob.innerHTML =
     "You decided to go and wrap some flowers! Here is some cash to keep you going! <br> Click CONTINUE to save and add 175€ to your account.";
 });
@@ -315,6 +335,9 @@ flowerShop.addEventListener("click", function (event) {
 burgerPlace.addEventListener("click", function (event) {
   jobElement.classList.remove("hidden");
   continueGame.classList.remove("hidden");
+
+  gameLogic.work();
+
   selectedJob.innerHTML =
     "You decided to work at the Burger Shack! Have some money! <br> Click CONTINUE to save and add 175€ to your account.";
 });
@@ -322,6 +345,9 @@ burgerPlace.addEventListener("click", function (event) {
 exchange.addEventListener("click", function (event) {
   jobElement.classList.remove("hidden");
   continueGame.classList.remove("hidden");
+
+  gameLogic.work();
+
   selectedJob.innerHTML =
     "We will trust that you count the bills correctly! Take some money! <br> Click CONTINUE to save and add 175€ to your account.";
 });
