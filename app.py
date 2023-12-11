@@ -69,19 +69,14 @@ def register():
     return Response(output_json, 200, mimetype="application/json")
 
 
-# /update?fly=_&work=_
+# /update
 @app.route("/update")
 def update():
-    args = request.args
-
-    # Määrittää, lentääkö pelaaja, eli generoidaanko sattuma
-    flying = True if str(args.get("fly")) == "yes" else False
-
     # Ilman globalia pelaaja on funktion sisäinen muuttuja johon ei pääse sen ulkopuolelta.
     global pelaaja
 
     # flying ja working ovat ehtoja, joilla päivitetään pelaajan tiedot.
-    output = json.dumps(pelaaja.update(flying))
+    output = json.dumps(pelaaja.update(False))
 
     return Response(output, 200, mimetype="application/json")
 
