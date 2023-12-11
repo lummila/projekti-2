@@ -1,6 +1,6 @@
 import random
 import math
-from geopy import distance
+
 
 from sql import Sql
 
@@ -108,11 +108,12 @@ class Player(Rotta):
             self.can_travel = False
 
         # Laske lennon emissiot ja hinta
-        coordinates, emissions = self.flight(self.location, destination)
-        # Lennon pituus kilometreissä
-        dist = distance.distance(coordinates).km
+        coordinates, kilometers = self.flight(self.location, destination)
+
         # Lennon hinta, 100 € + (etäisyys jaettuna viidellätoista)
-        price = math.floor(100 + dist / 15)
+        price = math.floor(100 + kilometers / 15)
+        # Lennon emissiot kiloina, kilometrit * 115 / 1000
+        emissions = math.floor(price * 115 / 1000)
 
         if self.money < price:
             return False
@@ -138,6 +139,7 @@ class Player(Rotta):
 
         # Listataan pelaajalle mahdolliset lentokohteet
         destinations = self.possible_locations(self.location, self.can_travel)
+        print(destinations)
         destinations_dict = {}
         for i in range(len(destinations)):
             destinations_dict[destinations[i]] = self.airport_info(destinations[i])
@@ -158,7 +160,8 @@ class Player(Rotta):
     # mahdollisista lentokohteista.
     def possible_locations(self, current: str, can_travel: bool) -> list:
         # Pelaajan tämänhetkinen sijainti numerona
-        cur = [i for i in range(len(DEST_ICAO)) if DEST_ICAO[i] == self.location][0]
+        cur = DEST_ICAO.index(current)
+        print(cur)
 
         # - Testataan pelaajan DEST_ICAO-arvonumeroa, jotta
         # voidaan asettaa oikeat rajat palautettavalle
@@ -167,19 +170,20 @@ class Player(Rotta):
         # joka määrittää sen, voiko pelaaja edetä
         # seuraavan tason lentokentille, ja tämä funktio
         # testaa sen.
-        if cur < 10:
-            (s, e) = (1, 6)
-        elif 10 < cur < 20:
-            (s, e) = (6, 11) if can_travel else (1, 6)
-        elif 20 < cur < 30:
-            (s, e) = (11, 16) if can_travel else (6, 11)
-        elif 30 < cur < 40:
-            (s, e) = (16, 21) if can_travel else (11, 16)
-        else:
-            (s, e) = (21, 26) if can_travel else (16, 21)
+        (s, e) = (1, 5)
+        if cur < 1:
+            (s, e) = (1, 5)
+        elif 1 <= cur <= 5:
+            (s, e) = (6, 10) if can_travel else (1, 5)
+        elif 6 <= cur <= 10:
+            (s, e) = (11, 15) if can_travel else (6, 10)
+        elif 11 <= cur <= 15:
+            (s, e) = (16, 20) if can_travel else (11, 15)
+        elif 16 <= cur:
+            (s, e) = (21, 25) if can_travel else (16, 20)
         # Rakennetaan viiden sijainnin lista, jonka
         # indeksit edellinen ehtopuu on määrittänyt.
-        return [DEST_ICAO[x] for x in range(s, e)]
+        return [DEST_ICAO[x] for x in range(s, e + 1)]
 
     def hint(self):
         # Vedä tietokannasta vinkki seuraavaa kohdetta varten

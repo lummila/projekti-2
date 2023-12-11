@@ -158,5 +158,17 @@ def high_score():
     return Response(output_json, 200, mimetype="application/json")
 
 
+@app.route("/reset")
+def reset():
+    # Ilman globalia pelaaja on funktion sisäinen muuttuja johon ei pääse sen ulkopuolelta.
+    global pelaaja
+
+    pelaaja = Player()
+
+    output = json.dumps({"Success": "Game reset"})
+
+    return Response(output, 200, mimetype="application/json")
+
+
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=5000, use_reloader=True)
