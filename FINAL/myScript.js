@@ -22,12 +22,11 @@ const handleCredentials = {
       const response = await fetch(this.server("login", username, password));
 
       const response_json = await response.json();
-      console.log(response_json);
 
-      return response_json;
+      return true;
     } catch (error) {
       console.error("Login failed", error);
-      return error;
+      return false;
     }
   },
 
@@ -40,10 +39,10 @@ const handleCredentials = {
       const response_json = await response.json();
       console.log(response_json);
 
-      return response_json;
+      return true;
     } catch (error) {
       console.error("Registering failed", error);
-      return error;
+      return false;
     }
   },
 };
@@ -110,9 +109,53 @@ function checkPin() {
     }
 }
 
+function switchToGame() {
+  let text = document.getElementById("messageBox");
+  if (checkPin) {
+    if (handleCredentials.login) {
+      window.location.href = "game/index.html";
+    } else {
+      text.innerHTML = "Check credentials";
+    }
+  } else {
+    text.innerText = "Invalid credentials";
+  }
+}
 
-function toGame() {
-  window.location.href = "index.html"
+
+function registerAccount() {
+  let text = document.getElementById("messageBox");
+  if (handleCredentials.register) {
+    text.innerText = "Account created";
+    text.style.color = "red";
+    text.style.fontWeight = "900";
+  } else {
+
+  }
+}
+
+
+
+function loginToGame() {
+  // Get the PIN and username input values
+    let pin = document.getElementById('query-pass').value;
+    let username = document.getElementById('query-user').value;
+    let text = document.getElementById("messageBox");
+
+    // Match PIN to exactly 4 digits (no letters)
+    const pinChecker = /^\d{4}$/;
+
+    // Check if PIN and username are not empty, otherwise all gucci
+    if (pin.trim() !== "" && username.trim() !== "" && pinChecker.test(pin) && !/[a-zA-Z]/.test(pin)) {
+        text.innerText = "Credentials valid";
+        text.style.color = "green";
+        text.style.fontWeight = "900";
+
+    } else {
+        text.innerText = "Invalid credentials.";
+        text.style.color = "red";
+        text.style.fontWeight = "900";
+    }
 }
 
 
@@ -120,13 +163,13 @@ function toGame() {
 
 
 
+/*
+-----------------------------------------------------------------------------------
+--------------------- TÄSTÄ ETEENPÄIN KOPIOITU SCRIPT.JS:STÄ-----------------------
+-----------------------------------------------------------------------------------
+*/
 
 
-
-
-
-
-// TÄSTÄ ETEENPÄIN KOPIOITU SCRIPT.JS:STÄ
 
 // Käyttäjän kirjoittama nimi ja PIN-koodi
 const user_username = document.querySelector("#query-user");
@@ -137,11 +180,14 @@ const login = document.querySelector(".login");
 const register = document.querySelector(".register");
 
 // Debug-tarkoituksiin
-const result = document.querySelector(".result");
+//  const result = document.querySelector(".result");
+
 
 function update(person) {
   document.querySelector("#next-hint").innerHTML = person.hint;
 }
+
+
 async function getLogin() {
   try {
     const username = user_username.value;
@@ -160,6 +206,7 @@ async function getLogin() {
   }
 }
 
+
 async function doLogin(event) {
   const response = await getLogin();
   if (response) {
@@ -171,6 +218,7 @@ async function doLogin(event) {
     return response.error;
   }
 }
+
 
 async function getRegister() {
   try {
@@ -189,6 +237,7 @@ async function getRegister() {
   }
 }
 
+
 async function doRegister() {
   const response = await getRegister();
   if (response) {
@@ -202,6 +251,7 @@ async function doRegister() {
   }
 }
 
+
 //Ongelma: miten saada formien molemmat arvot syötettyä samalle reitille?
 // const username = document.querySelector("form")[0].addEventListener("submit");
 
@@ -210,6 +260,7 @@ login.addEventListener("click", (e) => {
   result.textContent = user_username.value + " " + user_password.value;
   const promise = doLogin();
 });
+
 
 register.addEventListener("click", (e) => {
   e.preventDefault();
