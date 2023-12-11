@@ -2,6 +2,8 @@
 
 // TÄRKEÄ: PELAAJAN TIEDOT OVAT LOKAALISTI TALLENNETTU TÄHÄN!
 let playerData = {};
+// ONKO PELI OHI, JA NÄYTETÄÄNKÖ VOITTOIKKUNA?
+let gameOver = false;
 
 // Pelaajan vinkki seuraavaan kohteeseen
 const hint = document.querySelector("#next-hint");
@@ -134,6 +136,11 @@ const gameLogic = {
     // Päivitys alkaa siitä, että otetaan lokaalisti tallennettu pelaajan tieto käyttöön
     const data = playerData;
 
+    if (playerData.final_score) {
+      gameOver = true;
+      console.log("PELI OHI");
+    }
+
     // Tyhjennetään kartta täpistä
     markers.clearLayers();
     // HUOM VAIN KEHITYSTARPEISIIN
@@ -165,7 +172,6 @@ const gameLogic = {
       dot.setIcon(greenIcon);
       dot.bindPopup(airports[i].airport_name);
       markers.addLayer(dot);
-    }
       //markerArray += airports[i].coordinates;
       //Tekee näppäimen, joka aukeaa klikkauksella
       const popupContent = document.createElement("div");

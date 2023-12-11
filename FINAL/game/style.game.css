@@ -312,8 +312,7 @@ ul {
 #select-flower:hover,
 #select-burger:hover,
 #select-exchange:hover,
-#continue:hover {
-#continue:hover,
+#continue:hover #continue:hover,
 #exit:hover {
   color: #85c094;
 }
