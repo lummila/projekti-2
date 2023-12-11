@@ -20,19 +20,19 @@ const handleCredentials = {
       const [username, password] = this.input();
       console.log(username, password)
 
-      const response = await fetch(this.server("login", username, password));
+      const response = await fetch(this.server("login", username.toUpperCase(), password));
 
       const response_json = await response.json();
       console.log(response_json)
 
       if (response.ok) {
         // Assuming the server returns a JSON object with a 'statusCode' property
-        if (response_json.statusCode === 200) {
+        if (response.status === 200) {
           // Login successful
           return true;
         } else {
           // Login failed, server returned a non-200 status code
-          console.error("Login failed:", response_json.statusCode);
+          console.error("Login failed:", response.status);
           return false;
         }
       } else {
@@ -55,20 +55,19 @@ const handleCredentials = {
       const response_json = await response.json();
       console.log(response_json);
 
-      if (response.ok) {
+      if (response_json.ok) {
         // Assuming the server returns a JSON object with a 'statusCode' property
-        if (responseJson.statusCode === 200) {
+        if (response.status === 200) {
           // Registration successful
           return true;
         } else {
           // Registration failed, server returned a non-200 status code
-          console.error("Registration failed with status code:",
-              responseJson.statusCode);
+          console.error("Registration failed:", response.status);
           return false;
         }
       } else {
         // Non-success HTTP status code
-        console.error("Registration failed with status code:", response.status);
+        console.error("Registration failed:", response.status);
         return false;
       }
     } catch (error) {
@@ -322,6 +321,5 @@ register.addEventListener("click", (e) => {
   result.textContent = user_username.value + " " + user_password.value;
   const promise = doRegister();
 });
+
 */
-
-
