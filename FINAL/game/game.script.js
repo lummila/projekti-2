@@ -14,8 +14,12 @@ const money = document.querySelector("#money");
 const emissions = document.querySelector("#emissions");
 const round = document.querySelector("#round");
 
-const map = L.map("map").setView([60.31, 24.94], 13);
+const map = L.map("map").setView([60.31, 24.94], 7);
 const mapElement = document.querySelector("#map");
+
+// icons
+const blueIcon = L.divIcon({ className: 'blue-icon' });
+const greenIcon = L.divIcon({ className: 'green-icon' });
 
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 16,
@@ -54,14 +58,24 @@ const gameLogic = {
       // e on ICAO-nappula ja siihen syötetään teksti airports-objektista icao-koodin avulla
       e.textContent = `${airports[icao].airport_name}, ${airports[icao].country_name}`;
     });
-    //kartta
+    //karttapiste nykyiselle sijainnille
     const marker = L.marker(data.location.coordinates).addTo(map);
-    //possible flight locations
+    marker.bindPopup(`You are here: ${data.location.airport_name}`);
+    marker.openPopup();
+    marker.setIcon(blueIcon);
     console.log(airports);
+    let markerArray = [];
+    //for looppi joka laittaa täpät kartalle
     for (const i in airports){
       console.log(airports[i].coordinates);
       const dot = L.marker(airports[i].coordinates).addTo(map);
+      dot.setIcon(greenIcon);
+      markerArray += airports[i].coordinates;
     }
+    console.log(markerArray);
+    //const group = new L.featureGroup(markerArray);
+    //map.fitBounds([markerArray]);
+    //map.setView(new L.LatLng(airports[i].coordinates), 20);
     // Sattumateksti
     coincidence.textContent = data.coincidence;
     // Rahamäärä

@@ -1,7 +1,7 @@
 "use strict";
 
 // Pelaajan vinkki seuraavaan kohteeseen
-const hint = document.querySelector("#next-hint");
+const tutorial = document.querySelector("#next-hint");
 
 // Elementtilista kaikista lentokenttänappuloista
 const icaoButtons = document.querySelectorAll(".icao-button");
@@ -13,6 +13,9 @@ const coincidence = document.querySelector("#given-coincidence");
 const money = document.querySelector("#money");
 const emissions = document.querySelector("#emissions");
 const round = document.querySelector("#round");
+
+// Työnappula, toimii myös jatka-nappulana
+const workButton = document.querySelector("#work-button");
 
 const map = L.map("map").setView([60.31, 24.94], 5);
 const mapElement = document.querySelector("#map");
@@ -28,7 +31,7 @@ const gameLogic = {
   async fetchInfo() {
     try {
       //
-      const response = await fetch("http://127.0.0.1:5000/update?fly=no");
+      const response = await fetch("http://127.0.0.1:5000/update");
       const response_json = await response.json();
 
       return response_json;
@@ -41,8 +44,6 @@ const gameLogic = {
     const data = await this.fetchInfo();
     // HUOM VAIN KEHITYSTARPEISIIN
     console.log(data);
-    // Vinkkiteksti
-    hint.textContent = data.hint;
 
     // Otetaan tuodusta datasta vain lentokentät-osio
     const airports = data.possible_destinations;
@@ -75,102 +76,27 @@ const gameLogic = {
     emissions.textContent = data.emissions;
     // Kierros
     round.textContent = data.round;
-    //kartta
   },
 };
 
 gameLogic.update();
 
-// MODALS
+tutorial.textContent =
+  "Welcome to the tutorial! In this short interactive demonstration, you will learn to play Velkajahti. We will go over flying to different countries and working for money. Press the 'Work' button to continue.";
 
-const personalModal = document.querySelector("#personal-modal");
-const personalButton = document.querySelector("#personal-button");
-const personalSpan = document.getElementsByClassName("close")[0];
+workButton.addEventListener;
+"click",
+  () => {
+    let pressed = false;
 
-personalButton.onclick = function () {
-  // Piilotetaan kartta
-  mapElement.classList.add("hidden");
-  personalModal.style.display = "block";
-};
+    return () => {
+      if (!pressed) {
+        !pressed;
+      }
+    };
+  };
 
-personalSpan.onclick = function () {
-  // Näytetään kartta taas
-  mapElement.classList.remove("hidden");
-  personalModal.style.display = "none";
-};
-
-window.onclick = function (event) {
-  if (event.target == personalModal) {
-    personalModal.style.display = "none";
-  }
-};
-
-const leaderModal = document.querySelector("#leader-modal");
-const leaderButton = document.querySelector("#leader-button");
-const leaderSpan = document.getElementsByClassName("close")[1];
-
-leaderButton.onclick = function () {
-  // Piilotetaan kartta
-  mapElement.classList.add("hidden");
-  leaderModal.style.display = "block";
-};
-
-leaderSpan.onclick = function () {
-  // Näytetään kartta taas
-  mapElement.classList.remove("hidden");
-  leaderModal.style.display = "none";
-};
-
-window.onclick = function (event) {
-  if (event.target == leaderModal) {
-    leaderModal.style.display = "none";
-  }
-};
-
-const helpModal = document.querySelector("#help-modal");
-const helpButton = document.querySelector("#help-button");
-const helpSpan = document.getElementsByClassName("close")[3];
-
-helpButton.onclick = function () {
-  // Piilotetaan kartta
-  mapElement.classList.add("hidden");
-  helpModal.style.display = "block";
-};
-
-helpSpan.onclick = function () {
-  // Näytetään kartta taas
-  mapElement.classList.remove("hidden");
-  helpModal.style.display = "none";
-};
-
-window.onclick = function (event) {
-  if (event.target == helpModal) {
-    helpModal.style.display = "none";
-  }
-};
-
-const instructionModal = document.querySelector("#instruction-modal");
-const instructionButton = document.querySelector("#instruction-button");
-const instructionSpan = document.getElementsByClassName("close")[2];
-
-instructionButton.onclick = function () {
-  // Piilotetaan kartta
-  mapElement.classList.add("hidden");
-  instructionModal.style.display = "block";
-};
-
-instructionSpan.onclick = function () {
-  // Näytetään kartta taas
-  mapElement.classList.remove("hidden");
-  instructionModal.style.display = "none";
-};
-
-window.onclick = function (event) {
-  if (event.target == instructionModal) {
-    instructionModal.style.display = "none";
-  }
-};
-
+/*
 const workModal = document.querySelector("#work-modal");
 const workButton = document.querySelector("#work-button");
 const workSpan = document.getElementsByClassName("close")[4];
@@ -213,3 +139,4 @@ exchange.addEventListener("click", function (event) {
   selectedJob.innerHTML =
     "We will trust that you count the bills correctly! Take some money!";
 });
+*/
