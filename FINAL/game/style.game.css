@@ -78,7 +78,8 @@ ul {
 }
 
 .icao-buttons {
-  max-width: 50%;
+  min-width: 50%;
+  margin-right: 1rem;
 }
 
 .icao-button {
@@ -90,7 +91,9 @@ ul {
   box-shadow: #392e3e 3px 3px 5px;
   border: 1px solid #392e3e;
   font-family: "Georgia Pro Black", verdana, sans-serif;
-  display: flex;
+  display: inline-flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .box {
@@ -296,7 +299,7 @@ ul {
 #select-flower:hover,
 #select-burger:hover,
 #select-exchange:hover,
-#continue:hover{
+#continue:hover {
   color: #85c094;
 }
 
@@ -305,10 +308,10 @@ ul {
 }
 
 .selected-job {
-  background-color: #DBEAE7;
-  color: #392E3E;
+  background-color: #dbeae7;
+  color: #392e3e;
   border-radius: 6px;
-  border: 1px solid #392E3E;
+  border: 1px solid #392e3e;
   padding: 0.5rem 0.5rem 0.5rem 1rem;
 }
 
@@ -350,10 +353,10 @@ ul {
 #your-personal-scores,
 #leader-board-scores {
   border-radius: 6px;
-  border: 1px solid #DBEAE7;
+  border: 1px solid #dbeae7;
   background-color: #b164b4;
   padding: 0.5rem;
-  color: #DBEAE7;
+  color: #dbeae7;
 }
 
 #leader-board-scores {
@@ -365,7 +368,7 @@ ul {
 #leader-board-scores td:first-child,
 #leader-board-scores td:nth-child(2),
 #leader-board-scores td:nth-child(3) {
-  border: 1px solid #392E3E;
+  border: 1px solid #392e3e;
   border-radius: 6px;
   padding: 0.5rem;
 }

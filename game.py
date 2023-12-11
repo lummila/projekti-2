@@ -1,47 +1,16 @@
 import random
 import math
-
-
 from sql import Sql
 
 
-DEST_ICAO = [
-    "EFHK",  # Helsinki
-    "ESSA",  # Ruotsi (HUOM Eka kiekka)
-    "ENGM",  # Norja
-    "EVRA",  # Latvia
-    "EKCH",  # Tanska
-    "EYVI",  # Liettua
-    "EPWA",  # Puola (HUOM Toka kierros)
-    "EDDB",  # Saksa
-    "EHAM",  # Alankomaat
-    "LZIB",  # Slovakia
-    "LKPR",  # Tsekki
-    "LOWW",  # Itävalta (HUOM Kolmas kierros)
-    "LHBP",  # Unkari
-    "EBBR",  # Belgia
-    "LYBE",  # Serbia
-    "LDZA",  # Kroatia
-    "LSZH",  # Sveitsi (HUOM Neljäs kierros)
-    "LIRN",  # Italia
-    "LFPO",  # Ranska
-    "EGLL",  # UK
-    "EIDW",  # Irlanti
-    "LEBL",  # Espanja (HUOM Viides kierros)
-    "LPPT",  # Portugali
-    "GMMX",  # Marokko
-    "HECA",  # Egypti
-    "GCLP",  # Gran Canaria
-]
-
 POS_COINCIDENCES = [
-    "Nice! You found a 100 € bill on the airport floor.\n(100 € will be added to your account)",
-    "You were helpful to a lost elderly. For the kind act he rewarded you with a 50 € bill!\n(50 € will be added to "
+    "Nice! You found a 100€ bill on the airport floor.\n(100€ will be added to your account)",
+    "You were helpful to a lost elderly. For the kind act he rewarded you with a 50€ bill!\n(50€ will be added to "
     "your account)",
-    "Lucky you! The flight company made a mistake with your tickets. You'll be getting 80 € cashback!\n(80 € will be "
+    "Lucky you! The flight company made a mistake with your tickets. You'll be getting 80€ cashback!\n(80€ will be "
     "added to your account)",
-    "There was a free seat at a more eco-friendly airplane!\n(10 kg was removed from your emissions)",
-    "The airplane took a shorter route. Emissions were 10 kg less than expected.\n(10 kg of emissions will be removed)",
+    "There was a free seat at a more eco-friendly airplane!\n(10kg was removed from your emissions)",
+    "The airplane took a shorter route. Emissions were 10kg less than expected.\n(10kg of emissions will be removed)",
     "Nothing of note has happened.",
 ]
 
@@ -57,25 +26,38 @@ NEG_COINCIDENCES = [
     "Nothing of note has happened.",
 ]
 
+# Listat kaikkien kierrosten maista
+# Ruotsi, Norja, Latvia, Tanska ja Liettua
+ROUND_1 = ["ESSA", "ENGM", "EVRA", "EKCH", "EYVI"]
+# Puola, Saksa, Alankomaat, Slovakia, Tsekki
+ROUND_2 = ["EPWA", "EDDB", "EHAM", "LZIB", "LKPR"]
+# Itävalta, Unkari, Belgia, Serbia, Kroatia
+ROUND_3 = ["LOWW", "LHBP", "EBBR", "LYBE", "LDZA"]
+# Sveitsi, Italia, Ranska, UK, Irlanti
+ROUND_4 = ["LSZH", "LIRN", "LFPO", "EGLL", "EIDW"]
+# Espanja, Portugali, Marokko, Egypti, Gran Canaria
+ROUND_5 = ["LEBL", "LPPT", "GMMX", "HECA", "GCLP"]
+
 
 class Rotta(Sql):
     def __init__(self) -> None:
         # Tämä tuottaa .connect ominaisuuden, joka on SQL-yhteyden käynnistys.
         Sql.__init__(self)
         # Lista viidestä lentokentästä, jossa rotta on käynyt (on viidennessä).
-        self.rotta_destination_list: list = []
         # Tehdään flygariarvonta satunnaisten intien pohjalta X on taso ja y satunnainen kenttä tasolta.
-        for x in range(1, 25, 5):
-            y: int = random.randint(0, 4)
-            # Lisätään icaos-listalta omaan listaan satunnaiset lentokentät.
-            self.rotta_destination_list.append(DEST_ICAO[x + y])
-
+        self.rotta_destination_list: list = [
+            ROUND_1[random.randint(0, 4)],
+            ROUND_2[random.randint(0, 4)],
+            ROUND_3[random.randint(0, 4)],
+            ROUND_4[random.randint(0, 4)],
+            ROUND_5[random.randint(0, 4)],
+        ]
         # Laske emissiot olemassa olevien lentokenttien perusteella.
         self.rotta_emissions: int = 0
 
         # Käydään läpi jokainen elementti rotta_destination_listissä ja lasketaan näiden välisten lentojen yhteisemissiot.
         for port in range(len(self.rotta_destination_list) - 1):
-            coordinates, emission = self.flight(
+            emission = self.flight(
                 self.rotta_destination_list[port], self.rotta_destination_list[port + 1]
             )
 
@@ -106,14 +88,16 @@ class Player(Rotta):
         # Varmista onko lentokohde oikeaan suuntaan.
         if destination not in self.rotta_destination_list:
             self.can_travel = False
+        else:
+            self.can_travel = True
 
         # Laske lennon emissiot ja hinta
-        coordinates, kilometers = self.flight(self.location, destination)
+        kilometers = self.flight(self.location, destination)
 
         # Lennon hinta, 100 € + (etäisyys jaettuna viidellätoista)
         price = math.floor(100 + kilometers / 15)
         # Lennon emissiot kiloina, kilometrit * 115 / 1000
-        emissions = math.floor(price * 115 / 1000)
+        emissions = math.floor(kilometers * 115 / 1000)
 
         if self.money < price:
             return False
@@ -130,13 +114,7 @@ class Player(Rotta):
         self.round += 1
         return self.money
 
-    def update(self, fly: bool) -> dict:
-        # Tapahtuuko sattuma, eli lennetäänkö?
-        if fly:
-            event = self.coincidence(self.can_travel)
-        else:
-            event = "Nothing of note has happened."
-
+    def update(self) -> dict:
         # Listataan pelaajalle mahdolliset lentokohteet
         destinations = self.possible_locations(self.location, self.can_travel)
 
@@ -153,32 +131,24 @@ class Player(Rotta):
             "possible_destinations": destinations_dict,
             "hint": self.hint(),
             "round": self.round,
-            "coincidence": event,
+            "coincidence": "Nothing of note has happened.",
         }
 
-    # Funktio palauttaa listan kaikista pelaajalle
-    # mahdollisista lentokohteista.
+    # Funktio palauttaa listan kaikista pelaajallemahdollisista lentokohteista.
     def possible_locations(self, current: str, can_travel: bool) -> list:
-        # Listat kaikkien kierrosten maista
-        first_round = [DEST_ICAO[x] for x in range(1, 6)]
-        second_round = [DEST_ICAO[x] for x in range(6, 11)]
-        third_round = [DEST_ICAO[x] for x in range(11, 16)]
-        fourth_round = [DEST_ICAO[x] for x in range(16, 21)]
-        fifth_round = [DEST_ICAO[x] for x in range(21, 26)]
-
         # Käydään läpi jokainen lista ja palautetaan oikea lista mahdollisia kohdemaita
-        if current in first_round:
-            return second_round if can_travel else first_round
-        elif current in second_round:
-            return third_round if can_travel else second_round
-        elif current in third_round:
-            return fourth_round if can_travel else third_round
-        elif current in fourth_round:
-            return fifth_round if can_travel else fourth_round
-        elif current in fifth_round:
-            return fifth_round
+        if current in ROUND_1:
+            return ROUND_2 if can_travel else ROUND_1
+        elif current in ROUND_2:
+            return ROUND_3 if can_travel else ROUND_2
+        elif current in ROUND_3:
+            return ROUND_4 if can_travel else ROUND_3
+        elif current in ROUND_4:
+            return ROUND_5 if can_travel else ROUND_4
+        elif current in ROUND_5:
+            return ROUND_5
         else:
-            return first_round
+            return ROUND_1
 
     def hint(self):
         # Vedä tietokannasta vinkki seuraavaa kohdetta varten
@@ -190,7 +160,7 @@ class Player(Rotta):
                 break
 
         # HUOM: Testijuttu
-        print(dest_hint)
+        # print(dest_hint)
         # Hae SQL:stä vinkki
         return self.pull_hint(dest_hint)
 
@@ -199,6 +169,7 @@ class Player(Rotta):
         choice = random.choice(
             random.choices([POS_COINCIDENCES, NEG_COINCIDENCES], weights=weights)[0]
         )
+        print(choice)
 
         for index, text in enumerate(POS_COINCIDENCES):
             if choice == text:

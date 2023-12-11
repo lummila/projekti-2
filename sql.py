@@ -37,6 +37,7 @@ class Sql:
         cursor = self.connect.cursor()
         cursor.execute(sql_code)
         result = cursor.fetchall()
+        cursor.close()
 
         return result
 
@@ -44,8 +45,10 @@ class Sql:
     def push(self, sql_code: str) -> int:
         cursor = self.connect.cursor()
         cursor.execute(sql_code)
+        rows = cursor.rowcount
+        cursor.close()
 
-        return cursor.rowcount
+        return rows
 
     # Kirjautumisfunktio
     def login(self, username: str, pin_code: str):
@@ -92,24 +95,15 @@ class Sql:
 
     # Palauttaa listan, missä listat alku- ja kohdemaan koordinaateista ja lennon pituuden kilometreissä
     def flight(self, start: str, end: str):
-        # Lista, jossa kahdet koordinaatit
-        coord_list = []
-
-        # Kaksi eri hakua, aloitusmaan ja päämäärän etäisyyden selvittämiseksi.
-        for x in range(2):
-            sql = "select longitude_deg, latitude_deg from airport "
-            # Jos x on 0, kyseessä on ensimmäinen haku, eli käytetään start-muuttujaa, ja toisella kerralla end-muuttujaa.
-            sql += f"where ident = '{start if x == 0 else end}';"
-
-            # SQL:n käyttö
+        sql = f"select longitude_deg, latitude_deg from airport where ident = '{start}' or ident = '{end}';"
+        # Lista, jossa on kahdet koordinaatit
+        if start == end:
+            kilometers = 0
+        else:
             result = self.pull(sql)
-
-            # Lisätään locationList-listaan tuple, jossa koordinaatit
-            coord_list.append(result[0])
-
-        kilometers = distance.distance(coord_list[0], coord_list[1]).km
+            kilometers = distance.distance(result[0], result[1]).km
         # Palautetaan koordinaatit ja lennon matka kilometreissä
-        return coord_list, kilometers
+        return kilometers
 
     # Vetää hint-pöydästä pyydetyn kohteen vinkin
     def pull_hint(self, icao: str):
@@ -126,6 +120,8 @@ class Sql:
         sql += f"where airport.ident = '{icao}' and airport.iso_country = country.iso_country;"
 
         result = self.pull(sql)
+        # print(result)
+        # print("SUCCESSFUL AIRPORT_INFO()")
 
         return {
             "airport_name": result[0][0],

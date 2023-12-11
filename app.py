@@ -38,7 +38,7 @@ def login():
         output = {"ERROR": "No user information found. Please check you credentials."}
         status_code = 400
     else:
-        pelaaja.update(False)
+        pelaaja.update()
         output = {"username": pelaaja.name, "password": pin_code}
         status_code = 200
 
@@ -64,7 +64,7 @@ def register():
     if not register:
         output = {"ERROR": "Username already exists."}
     else:
-        output = pelaaja.update(False)
+        output = pelaaja.update()
 
     output_json = json.dumps(output)
     return Response(output_json, 200, mimetype="application/json")
@@ -76,10 +76,10 @@ def update():
     # Ilman globalia pelaaja on funktion sisäinen muuttuja johon ei pääse sen ulkopuolelta.
     global pelaaja
 
-    # flying ja working ovat ehtoja, joilla päivitetään pelaajan tiedot.
-    output = json.dumps(pelaaja.update(False))
+    output = pelaaja.update()
+    output_json = json.dumps(output)
 
-    return Response(output, 200, mimetype="application/json")
+    return Response(output_json, 200, mimetype="application/json")
 
 
 # /fly?dest=_
@@ -90,19 +90,25 @@ def fly():
     # Ilman globalia pelaaja on funktion sisäinen muuttuja johon ei pääse sen ulkopuolelta.
     global pelaaja
 
-    flight = pelaaja.fly(destination)
-    if not flight:
-        output = {"ERROR": "Not enough money"}
+    if pelaaja.location == destination:
+        output = pelaaja.update()
     else:
-        output = pelaaja.update(True)
+        flight = pelaaja.fly(destination)
+        if not flight:
+            output = {"ERROR": "Not enough money"}
+        else:
+            output = pelaaja.update()
+            output["coincidence"] = pelaaja.coincidence(pelaaja.can_travel)
+            print(output["coincidence"])
 
     # HUOM JOS PELAAJAN SIJAINTI ON SAMA KUIN ROTAN VIIMEINEN = PELI ON VOITETTU!
+    print(pelaaja.location, pelaaja.rotta_destination_list[4])
     if pelaaja.location == pelaaja.rotta_destination_list[4]:
         # Pelaajan pisteet tallennetaan tietokantaan ja pisteet palautetaan
         final_score = pelaaja.game_over()
 
         # Viedään käyttäjälle kaikki tiedot ja uusi pistemäärä
-        output = pelaaja.update(False)
+        output = pelaaja.update()
         # Käyttöliittymän tulee tarkistaa, sisältääkö json final_scoren
         output["final_score"] = final_score
 
@@ -120,7 +126,7 @@ def work():
     pelaaja.work()
 
     # Päivitetään pelaajan tiedot käyttöliittymään (False = ei sattumaa)
-    output = json.dumps(pelaaja.update(False))
+    output = json.dumps(pelaaja.update())
 
     return Response(output, 200, mimetype="application/json")
 
