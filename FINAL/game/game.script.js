@@ -163,6 +163,9 @@ const gameLogic = {
       const dot = L.marker(airports[i].coordinates);
       //väri
       dot.setIcon(greenIcon);
+      dot.bindPopup(airports[i].airport_name);
+      markers.addLayer(dot);
+    }
       //markerArray += airports[i].coordinates;
       //Tekee näppäimen, joka aukeaa klikkauksella
       const popupContent = document.createElement("div");
@@ -300,19 +303,19 @@ flowerShop.addEventListener("click", function (event) {
   jobElement.classList.remove("hidden");
   continueGame.classList.remove("hidden");
   selectedJob.innerHTML =
-    "You decided to go and wrap some flowers! Here is some cash to keep you going! <br> Click continue to save and add 175€ to your account.";
+    "You decided to go and wrap some flowers! Here is some cash to keep you going! <br> Click CONTINUE to save and add 175€ to your account.";
 });
 
 burgerPlace.addEventListener("click", function (event) {
   jobElement.classList.remove("hidden");
   continueGame.classList.remove("hidden");
   selectedJob.innerHTML =
-    "You decided to work at the Burger Shack! Have some money! <br> Click continue to save and add 175€ to your account.";
+    "You decided to work at the Burger Shack! Have some money! <br> Click CONTINUE to save and add 175€ to your account.";
 });
 
 exchange.addEventListener("click", function (event) {
   jobElement.classList.remove("hidden");
   continueGame.classList.remove("hidden");
   selectedJob.innerHTML =
-    "We will trust that you count the bills correctly! Take some money! <br> Click continue to save and add 175€ to your account.";
+    "We will trust that you count the bills correctly! Take some money! <br> Click CONTINUE to save and add 175€ to your account.";
 });

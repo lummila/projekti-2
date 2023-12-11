@@ -182,7 +182,8 @@ ul {
 .leader-modal,
 .help-modal,
 .instruction-modal,
-.work-modal {
+.work-modal,
+.exit-modal {
   display: none;
   position: fixed;
   z-index: 1;
@@ -198,7 +199,8 @@ ul {
 .leader-content,
 .help-content,
 .instruction-content,
-.work-content {
+.work-content,
+.exit-content {
   background-color: #85c094;
   margin: auto;
   padding: 2rem;
@@ -225,6 +227,16 @@ ul {
 
 .help-content {
   margin-top: 2rem;
+}
+
+.exit-content {
+  width: 40%;
+  margin-top: 3rem;
+  text-align: center;
+}
+
+#exit {
+  text-decoration: none;
 }
 
 .close {
@@ -287,7 +299,8 @@ ul {
 #select-flower,
 #select-burger,
 #select-exchange,
-#continue {
+#continue,
+#exit {
   background-color: #392e3e;
   border: 1px solid #dbeae7;
   color: #dbeae7;
@@ -300,6 +313,8 @@ ul {
 #select-burger:hover,
 #select-exchange:hover,
 #continue:hover {
+#continue:hover,
+#exit:hover {
   color: #85c094;
 }
 
