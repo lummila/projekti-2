@@ -73,6 +73,11 @@ ul {
   padding: 1rem;
 }
 
+.icao-buttons {
+  width: 50%;
+  margin-right: 1rem;
+}
+
 .icao-button {
   background-color: #e99b5d;
   color: #392e3e;
@@ -83,6 +88,7 @@ ul {
   border: 1px solid #392e3e;
   font-family: "Georgia Pro Black", verdana, sans-serif;
   display: flex;
+  width: 100%;
 }
 
 .box {
@@ -95,6 +101,8 @@ ul {
 .work-button {
   display: inline-flex;
   box-sizing: border-box;
+  min-width: 20%;
+  margin-right: 1rem;
 }
 
 .work {
@@ -105,6 +113,8 @@ ul {
   background-color: #b164b4;
   text-align: center;
   font-family: "Georgia Pro Black", verdana, sans-serif;
+
+  min-width: 100%;
 }
 
 .coincidence-box {
