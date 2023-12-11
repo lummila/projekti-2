@@ -18,12 +18,16 @@ const handleCredentials = {
   async login() {
     try {
       const [username, password] = this.input();
+      console.log(username, password)
 
       const response = await fetch(this.server("login", username, password));
 
       const response_json = await response.json();
-
-      return true;
+      if (response.statusCode === "400") {
+        return false;
+      } else if (response.statusCode === "200") {
+         return true;
+      }
     } catch (error) {
       console.error("Login failed", error);
       return false;
@@ -39,7 +43,11 @@ const handleCredentials = {
       const response_json = await response.json();
       console.log(response_json);
 
-      return true;
+      if (response.statusCode === "400") {
+        return false;
+      } else if (response.statusCode === "200") {
+        return true;
+      }
     } catch (error) {
       console.error("Registering failed", error);
       return false;
@@ -89,74 +97,98 @@ registerButton.addEventListener("click", (e) => {
 });
 
 function checkPin() {
-    // Get the PIN and username input values
-    let pin = document.getElementById('query-pass').value;
-    let username = document.getElementById('query-user').value;
-    let text = document.getElementById("messageBox");
+  // Get the PIN and username input values
+  const pin = document.getElementById('query-pass').value;
+  const username = document.getElementById('query-user').value;
 
-    // Match PIN to exactly 4 digits (no letters)
-    const pinChecker = /^\d{4}$/;
+  // Match PIN to exactly 4 digits (no letters)
+  const pinRegex = /^\d{4}$/;
 
-    // Check if PIN and username are not empty, otherwise all gucci
-    if (pin.trim() !== "" && username.trim() !== "" && pinChecker.test(pin) && !/[a-zA-Z]/.test(pin)) {
-        text.innerText = "Credentials valid";
-        text.style.color = "green";
-        text.style.fontWeight = "900";
-    } else {
-        text.innerText = "Invalid credentials.";
-        text.style.color = "red";
-        text.style.fontWeight = "900";
-    }
+  // Check if PIN and username are not empty, otherwise return false
+  if (pin.trim() === "" || username.trim() === "") {
+    displayErrorMessage("Invalid input");
+    return false;
+  }
+  // Check if PIN is exactly 4 digits with no letters
+  if (!pinRegex.test(pin) || /[a-zA-Z]/.test(pin)) {
+    displayErrorMessage("Invalid PIN format");
+    return false;
+  }
+  return true;
 }
 
-function switchToGame() {
-  let text = document.getElementById("messageBox");
-  if (checkPin) {
-    if (handleCredentials.login) {
-      window.location.href = "game/index.html";
+
+
+
+function displayErrorMessage(message) {
+  const messageBox = document.getElementById("messageBox");
+  messageBox.innerText = message;
+  messageBox.style.color = "red";
+  messageBox.style.fontWeight = "900";
+}
+
+function loginToGame() {
+  const messageBox = document.getElementById("messageBox");
+  const pinIsValid = checkPin();
+
+  if (pinIsValid) {
+    const loginSuccess = handleCredentials.login();
+
+    if (loginSuccess) {
+      window.location.href = getGameURL();
     } else {
-      text.innerHTML = "Check credentials";
+      displayErrorMessage1("Check credentials");
     }
   } else {
-    text.innerText = "Invalid credentials";
+    displayErrorMessage1("Invalid credentials");
   }
+}
+
+function displayErrorMessage1(message) {
+  const messageBox = document.getElementById("messageBox");
+  messageBox.innerHTML = message;
+  messageBox.style.color = "red";
+  messageBox.style.fontWeight = "900";
+}
+
+function getGameURL() {
+  return "game/index.html";
 }
 
 
 function registerAccount() {
-  let text = document.getElementById("messageBox");
-  if (handleCredentials.register) {
-    text.innerText = "Account created";
-    text.style.color = "red";
-    text.style.fontWeight = "900";
-  } else {
+  const messageBox = document.getElementById("messageBox");
+  const pinIsValid = checkPin();
 
+  if (pinIsValid) {
+    const registrationSuccess = handleCredentials.register();
+
+    if (registrationSuccess) {
+      displaySuccessMessage("Account created");
+    } else {
+      displayErrorMessage2("Username taken");
+    }
+  } else {
+    displayErrorMessage2("Check credentials");
   }
 }
 
-
-
-function loginToGame() {
-  // Get the PIN and username input values
-    let pin = document.getElementById('query-pass').value;
-    let username = document.getElementById('query-user').value;
-    let text = document.getElementById("messageBox");
-
-    // Match PIN to exactly 4 digits (no letters)
-    const pinChecker = /^\d{4}$/;
-
-    // Check if PIN and username are not empty, otherwise all gucci
-    if (pin.trim() !== "" && username.trim() !== "" && pinChecker.test(pin) && !/[a-zA-Z]/.test(pin)) {
-        text.innerText = "Credentials valid";
-        text.style.color = "green";
-        text.style.fontWeight = "900";
-
-    } else {
-        text.innerText = "Invalid credentials.";
-        text.style.color = "red";
-        text.style.fontWeight = "900";
-    }
+function displaySuccessMessage(message) {
+  displayMessage(message, "green");
 }
+
+function displayErrorMessage2(message) {
+  displayMessage(message, "red");
+}
+
+function displayMessage(message, color) {
+  const messageBox = document.getElementById("messageBox");
+  messageBox.innerText = message;
+  messageBox.style.color = color;
+  messageBox.style.fontWeight = "900";
+}
+
+
 
 
 
@@ -254,7 +286,7 @@ async function doRegister() {
 
 //Ongelma: miten saada formien molemmat arvot syötettyä samalle reitille?
 // const username = document.querySelector("form")[0].addEventListener("submit");
-
+/*
 login.addEventListener("click", (e) => {
   e.preventDefault();
   result.textContent = user_username.value + " " + user_password.value;
@@ -267,6 +299,6 @@ register.addEventListener("click", (e) => {
   result.textContent = user_username.value + " " + user_password.value;
   const promise = doRegister();
 });
-
+*/
 
 

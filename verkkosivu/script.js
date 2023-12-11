@@ -77,7 +77,7 @@ async function doRegister() {
 //Ongelma: miten saada formien molemmat arvot syötettyä samalle reitille?
 // const username = document.querySelector("form")[0].addEventListener("submit");
 
-login.addEventListener("click", (e) => {
+/*login.addEventListener("click", (e) => {
   e.preventDefault();
   result.textContent = user_username.value + " " + user_password.value;
   const promise = doLogin();
@@ -88,3 +88,4 @@ register.addEventListener("click", (e) => {
   result.textContent = user_username.value + " " + user_password.value;
   const promise = doRegister();
 });
+*/
