@@ -99,7 +99,7 @@ class Player(Rotta):
         # Voiko pelaaja matkustaa seuraavan tason lentokentille, boolean.
         self.can_travel = True
         # Pelaajan kierrokset, jos näitä on 10, peli päättyy.
-        self.round = 0
+        self.round = 1
 
     # Lentofunktio, siirtää pelaajan paikasta A paikkaan B.
     def fly(self, destination: str):
