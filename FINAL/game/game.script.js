@@ -57,6 +57,7 @@ const gameLogic = {
       const icao = Object.keys(airports)[i];
       // e on ICAO-nappula ja siihen syötetään teksti airports-objektista icao-koodin avulla
       e.textContent = `${airports[icao].airport_name}, ${airports[icao].country_name}`;
+      e.addEventListener('click', () => {this.fly(icao)});
     });
     //karttapiste nykyiselle sijainnille
     const marker = L.marker(data.location.coordinates).addTo(map);
@@ -67,14 +68,22 @@ const gameLogic = {
     let markerArray = [];
     //for looppi joka laittaa täpät kartalle
     for (const i in airports){
-      console.log(airports[i].coordinates);
       const dot = L.marker(airports[i].coordinates).addTo(map);
+      //väri
       dot.setIcon(greenIcon);
-      markerArray += airports[i].coordinates;
-      console.log(airports[i].airport_name);
-      dot.bindPopup(`Fly here: ${airports[i].airport_name}`);
+      //markerArray += airports[i].coordinates;
+      //Tekee näppäimen, joka aukeaa klikkauksella
+      const popupContent = document.createElement('div');
+      const h4 = document.createElement('p');
+      h4.innerHTML = airports[i].airport_name;
+      popupContent.append(h4);
+      //const flyButton = document.createElement('button');
+      //flyButton.classList.add('button');
+      //flyButton.innerHTML = `Fly here`;
+      //popupContent.append(flyButton);
+      dot.bindPopup(popupContent);
     }
-    //const group = new L.featureGroup(markerArray);
+     //const group = new L.featureGroup(markerArray);
     //map.fitBounds([markerArray]);
     //lennättä näkymän nykyiseen sijaintiin
     const currlocation = data.location.coordinates;
@@ -88,6 +97,20 @@ const gameLogic = {
     // Kierros
     round.textContent = data.round;
     //kartta
+    },
+    async fly(destination){
+      try{
+        const response = await fetch(`http://127.0.0.1:5000/fly?dest=${destination}`);
+          console.log(response);
+          if (response.status !== 200){
+            console.log("Gamelogic.fly failed");
+          }
+          const response_json = await response.json();
+          await this.update();
+      }
+      catch (error) {
+          console.error("gameLogic.update() failed", error);
+        }
   },
 };
 

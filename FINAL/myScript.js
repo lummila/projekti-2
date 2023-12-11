@@ -23,10 +23,22 @@ const handleCredentials = {
       const response = await fetch(this.server("login", username, password));
 
       const response_json = await response.json();
-      if (response.statusCode === "400") {
+      console.log(response_json)
+
+      if (response.ok) {
+        // Assuming the server returns a JSON object with a 'statusCode' property
+        if (response_json.statusCode === 200) {
+          // Login successful
+          return true;
+        } else {
+          // Login failed, server returned a non-200 status code
+          console.error("Login failed:", response_json.statusCode);
+          return false;
+        }
+      } else {
+        // Non-successful HTTP status code
+        console.error("Login failed:", response.status);
         return false;
-      } else if (response.statusCode === "200") {
-         return true;
       }
     } catch (error) {
       console.error("Login failed", error);
@@ -43,17 +55,28 @@ const handleCredentials = {
       const response_json = await response.json();
       console.log(response_json);
 
-      if (response.statusCode === "400") {
+      if (response.ok) {
+        // Assuming the server returns a JSON object with a 'statusCode' property
+        if (responseJson.statusCode === 200) {
+          // Registration successful
+          return true;
+        } else {
+          // Registration failed, server returned a non-200 status code
+          console.error("Registration failed with status code:",
+              responseJson.statusCode);
+          return false;
+        }
+      } else {
+        // Non-success HTTP status code
+        console.error("Registration failed with status code:", response.status);
         return false;
-      } else if (response.statusCode === "200") {
-        return true;
       }
     } catch (error) {
-      console.error("Registering failed", error);
+      console.error("Registration failed", error);
       return false;
     }
-  },
-};
+  }
+}
 
 function hideFunction() {
   const pass = document.getElementById("query-pass");
@@ -135,7 +158,7 @@ function loginToGame() {
     const loginSuccess = handleCredentials.login();
 
     if (loginSuccess) {
-      window.location.href = getGameURL();
+      //window.location.href = getGameURL();
     } else {
       displayErrorMessage1("Check credentials");
     }
