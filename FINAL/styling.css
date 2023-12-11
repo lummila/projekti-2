@@ -226,6 +226,15 @@ html, body {
 -----------------------------------------------------------------------------------
  */
 
+.messageBox {
+    display: flex;
+    justify-content: center;
+    background-color: #DBEAE7;
+    border: 3px solid #357654;
+    margin: auto auto 1rem;
+    border-radius: 3px
+}
+
 .loginMain {
     margin: auto;
     display: flex;

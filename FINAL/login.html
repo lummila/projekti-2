@@ -11,6 +11,7 @@
     <header></header>
     <main class="loginMain">
       <form class="loginForm">
+          <div id="messageBox" class="messageBox">Please login</div>
         <input
           id="query-user"
           name="username"
@@ -18,8 +19,7 @@
           placeholder="Username"
           maxlength="30"
         />
-        <input
-          id="query-pass"
+        <input id="query-pass"
           name="password"
           type="password"
           placeholder="4-digit PIN"
@@ -27,19 +27,17 @@
           maxlength="4"
         />
         <div class="hidePass">
-          <input type="checkbox" onclick="hideFunction()" />Show password
+          <input type="checkbox" onclick="hideFunction()"/>Show password
         </div>
         <div class="logSubmit">
-          <input class="login" type="submit" value="LOGIN" />
+          <input class="login" type="submit" value="LOGIN" onclick="checkPin()" />
           <input class="register" type="submit" value="REGISTER" onclick="checkPin()" />
         </div>
       </form>
       <div class="result"></div>
     </main>
     <div class="exitBtn">
-      <a href="index.html"
-        ><button class="button-85" role="button">RETURN</button></a
-      >
+      <a href="index.html"><button class="button-85" role="button">RETURN</button></a>
     </div>
   </body>
 </html>
