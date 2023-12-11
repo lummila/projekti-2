@@ -29,7 +29,51 @@
                     <div id="personal-modal" class="personal-modal">
                         <div class="personal-content">
                             <span class="close">&times;</span>
-                            <p>some text in the modal</p>
+                            <section class="personal-scores">
+                                <h3>TOP 10 PERSONAL SCORES:</h3>
+                                <table id="your-personal-scores">
+                                    <tr>
+                                        <td>1.</td>
+                                        <td class="score"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2.</td>
+                                        <td class="score"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>3.</td>
+                                        <td class="score"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>4.</td>
+                                        <td class="score"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>5.</td>
+                                        <td class="score"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>6.</td>
+                                        <td class="score"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>7.</td>
+                                        <td class="score"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>8.</td>
+                                        <td class="score"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>9.</td>
+                                        <td class="score"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>10.</td>
+                                        <td class="score"></td>
+                                    </tr>
+                                </table>
+                            </section>
                         </div>
                     </div>
                 </li>
@@ -38,7 +82,61 @@
                     <div id="leader-modal" class="leader-modal">
                         <div class="leader-content">
                             <span class="close">&times;</span>
-                            <p>some text in the modal</p>
+                            <section class="leader-scores">
+                                <h3>TOP 10 HIGH SCORES:</h3>
+                                <table id="leader-board-scores">
+                                    <tr>
+                                        <td>1.</td>
+                                        <td class="user-name"></td>
+                                        <td class="top-score"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2.</td>
+                                        <td class="user-name"></td>
+                                        <td class="top-score"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>3.</td>
+                                        <td class="user-name"></td>
+                                        <td class="top-score"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>4.</td>
+                                        <td class="user-name"></td>
+                                        <td class="top-score"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>5.</td>
+                                        <td class="user-name"></td>
+                                        <td class="top-score"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>6.</td>
+                                        <td class="user-name"></td>
+                                        <td class="top-score"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>7.</td>
+                                        <td class="user-name"></td>
+                                        <td class="top-score"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>8.</td>
+                                        <td class="user-name"></td>
+                                        <td class="top-score"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>9.</td>
+                                        <td class="user-name"></td>
+                                        <td class="top-score"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>10.</td>
+                                        <td class="user-name"></td>
+                                        <td class="top-score"></td>
+                                    </tr>
+                                </table>
+                            </section>
                         </div>
                     </div>
                 </li>
@@ -47,7 +145,7 @@
                     <div id="instruction-modal" class="instruction-modal">
                         <div class="instruction-content">
                             <span class="close">&times;</span>
-                            <p>Welcome to Chase The Rat!<br><br><em>This guide is not required, but may help you understand the game.</em><br><br>
+                            <p style="text-align: center">Welcome to Chase The Rat!<br><br><em>This guide is not required, but may help you understand the game.</em><br><br>
                                 You'll need to enter an existing username and a PIN-code to play with your user OR<br>
                                 you can create new username and a PIN-code.<br><br>
                                 In this game you'll travel between different airports, trying to find the Rat who owes you money.<br>
@@ -73,7 +171,25 @@
                     <div id="help-modal" class="help-modal">
                         <div class="help-content">
                             <span class="close">&times;</span>
-                            <p>some text in the modal</p>
+                            <section style="margin-top: 1rem">
+                                <div class="help-menu-content">
+                                    <button type="button" class="help-menu-button">INSTRUCTIONS</button>
+                                        <p>Displays the rules of the game. You can click and view the INSTRUCTIONS during the game.</p>
+                                </div>
+                                <div class="help-menu-content">
+                                    <button type="button" class="help-menu-button">LEADERBOARD</button>
+                                        <p>Displays top 10 scores.</p>
+                                </div>
+                                <div class="help-menu-content">
+                                    <button type="button" class="help-menu-button">PERSONAL</button>
+                                        <p>Displays your own previous scores.</p>
+                                </div>
+                                <div class="help-menu-content">
+                                    <button type="button" class="help-menu-button">EXIT</button>
+                                        <p>Exits the game. If you click EXIT, the game will end.<br>
+                                            You can go back to view the tutorial or log in with a different user.</p>
+                                </div>
+                            </section>
                         </div>
                     </div>
                 </li>
@@ -104,7 +220,7 @@
                 </div>
                 <div class="work-button">
                     <button type="button" class="work hover" id="work-button">
-                        <h3>Stay + work</h3>
+                        <h3>Work</h3>
                     </button>
                     <div id="work-modal" class="work-modal">
                         <div class="work-content">

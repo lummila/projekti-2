@@ -1,6 +1,6 @@
 import random
 import math
-from geopy import distance
+
 
 from sql import Sql
 
@@ -108,11 +108,12 @@ class Player(Rotta):
             self.can_travel = False
 
         # Laske lennon emissiot ja hinta
-        coordinates, emissions = self.flight(self.location, destination)
-        # Lennon pituus kilometreissä
-        dist = distance.distance(coordinates).km
+        coordinates, kilometers = self.flight(self.location, destination)
+
         # Lennon hinta, 100 € + (etäisyys jaettuna viidellätoista)
-        price = math.floor(100 + dist / 15)
+        price = math.floor(100 + kilometers / 15)
+        # Lennon emissiot kiloina, kilometrit * 115 / 1000
+        emissions = math.floor(price * 115 / 1000)
 
         if self.money < price:
             return False
@@ -138,6 +139,7 @@ class Player(Rotta):
 
         # Listataan pelaajalle mahdolliset lentokohteet
         destinations = self.possible_locations(self.location, self.can_travel)
+
         destinations_dict = {}
         for i in range(len(destinations)):
             destinations_dict[destinations[i]] = self.airport_info(destinations[i])
@@ -157,29 +159,26 @@ class Player(Rotta):
     # Funktio palauttaa listan kaikista pelaajalle
     # mahdollisista lentokohteista.
     def possible_locations(self, current: str, can_travel: bool) -> list:
-        # Pelaajan tämänhetkinen sijainti numerona
-        cur = [i for i in range(len(DEST_ICAO)) if DEST_ICAO[i] == self.location][0]
+        # Listat kaikkien kierrosten maista
+        first_round = [DEST_ICAO[x] for x in range(1, 6)]
+        second_round = [DEST_ICAO[x] for x in range(6, 11)]
+        third_round = [DEST_ICAO[x] for x in range(11, 16)]
+        fourth_round = [DEST_ICAO[x] for x in range(16, 21)]
+        fifth_round = [DEST_ICAO[x] for x in range(21, 26)]
 
-        # - Testataan pelaajan DEST_ICAO-arvonumeroa, jotta
-        # voidaan asettaa oikeat rajat palautettavalle
-        # listalle mahdollisista lentomaista.
-        # - Pelaaja-luokassa on can_travel-ominaisuus,
-        # joka määrittää sen, voiko pelaaja edetä
-        # seuraavan tason lentokentille, ja tämä funktio
-        # testaa sen.
-        if cur < 10:
-            (s, e) = (1, 6)
-        elif 10 < cur < 20:
-            (s, e) = (6, 11) if can_travel else (1, 6)
-        elif 20 < cur < 30:
-            (s, e) = (11, 16) if can_travel else (6, 11)
-        elif 30 < cur < 40:
-            (s, e) = (16, 21) if can_travel else (11, 16)
+        # Käydään läpi jokainen lista ja palautetaan oikea lista mahdollisia kohdemaita
+        if current in first_round:
+            return second_round if can_travel else first_round
+        elif current in second_round:
+            return third_round if can_travel else second_round
+        elif current in third_round:
+            return fourth_round if can_travel else third_round
+        elif current in fourth_round:
+            return fifth_round if can_travel else fourth_round
+        elif current in fifth_round:
+            return fifth_round
         else:
-            (s, e) = (21, 26) if can_travel else (16, 21)
-        # Rakennetaan viiden sijainnin lista, jonka
-        # indeksit edellinen ehtopuu on määrittänyt.
-        return [DEST_ICAO[x] for x in range(s, e)]
+            return first_round
 
     def hint(self):
         # Vedä tietokannasta vinkki seuraavaa kohdetta varten

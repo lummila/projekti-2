@@ -1,7 +1,7 @@
 "use strict";
 
 // Pelaajan vinkki seuraavaan kohteeseen
-const hint = document.querySelector("#next-hint");
+const tutorial = document.querySelector("#next-hint");
 
 // Elementtilista kaikista lentokenttänappuloista
 const icaoButtons = document.querySelectorAll(".icao-button");
@@ -14,8 +14,12 @@ const money = document.querySelector("#money");
 const emissions = document.querySelector("#emissions");
 const round = document.querySelector("#round");
 
+// Työnappula, toimii myös jatka-nappulana
+const workButton = document.querySelector("#work-button");
+
 const map = L.map("map").setView([60.31, 24.94], 5);
 const mapElement = document.querySelector("#map");
+const markers = L.layerGroup();
 
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 16,
@@ -28,7 +32,7 @@ const gameLogic = {
   async fetchInfo() {
     try {
       //
-      const response = await fetch("http://127.0.0.1:5000/update?fly=no");
+      const response = await fetch("http://127.0.0.1:5000/update");
       const response_json = await response.json();
 
       return response_json;
@@ -37,15 +41,27 @@ const gameLogic = {
       return error;
     }
   },
+  async flyToSweden() {
+    try {
+      const response = await fetch("http://127.0.0.1:5000/fly?dest=ESSA");
+      console.log(response);
+      const response_json = await response.json();
+
+      gameLogic.update();
+    } catch (error) {
+      console.error("gameLogic.update() failed", error);
+    }
+  },
   async update() {
     const data = await this.fetchInfo();
     // HUOM VAIN KEHITYSTARPEISIIN
     console.log(data);
-    // Vinkkiteksti
-    hint.textContent = data.hint;
+
+    markers.clearLayers();
 
     // Otetaan tuodusta datasta vain lentokentät-osio
     const airports = data.possible_destinations;
+
     // Käydään jokainen ICAO-nappula läpi ja sijoitetaan niihin oikeat tiedot
     icaoButtons.forEach((e, i) => {
       // Otetaan ylös tämänhetkisen iteraation ICAO-koodi
@@ -53,20 +69,27 @@ const gameLogic = {
       // e on ICAO-nappula ja siihen syötetään teksti airports-objektista icao-koodin avulla
       e.textContent = `${airports[icao].airport_name}, ${airports[icao].country_name}`;
     });
+
     // Pelaajan tämänhetkinen sijainti
     const marker = L.marker(data.location.coordinates, {
       title: data.location.airport_name,
-    }).addTo(map);
+    });
+
     marker.bindPopup(data.location.airport_name);
+    // Lisätään täppälistaan nykyinen sijainti
+    markers.addLayer(marker);
+
     //Käydään läpi kaikki mahdollisten kohteiden koordinaatit ja laitetaan pisteet niiden päälle
     console.log(airports);
     for (const i in airports) {
-      console.log(airports[i].coordinates);
       const dot = L.marker(airports[i].coordinates, {
         title: airports[i].airport_name,
-      }).addTo(map);
+      });
       dot.bindPopup(airports[i].airport_name);
+      markers.addLayer(dot);
     }
+    // Lisätään täpät karttaan
+    map.addLayer(markers);
     // Sattumateksti
     coincidence.textContent = data.coincidence;
     // Rahamäärä
@@ -75,141 +98,89 @@ const gameLogic = {
     emissions.textContent = data.emissions;
     // Kierros
     round.textContent = data.round;
-    //kartta
   },
 };
 
 gameLogic.update();
+let stages = 0;
 
-// MODALS
+tutorial.textContent =
+  "Welcome to the tutorial! In this short interactive demonstration, you will learn to play Velkajahti. We will go over flying to different countries and working for money. Press the 'Work' button to continue.";
 
-const personalModal = document.querySelector("#personal-modal");
-const personalButton = document.querySelector("#personal-button");
-const personalSpan = document.getElementsByClassName("close")[0];
+workButton.addEventListener("click", () => {
+  if (stages == 0) {
+    stages++;
 
-personalButton.onclick = function () {
-  // Piilotetaan kartta
-  mapElement.classList.add("hidden");
-  personalModal.style.display = "block";
-};
-
-personalSpan.onclick = function () {
-  // Näytetään kartta taas
-  mapElement.classList.remove("hidden");
-  personalModal.style.display = "none";
-};
-
-window.onclick = function (event) {
-  if (event.target == personalModal) {
-    personalModal.style.display = "none";
+    tutorial.textContent =
+      "During the game, you will receive hints about your next destination, which will be displayed where this text is. But now, I will assist you and tell you where to travel. We will go to Sweden. Press the button which reads: 'Stockholm-Arlanda Airport, Sweden'.";
   }
-};
+});
 
-const leaderModal = document.querySelector("#leader-modal");
-const leaderButton = document.querySelector("#leader-button");
-const leaderSpan = document.getElementsByClassName("close")[1];
-
-leaderButton.onclick = function () {
-  // Piilotetaan kartta
-  mapElement.classList.add("hidden");
-  leaderModal.style.display = "block";
-};
-
-leaderSpan.onclick = function () {
-  // Näytetään kartta taas
-  mapElement.classList.remove("hidden");
-  leaderModal.style.display = "none";
-};
-
-window.onclick = function (event) {
-  if (event.target == leaderModal) {
-    leaderModal.style.display = "none";
+icaoButtons[0].addEventListener("click", async () => {
+  if (stages == 1) {
+    stages++;
+    gameLogic.flyToSweden();
+    tutorial.textContent =
+      "Here we are, beautiful Sweden. You'll see that the flight cost money, increased your emission count and round count. If you reach 10 rounds without reaching the Rat, you lose the game! Anyway, press 'Work' to continue.";
   }
-};
+});
 
-const helpModal = document.querySelector("#help-modal");
-const helpButton = document.querySelector("#help-button");
-const helpSpan = document.getElementsByClassName("close")[3];
-
-helpButton.onclick = function () {
-  // Piilotetaan kartta
-  mapElement.classList.add("hidden");
-  helpModal.style.display = "block";
-};
-
-helpSpan.onclick = function () {
-  // Näytetään kartta taas
-  mapElement.classList.remove("hidden");
-  helpModal.style.display = "none";
-};
-
-window.onclick = function (event) {
-  if (event.target == helpModal) {
-    helpModal.style.display = "none";
+workButton.addEventListener("click", () => {
+  if (stages == 2) {
+    stages++;
+    tutorial.textContent =
+      "Now it's time to work for a bit. If you now press the 'Work' button, you will be taken to a submenu that offers different options for a short-time gig. Doing work gives you money, but it will also spend one round, so use it wisely!";
   }
-};
+});
 
-const instructionModal = document.querySelector("#instruction-modal");
-const instructionButton = document.querySelector("#instruction-button");
-const instructionSpan = document.getElementsByClassName("close")[2];
+if (stages == 2) {
+  const workModal = document.querySelector("#work-modal");
+  const workSpan = document.getElementsByClassName("close")[4];
 
-instructionButton.onclick = function () {
-  // Piilotetaan kartta
-  mapElement.classList.add("hidden");
-  instructionModal.style.display = "block";
-};
+  workButton.onclick = function () {
+    // Piilotetaan kartta
+    mapElement.classList.add("hidden");
+    workModal.style.display = "block";
+  };
 
-instructionSpan.onclick = function () {
-  // Näytetään kartta taas
-  mapElement.classList.remove("hidden");
-  instructionModal.style.display = "none";
-};
-
-window.onclick = function (event) {
-  if (event.target == instructionModal) {
-    instructionModal.style.display = "none";
-  }
-};
-
-const workModal = document.querySelector("#work-modal");
-const workButton = document.querySelector("#work-button");
-const workSpan = document.getElementsByClassName("close")[4];
-
-workButton.onclick = function () {
-  // Piilotetaan kartta
-  mapElement.classList.add("hidden");
-  workModal.style.display = "block";
-};
-
-workSpan.onclick = function () {
-  // Näytetään kartta taas
-  mapElement.classList.remove("hidden");
-  workModal.style.display = "none";
-};
-
-window.onclick = function (event) {
-  if (event.target == workModal) {
+  workSpan.onclick = function () {
+    // Näytetään kartta taas
+    mapElement.classList.remove("hidden");
     workModal.style.display = "none";
-  }
-};
+  };
 
-// SELECT WORK PLACE
+  window.onclick = function (event) {
+    if (event.target == workModal) {
+      workModal.style.display = "none";
+    }
+  };
 
-const flowerShop = document.querySelector("#select-flower");
-const burgerPlace = document.querySelector("#select-burger");
-const exchange = document.querySelector("#select-exchange");
-const selectedJob = document.querySelector("#selected");
-flowerShop.addEventListener("click", function (event) {
-  selectedJob.innerHTML =
-    "You decided to go and wrap some flowers! Here is some cash to keep you going!";
-});
+  // SELECT WORK PLACE
 
-burgerPlace.addEventListener("click", function (event) {
-  selectedJob.innerHTML =
-    "You decided to work at the Burger Shack! Have some money!";
-});
+  const flowerShop = document.querySelector("#select-flower");
+  const burgerPlace = document.querySelector("#select-burger");
+  const exchange = document.querySelector("#select-exchange");
+  const selectedJob = document.querySelector("#selected");
+  flowerShop.addEventListener("click", function (event) {
+    selectedJob.innerHTML =
+      "You decided to go and wrap some flowers! Here is some cash to keep you going!";
+    stages = 3;
+  });
 
-exchange.addEventListener("click", function (event) {
-  selectedJob.innerHTML =
-    "We will trust that you count the bills correctly! Take some money!";
-});
+  burgerPlace.addEventListener("click", function (event) {
+    selectedJob.innerHTML =
+      "You decided to work at the Burger Shack! Have some money!";
+    stages = 3;
+  });
+
+  exchange.addEventListener("click", function (event) {
+    selectedJob.innerHTML =
+      "We will trust that you count the bills correctly! Take some money!";
+    stages = 3;
+  });
+}
+
+if (stages == 3) {
+  tutorial.textContent =
+    "That concludes the most important parts of the game. You seem a natural at this, so I'll leave the rest for you. ";
+}
