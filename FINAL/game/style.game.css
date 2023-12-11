@@ -56,14 +56,17 @@ ul {
 }
 
 .button,
-.help-menu-button{
+.help-menu-button {
   color: #392e3e;
   padding: 1rem;
-  display: block;
   background-color: #e99b5d;
   text-decoration: none;
   border-radius: 6px;
   border: 1px solid #dbeae7;
+}
+
+.button {
+  display: block;
 }
 
 .hint {
@@ -100,6 +103,8 @@ ul {
 .work-button {
   display: inline-flex;
   box-sizing: border-box;
+  min-width: 20%;
+  margin-right: 1rem;
 }
 
 .work {
@@ -110,6 +115,7 @@ ul {
   background-color: #b164b4;
   text-align: center;
   font-family: "Georgia Pro Black", verdana, sans-serif;
+  min-width: 100%;
 }
 
 .coincidence-box {
@@ -204,6 +210,10 @@ ul {
   line-height: 2rem;
 }
 
+.help-content {
+  margin-top: 10%;
+}
+
 .close {
   font-size: 28px;
   font-weight: bold;
@@ -288,6 +298,13 @@ ul {
 
 /* HELP_MENU */
 
+.help-menu-button {
+  font-family: "Georgia Pro Black", verdana, sans-serif;
+  margin-bottom: 0.5rem;
+  margin-right: 1rem;
+  width: 20%;
+}
+
 .help-menu-content {
-  display: inline-block;
+  display: flex;
 }
