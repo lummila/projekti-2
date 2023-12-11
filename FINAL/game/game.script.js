@@ -22,7 +22,7 @@ const blueIcon = L.divIcon({ className: 'blue-icon' });
 const greenIcon = L.divIcon({ className: 'green-icon' });
 
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  maxZoom: 16,
+  maxZoom: 500,
   attribution:
       '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 }).addTo(map);
@@ -71,11 +71,14 @@ const gameLogic = {
       const dot = L.marker(airports[i].coordinates).addTo(map);
       dot.setIcon(greenIcon);
       markerArray += airports[i].coordinates;
+      console.log(airports[i].airport_name);
+      dot.bindPopup(`Fly here: ${airports[i].airport_name}`);
     }
-    console.log(markerArray);
     //const group = new L.featureGroup(markerArray);
     //map.fitBounds([markerArray]);
-    //map.setView(new L.LatLng(airports[i].coordinates), 20);
+    //lennättä näkymän nykyiseen sijaintiin
+    const currlocation = data.location.coordinates;
+    map.flyTo(currlocation, 4);
     // Sattumateksti
     coincidence.textContent = data.coincidence;
     // Rahamäärä
