@@ -44,12 +44,22 @@ const gameLogic = {
   async flyToSweden() {
     try {
       const response = await fetch("http://127.0.0.1:5000/fly?dest=ESSA");
-      console.log(response);
       const response_json = await response.json();
 
       gameLogic.update();
     } catch (error) {
       console.error("gameLogic.update() failed", error);
+    }
+  },
+  async reset() {
+    try {
+      const response = await fetch("http://127.0.0.1:5000/reset");
+      if (response.status != 200) {
+        return -1;
+      }
+      const response_json = await response.json();
+    } catch (error) {
+      console.log("gameLogic.reset() failed", error);
     }
   },
   async update() {
@@ -121,7 +131,7 @@ icaoButtons[0].addEventListener("click", async () => {
     stages++;
     gameLogic.flyToSweden();
     tutorial.textContent =
-      "Here we are, beautiful Sweden. You'll see that the flight cost money, increased your emission count and round count. If you reach 10 rounds without reaching the Rat, you lose the game! Anyway, press 'Work' to continue.";
+      "Here we are, beautiful Sweden. You'll see that the flight cost money, increased your emission count and round count. If you reach 10 rounds without reaching the Rat, you lose the game! You may have new list of destinations, or not, depending on if you went the right location. Anyway, press 'Work' to continue.";
   }
 });
 
@@ -130,57 +140,52 @@ workButton.addEventListener("click", () => {
     stages++;
     tutorial.textContent =
       "Now it's time to work for a bit. If you now press the 'Work' button, you will be taken to a submenu that offers different options for a short-time gig. Doing work gives you money, but it will also spend one round, so use it wisely!";
+
+    const workModal = document.querySelector("#work-modal");
+    const workSpan = document.getElementsByClassName("close")[4];
+
+    workButton.onclick = function () {
+      // Piilotetaan kartta
+      mapElement.classList.add("hidden");
+      workModal.style.display = "block";
+    };
+
+    workSpan.onclick = function () {
+      // Näytetään kartta taas
+      mapElement.classList.remove("hidden");
+      workModal.style.display = "none";
+      tutorial.textContent =
+        "That concludes the most important parts of the game. You seem a natural at this, so I'll leave the rest for you. You'll gain more experience through first-hand experience, os You can exit to the main menu by pressing the 'Exit' button.";
+    };
+
+    window.onclick = function (event) {
+      if (event.target == workModal) {
+        workModal.style.display = "none";
+      }
+    };
+
+    // SELECT WORK PLACE
+
+    const flowerShop = document.querySelector("#select-flower");
+    const burgerPlace = document.querySelector("#select-burger");
+    const exchange = document.querySelector("#select-exchange");
+    const selectedJob = document.querySelector("#selected");
+    flowerShop.addEventListener("click", function (event) {
+      selectedJob.innerHTML =
+        "You decided to go and wrap some flowers! Here is some cash to keep you going!";
+      money.textContent = +money.textContent + 175;
+    });
+
+    burgerPlace.addEventListener("click", function (event) {
+      selectedJob.innerHTML =
+        "You decided to work at the Burger Shack! Have some money!";
+      money.textContent = +money.textContent + 175;
+    });
+
+    exchange.addEventListener("click", function (event) {
+      selectedJob.innerHTML =
+        "We will trust that you count the bills correctly! Take some money!";
+      money.textContent = +money.textContent + 175;
+    });
   }
 });
-
-if (stages == 2) {
-  const workModal = document.querySelector("#work-modal");
-  const workSpan = document.getElementsByClassName("close")[4];
-
-  workButton.onclick = function () {
-    // Piilotetaan kartta
-    mapElement.classList.add("hidden");
-    workModal.style.display = "block";
-  };
-
-  workSpan.onclick = function () {
-    // Näytetään kartta taas
-    mapElement.classList.remove("hidden");
-    workModal.style.display = "none";
-  };
-
-  window.onclick = function (event) {
-    if (event.target == workModal) {
-      workModal.style.display = "none";
-    }
-  };
-
-  // SELECT WORK PLACE
-
-  const flowerShop = document.querySelector("#select-flower");
-  const burgerPlace = document.querySelector("#select-burger");
-  const exchange = document.querySelector("#select-exchange");
-  const selectedJob = document.querySelector("#selected");
-  flowerShop.addEventListener("click", function (event) {
-    selectedJob.innerHTML =
-      "You decided to go and wrap some flowers! Here is some cash to keep you going!";
-    stages = 3;
-  });
-
-  burgerPlace.addEventListener("click", function (event) {
-    selectedJob.innerHTML =
-      "You decided to work at the Burger Shack! Have some money!";
-    stages = 3;
-  });
-
-  exchange.addEventListener("click", function (event) {
-    selectedJob.innerHTML =
-      "We will trust that you count the bills correctly! Take some money!";
-    stages = 3;
-  });
-}
-
-if (stages == 3) {
-  tutorial.textContent =
-    "That concludes the most important parts of the game. You seem a natural at this, so I'll leave the rest for you. ";
-}
