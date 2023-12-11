@@ -186,7 +186,7 @@ window.onclick = function (event) {
 
 const workModal = document.querySelector("#work-modal");
 const workButton = document.querySelector("#work-button");
-const workSpan = document.getElementsByClassName("close")[4];
+const workSpan = document.getElementsByClassName("close")[5];
 
 const jobElement = document.querySelector('.selected-job');
 
@@ -235,20 +235,45 @@ flowerShop.addEventListener("click", function (event) {
   jobElement.classList.remove("hidden");
   continueGame.classList.remove('hidden');
   selectedJob.innerHTML =
-    "You decided to go and wrap some flowers! Here is some cash to keep you going! <br> Click continue to save and add 175€ to your account.";
+    "You decided to go and wrap some flowers! Here is some cash to keep you going! <br> Click CONTINUE to save and add 175€ to your account.";
 });
 
 burgerPlace.addEventListener("click", function (event) {
   jobElement.classList.remove("hidden");
   continueGame.classList.remove('hidden');
   selectedJob.innerHTML =
-    "You decided to work at the Burger Shack! Have some money! <br> Click continue to save and add 175€ to your account.";
+    "You decided to work at the Burger Shack! Have some money! <br> Click CONTINUE to save and add 175€ to your account.";
 });
 
 exchange.addEventListener("click", function (event) {
   jobElement.classList.remove("hidden");
   continueGame.classList.remove('hidden');
   selectedJob.innerHTML =
-    "We will trust that you count the bills correctly! Take some money! <br> Click continue to save and add 175€ to your account.";
+    "We will trust that you count the bills correctly! Take some money! <br> Click CONTINUE to save and add 175€ to your account.";
 });
 
+const exitModal = document.querySelector("#exit-modal");
+const exitButton = document.querySelector("#exit-button");
+const exitSpan = document.getElementsByClassName("close")[4];
+
+exitButton.onclick = function () {
+  // Piilotetaan kartta
+  mapElement.classList.add("hidden");
+  exitModal.style.display = "block";
+};
+
+exitSpan.onclick = function () {
+  // Näytetään kartta taas
+  mapElement.classList.remove("hidden");
+  exitModal.style.display = "none";
+};
+
+window.onclick = function (event) {
+  if (event.target == exitModal) {
+    exitModal.style.display = "none";
+  }
+};
+
+function exitToMain() {
+  window.location.href = '../index.html';
+}

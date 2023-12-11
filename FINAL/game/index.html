@@ -194,7 +194,16 @@
                     </div>
                 </li>
                 <li class="buttons">
-                    <a class="button hover" href="">Exit</a>
+                    <a id="exit-button" class="button hover">Exit</a>
+                    <div class="exit-modal" id="exit-modal">
+                        <div class="exit-content">
+                            <span class="close">&times;</span>
+                                <div>
+                                    <p>Are you sure you want to exit? <br> Click EXIT to end the game and return to log in page.</p> <br>
+                                    <a type="button" id="exit" onclick="exitToMain()">EXIT</a>
+                                </div>
+                        </div>
+                    </div>
                 </li>
             </ul>
         </nav>
