@@ -7,9 +7,9 @@ class Sql:
         self.connect = mysql.connector.connect(
             host="127.0.0.1",
             port=3306,
-            database="velkajahti",
-            user="root",
-            password="metropolia",
+            database="flight_game",
+            user="user",
+            password="password",
             autocommit=True,
         )
 
