@@ -191,10 +191,6 @@ ul {
   background-color: #dbeae7;
 }
 
-.work-modal {
-  margin-top: 8%;
-}
-
 .personal-content,
 .leader-content,
 .help-content,
@@ -208,6 +204,10 @@ ul {
   width: 80%;
   color: #392e3e;
   line-height: 2rem;
+}
+
+.work-content {
+  margin-top: 1rem;
 }
 
 .personal-content {
@@ -283,7 +283,8 @@ ul {
 
 #select-flower,
 #select-burger,
-#select-exchange {
+#select-exchange,
+#continue {
   background-color: #392e3e;
   border: 1px solid #dbeae7;
   color: #dbeae7;
@@ -294,16 +295,21 @@ ul {
 
 #select-flower:hover,
 #select-burger:hover,
-#select-exchange:hover {
+#select-exchange:hover,
+#continue:hover{
   color: #85c094;
 }
 
+#continue {
+  margin-top: 1rem;
+}
+
 .selected-job {
-  background-color: #392e3e;
-  color: #dbeae7;
+  background-color: #DBEAE7;
+  color: #392E3E;
   border-radius: 6px;
-  border: 1px solid #dbeae7;
-  padding: 1rem;
+  border: 1px solid #392E3E;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
 }
 
 /* Leaflet icons */

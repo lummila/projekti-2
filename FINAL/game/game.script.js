@@ -188,6 +188,10 @@ const workModal = document.querySelector("#work-modal");
 const workButton = document.querySelector("#work-button");
 const workSpan = document.getElementsByClassName("close")[4];
 
+const jobElement = document.querySelector('.selected-job');
+
+jobElement.classList.add("hidden");
+
 workButton.onclick = function () {
   // Piilotetaan kartta
   mapElement.classList.add("hidden");
@@ -197,6 +201,8 @@ workButton.onclick = function () {
 workSpan.onclick = function () {
   // Näytetään kartta taas
   mapElement.classList.remove("hidden");
+  jobElement.classList.add("hidden");
+  continueGame.classList.add('hidden');
   workModal.style.display = "none";
 };
 
@@ -212,17 +218,37 @@ const flowerShop = document.querySelector("#select-flower");
 const burgerPlace = document.querySelector("#select-burger");
 const exchange = document.querySelector("#select-exchange");
 const selectedJob = document.querySelector("#selected");
+
+const continueGame = document.querySelector('.continue');
+continueGame.classList.add('hidden');
+
+const addMoney = document.querySelector('#continue');
+
+addMoney.addEventListener('click', function (event) {
+  jobElement.classList.add("hidden");
+  continueGame.classList.add('hidden');
+  mapElement.classList.remove("hidden");
+  workModal.style.display = "none";
+});
+
 flowerShop.addEventListener("click", function (event) {
+  jobElement.classList.remove("hidden");
+  continueGame.classList.remove('hidden');
   selectedJob.innerHTML =
-    "You decided to go and wrap some flowers! Here is some cash to keep you going!";
+    "You decided to go and wrap some flowers! Here is some cash to keep you going! <br> Click continue to save and add 175€ to your account.";
 });
 
 burgerPlace.addEventListener("click", function (event) {
+  jobElement.classList.remove("hidden");
+  continueGame.classList.remove('hidden');
   selectedJob.innerHTML =
-    "You decided to work at the Burger Shack! Have some money!";
+    "You decided to work at the Burger Shack! Have some money! <br> Click continue to save and add 175€ to your account.";
 });
 
 exchange.addEventListener("click", function (event) {
+  jobElement.classList.remove("hidden");
+  continueGame.classList.remove('hidden');
   selectedJob.innerHTML =
-    "We will trust that you count the bills correctly! Take some money!";
+    "We will trust that you count the bills correctly! Take some money! <br> Click continue to save and add 175€ to your account.";
 });
+
