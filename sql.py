@@ -4,6 +4,7 @@ from geopy import distance
 
 class Sql:
     def __init__(self) -> None:
+        """"
         self.connect = mysql.connector.connect(
             host="127.0.0.1",
             port=3306,
@@ -13,7 +14,7 @@ class Sql:
             autocommit=True,
         )
 
-    """def __init__(self) -> None:
+    def __init__(self) -> None:
         self.connect = mysql.connector.connect(
             host="127.0.0.1",
             port=3306,
@@ -22,6 +23,17 @@ class Sql:
             password="",
             autocommit=True,
         )"""
+    def __init__(self) -> None:
+        self.connect = mysql.connector.connect(
+            host="127.0.0.1",
+            port=3306,
+            database="velkajahti",
+            user="root",
+            password="Challenger-1971",
+            autocommit=True,
+        )
+
+
 
     # Tiedon tuonti tietokannasta
     def pull(self, sql_code: str):
