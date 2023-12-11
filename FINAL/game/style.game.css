@@ -210,8 +210,18 @@ ul {
   line-height: 2rem;
 }
 
+.personal-content {
+  width: 30%;
+  margin-top: 1rem;
+}
+
+.leader-content {
+  width: 40%;
+  margin-top: 1rem;
+}
+
 .help-content {
-  margin-top: 10%;
+  margin-top: 2rem;
 }
 
 .close {
@@ -320,4 +330,36 @@ ul {
 
 .help-menu-content {
   display: flex;
+}
+
+/* PERSONAL SCORES TABLE */
+
+.personal-scores,
+.leader-scores {
+  color: #392e3e;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+#your-personal-scores,
+#leader-board-scores {
+  border-radius: 6px;
+  border: 1px solid #DBEAE7;
+  background-color: #b164b4;
+  padding: 0.5rem;
+  color: #DBEAE7;
+}
+
+#leader-board-scores {
+  background-color: #357654;
+}
+
+#your-personal-scores td:first-child,
+#your-personal-scores td:nth-child(2),
+#leader-board-scores td:first-child,
+#leader-board-scores td:nth-child(2),
+#leader-board-scores td:nth-child(3) {
+  border: 1px solid #392E3E;
+  border-radius: 6px;
+  padding: 0.5rem;
 }
