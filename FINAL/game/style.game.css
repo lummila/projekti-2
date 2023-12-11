@@ -55,7 +55,8 @@ ul {
   padding: 0.5rem;
 }
 
-.button {
+.button,
+.help-menu-button{
   color: #392e3e;
   padding: 1rem;
   display: block;
@@ -71,6 +72,10 @@ ul {
   border: 1px solid #392e3e;
   color: #392e3e;
   padding: 1rem;
+}
+
+.icao-buttons {
+  max-width: 50%;
 }
 
 .icao-button {
@@ -279,4 +284,10 @@ ul {
   border-radius: 6px;
   border: 1px solid #dbeae7;
   padding: 1rem;
+}
+
+/* HELP_MENU */
+
+.help-menu-content {
+  display: inline-block;
 }
