@@ -16,7 +16,7 @@ const round = document.querySelector("#round");
 
 const map = L.map("map").setView([60.31, 24.94], 7);
 const mapElement = document.querySelector("#map");
-
+const markers = L.layerGroup();
 // icons
 const blueIcon = L.divIcon({ className: 'blue-icon' });
 const greenIcon = L.divIcon({ className: 'green-icon' });
@@ -46,6 +46,9 @@ const gameLogic = {
     const data = await this.fetchInfo();
     // HUOM VAIN KEHITYSTARPEISIIN
     console.log(data);
+
+    markers.clearLayers();
+
     // Vinkkiteksti
     hint.textContent = data.hint;
 
@@ -60,17 +63,29 @@ const gameLogic = {
       e.addEventListener('click', () => {this.fly(icao)});
     });
     //karttapiste nykyiselle sijainnille
-    const marker = L.marker(data.location.coordinates).addTo(map);
+    const marker = L.marker(data.location.coordinates, {
+      title: data.location.airport_name,
+    });
+    //huom aleksi ei käytä addtomap-funktiota, toimiiko näin?
     marker.bindPopup(`You are here: ${data.location.airport_name}`);
     marker.openPopup();
     marker.setIcon(blueIcon);
     console.log(airports);
+
+    //lisätään täppälistaan nykyinen sijainti
+    markers.addLayer(marker);
+
     let markerArray = [];
     //for looppi joka laittaa täpät kartalle
     for (const i in airports){
-      const dot = L.marker(airports[i].coordinates).addTo(map);
+      const dot = L.marker(airports[i].coordinates, {
+        title: airports[i].airport_name,
+      });
       //väri
       dot.setIcon(greenIcon);
+      dot.bindPopup(airports[i].airport_name);
+      markers.addLayer(dot);
+    }
       //markerArray += airports[i].coordinates;
       //Tekee näppäimen, joka aukeaa klikkauksella
       const popupContent = document.createElement('div');
@@ -82,7 +97,9 @@ const gameLogic = {
       //flyButton.innerHTML = `Fly here`;
       //popupContent.append(flyButton);
       dot.bindPopup(popupContent);
-    }
+      //lisätään täpät karttaan
+      map.addLayer(markers)
+
      //const group = new L.featureGroup(markerArray);
     //map.fitBounds([markerArray]);
     //lennättä näkymän nykyiseen sijaintiin
