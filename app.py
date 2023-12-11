@@ -38,7 +38,8 @@ def login():
         output = {"ERROR": "No user information found. Please check you credentials."}
         status_code = 400
     else:
-        output = pelaaja.update(False)
+        pelaaja.update(False)
+        output = {"username": pelaaja.name, "password": pin_code}
         status_code = 200
 
     output_json = json.dumps(output)
