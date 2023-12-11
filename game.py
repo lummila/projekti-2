@@ -139,7 +139,7 @@ class Player(Rotta):
 
         # Listataan pelaajalle mahdolliset lentokohteet
         destinations = self.possible_locations(self.location, self.can_travel)
-        print(destinations)
+
         destinations_dict = {}
         for i in range(len(destinations)):
             destinations_dict[destinations[i]] = self.airport_info(destinations[i])
@@ -159,31 +159,26 @@ class Player(Rotta):
     # Funktio palauttaa listan kaikista pelaajalle
     # mahdollisista lentokohteista.
     def possible_locations(self, current: str, can_travel: bool) -> list:
-        # Pelaajan tämänhetkinen sijainti numerona
-        cur = DEST_ICAO.index(current)
-        print(cur)
+        # Listat kaikkien kierrosten maista
+        first_round = [DEST_ICAO[x] for x in range(1, 6)]
+        second_round = [DEST_ICAO[x] for x in range(6, 11)]
+        third_round = [DEST_ICAO[x] for x in range(11, 16)]
+        fourth_round = [DEST_ICAO[x] for x in range(16, 21)]
+        fifth_round = [DEST_ICAO[x] for x in range(21, 26)]
 
-        # - Testataan pelaajan DEST_ICAO-arvonumeroa, jotta
-        # voidaan asettaa oikeat rajat palautettavalle
-        # listalle mahdollisista lentomaista.
-        # - Pelaaja-luokassa on can_travel-ominaisuus,
-        # joka määrittää sen, voiko pelaaja edetä
-        # seuraavan tason lentokentille, ja tämä funktio
-        # testaa sen.
-        (s, e) = (1, 5)
-        if cur < 1:
-            (s, e) = (1, 5)
-        elif 1 <= cur <= 5:
-            (s, e) = (6, 10) if can_travel else (1, 5)
-        elif 6 <= cur <= 10:
-            (s, e) = (11, 15) if can_travel else (6, 10)
-        elif 11 <= cur <= 15:
-            (s, e) = (16, 20) if can_travel else (11, 15)
-        elif 16 <= cur:
-            (s, e) = (21, 25) if can_travel else (16, 20)
-        # Rakennetaan viiden sijainnin lista, jonka
-        # indeksit edellinen ehtopuu on määrittänyt.
-        return [DEST_ICAO[x] for x in range(s, e + 1)]
+        # Käydään läpi jokainen lista ja palautetaan oikea lista mahdollisia kohdemaita
+        if current in first_round:
+            return second_round if can_travel else first_round
+        elif current in second_round:
+            return third_round if can_travel else second_round
+        elif current in third_round:
+            return fourth_round if can_travel else third_round
+        elif current in fourth_round:
+            return fifth_round if can_travel else fourth_round
+        elif current in fifth_round:
+            return fifth_round
+        else:
+            return first_round
 
     def hint(self):
         # Vedä tietokannasta vinkki seuraavaa kohdetta varten
