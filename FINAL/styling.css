@@ -85,7 +85,8 @@ html, body {
 .btn_container img:hover {
     transform: scale(102%) translateY(-15px);
     opacity: 80%;
-    box-shadow: 3px 3px 10px #B164B4;
+    box-shadow: 7px 7px 25px #B164B4;
+    border: 3px solid #DBEAE7;
 }
 
 
@@ -190,6 +191,7 @@ html, body {
     text-align: center;
     visibility: hidden;
     transition: transform 0.4s, top 0.4s;
+    z-index: 1;
 }
 
 .instructionsPop p {
@@ -197,11 +199,11 @@ html, body {
     margin: auto;
     padding-top: 5rem;
     font-family: "Georgia Pro Black", verdana, sans-serif;
-    padding-bottom: 5rem;
+    padding-bottom: 3rem;
 }
 
 .instructionsPop h2 {
-    padding-top: 4rem;
+    padding-top: 2rem;
     font-family: "Georgia Pro Black", verdana, sans-serif
 }
 
@@ -249,10 +251,12 @@ html, body {
     border-radius: 8px;
     font-family: inherit;
     box-shadow: 3px 3px 7px 3px #B164B4;
+    font-family: "Georgia Pro Black", verdana, sans-serif
 }
 
 .loginBody {
     background-color: #392E3E;
+    font-family: "Georgia Pro Black", verdana, sans-serif
 }
 
 .loginForm input {
@@ -261,6 +265,7 @@ html, body {
     margin: auto;
     border: 3px solid #357654;
     border-radius: 15px;
+    font-family: "Georgia Pro Black", verdana, sans-serif
 
 }
 
