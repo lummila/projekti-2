@@ -76,8 +76,11 @@ continueGame.classList.add("hidden");
 
 const addMoney = document.querySelector("#continue");
 
+// Pelin voitto- ja häviämodaalit
 const winnerModal = document.querySelector("#winner-modal");
 const loserModal = document.querySelector(".loser-modal");
+
+const resetButton = document.querySelector("#reset");
 
 // Ikonit
 const blueIcon = L.divIcon({ className: "blue-icon" });
@@ -416,4 +419,9 @@ exchange.addEventListener("click", function (event) {
 
   selectedJob.innerHTML =
     "We will trust that you count the bills correctly! Take some money! <br> Click CONTINUE to save and add 175€ to your account.";
+});
+
+resetButton.addEventListener("click", async (e) => {
+  e.preventDefault();
+  await gameLogic.reset();
 });
