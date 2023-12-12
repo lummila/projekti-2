@@ -1,333 +1,437 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-        crossorigin=""/>
-    <link href="style.game.css" rel="stylesheet">
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-        crossorigin="" defer></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link href="style.game.css" rel="stylesheet" />
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+      defer
+    ></script>
     <script src="game.script.js" defer></script>
-      <!-- <script src="../verkkosivu/script.js" defer></script> -->
+    <!-- <script src="../verkkosivu/script.js" defer></script> -->
     <title>Velkajahti</title>
-</head>
+  </head>
 
-<body>
-<div class="container">
-    <header class="page-header">
-        <h1 class="title">
-            $ CHASE THE RAT $
-        </h1>
+  <body>
+    <div class="container">
+      <header class="page-header">
+        <h1 class="title">$ CHASE THE RAT $</h1>
         <nav>
-            <ul class="flex-wrap">
-                <li class="buttons">
-                    <a id="personal-button" class="button hover">Personal</a>
-                    <div id="personal-modal" class="personal-modal">
-                        <div class="personal-content">
-                            <span class="close">&times;</span>
-                            <section class="personal-scores">
-                                <h3>TOP 10 PERSONAL SCORES:</h3>
-                                <table id="your-personal-scores">
-                                    <tr>
-                                        <td>1.</td>
-                                        <td class="score"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>2.</td>
-                                        <td class="score"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>3.</td>
-                                        <td class="score"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>4.</td>
-                                        <td class="score"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>5.</td>
-                                        <td class="score"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>6.</td>
-                                        <td class="score"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>7.</td>
-                                        <td class="score"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>8.</td>
-                                        <td class="score"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>9.</td>
-                                        <td class="score"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>10.</td>
-                                        <td class="score"></td>
-                                    </tr>
-                                </table>
-                            </section>
-                        </div>
-                    </div>
-                </li>
-                <li class="buttons">
-                    <a id="leader-button" class="button hover">Leaderboard</a>
-                    <div id="leader-modal" class="leader-modal">
-                        <div class="leader-content">
-                            <span class="close">&times;</span>
-                            <section class="leader-scores">
-                                <h3>TOP 10 HIGH SCORES:</h3>
-                                <table id="leader-board-scores">
-                                    <tr>
-                                        <td>1.</td>
-                                        <td class="user-name"></td>
-                                        <td class="top-score"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>2.</td>
-                                        <td class="user-name"></td>
-                                        <td class="top-score"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>3.</td>
-                                        <td class="user-name"></td>
-                                        <td class="top-score"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>4.</td>
-                                        <td class="user-name"></td>
-                                        <td class="top-score"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>5.</td>
-                                        <td class="user-name"></td>
-                                        <td class="top-score"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>6.</td>
-                                        <td class="user-name"></td>
-                                        <td class="top-score"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>7.</td>
-                                        <td class="user-name"></td>
-                                        <td class="top-score"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>8.</td>
-                                        <td class="user-name"></td>
-                                        <td class="top-score"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>9.</td>
-                                        <td class="user-name"></td>
-                                        <td class="top-score"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>10.</td>
-                                        <td class="user-name"></td>
-                                        <td class="top-score"></td>
-                                    </tr>
-                                </table>
-                            </section>
-                        </div>
-                    </div>
-                </li>
-                <li class="buttons">
-                    <a id="instruction-button" class="button hover">Instructions</a>
-                    <div id="instruction-modal" class="instruction-modal">
-                        <div class="instruction-content">
-                            <span class="close">&times;</span>
-                            <p style="text-align: center">Welcome to Chase The Rat!<br><br><em>This guide is not required, but may help you understand the game.</em><br><br>
-                                You'll need to enter an existing username and a PIN-code to play with your user OR<br>
-                                you can create new username and a PIN-code.<br><br>
-                                In this game you'll travel between different airports, trying to find the Rat who owes you money.<br>
-                                The rat has done some airport-hopping and the game will give you clues of his route and final location.<br>
-                                Each game will draw a new route of five airports, the fifth being the current location of the Rat.<br>
-                                You'll need to unravel the clues and follow the route that the rat took.<br><br>
-                                There are a total of ten rounds in each game for you to try to find the Rat and each time you travel you'll use one round.<br>
-                                You have a limited amount of money to spend on your trip and your emissions will alter your final score in the game.<br><br>
-                                The game will give you your first clue and after unraveling it you can start travelling to the first airport.<br>
-                                If you get the given clue correct the game will give you a clue to reach the next airport.<br><br>
-                                With the clues, you also have a chance to be given a positive OR negative coincidence.<br>
-                                If you solve the clue the possibility to get a positive coincidence is much higher<br>
-                                AND if you travel to the wrong airport you are more likely to experience negative coincidence.<br><br>
-                                If you reach the final destination where the Rat is within the given rounds: <em>you'll win.</em><br><br>
-                                After reaching the goal the game will calculate your final points:<br>
-                                <em>Your money * rounds left + Emission budget - actual emissions.</em><br><br>
-                                If you don't find the Rat within the ten rounds: <em>you'll lose.</em>
-                        </div>
-                    </div>
-                </li>
-                <li class="buttons">
-                    <a id="help-button" class="button hover">Help</a>
-                    <div id="help-modal" class="help-modal">
-                        <div class="help-content">
-                            <span class="close">&times;</span>
-                            <section style="margin-top: 1rem">
-                                <div class="help-menu-content">
-                                    <button type="button" class="help-menu-button">INSTRUCTIONS</button>
-                                        <p>Displays the rules of the game. You can click and view the INSTRUCTIONS during the game.</p>
-                                </div>
-                                <div class="help-menu-content">
-                                    <button type="button" class="help-menu-button">LEADERBOARD</button>
-                                        <p>Displays top 10 scores.</p>
-                                </div>
-                                <div class="help-menu-content">
-                                    <button type="button" class="help-menu-button">PERSONAL</button>
-                                        <p>Displays your own previous scores.</p>
-                                </div>
-                                <div class="help-menu-content">
-                                    <button type="button" class="help-menu-button">EXIT</button>
-                                        <p>Exits the game. If you click EXIT, the game will end.<br>
-                                            You can go back to view the tutorial or log in with a different user.</p>
-                                </div>
-                            </section>
-                        </div>
-                    </div>
-                </li>
-                <li class="buttons">
-                    <a id="exit-button" class="button hover">Exit</a>
-                    <div class="exit-modal" id="exit-modal">
-                        <div class="exit-content">
-                            <span class="close">&times;</span>
-                                <div>
-                                    <p>Are you sure you want to exit? <br> Click EXIT to end the game and return to log in page.</p> <br>
-                                    <a type="button" id="exit" onclick="exitToMain()">EXIT</a>
-                                </div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        <div class="elements">
-            <section class="hint">
-                <header>
-                    <h3>Hint for your next location:</h3>
-                </header>
-                <p>
-                    <span id="next-hint"></span>
-                </p>
-            </section>
-            <section class="box">
-                <div class="icao-buttons">
-                    <button type="button" class="icao-button hover" style="margin-bottom: 0.5rem">-----------Icao + airport-----------</button>
-                    <button type="button" class="icao-button hover" style="margin-bottom: 0.5rem">-----------Icao + airport-----------</button>
-                    <button type="button" class="icao-button hover" style="margin-bottom: 0.5rem">-----------Icao + airport-----------</button>
-                    <button type="button" class="icao-button hover" style="margin-bottom: 0.5rem">-----------Icao + airport-----------</button>
-                    <button type="button" class="icao-button hover">-----------Icao + airport-----------</button>
+          <ul class="flex-wrap">
+            <li class="buttons">
+              <a id="personal-button" class="button hover">Personal</a>
+              <div id="personal-modal" class="personal-modal">
+                <div class="personal-content">
+                  <span class="close">&times;</span>
+                  <section class="personal-scores">
+                    <h3>TOP 10 PERSONAL SCORES:</h3>
+                    <table id="your-personal-scores">
+                      <tr>
+                        <td>1.</td>
+                        <td class="score"></td>
+                      </tr>
+                      <tr>
+                        <td>2.</td>
+                        <td class="score"></td>
+                      </tr>
+                      <tr>
+                        <td>3.</td>
+                        <td class="score"></td>
+                      </tr>
+                      <tr>
+                        <td>4.</td>
+                        <td class="score"></td>
+                      </tr>
+                      <tr>
+                        <td>5.</td>
+                        <td class="score"></td>
+                      </tr>
+                      <tr>
+                        <td>6.</td>
+                        <td class="score"></td>
+                      </tr>
+                      <tr>
+                        <td>7.</td>
+                        <td class="score"></td>
+                      </tr>
+                      <tr>
+                        <td>8.</td>
+                        <td class="score"></td>
+                      </tr>
+                      <tr>
+                        <td>9.</td>
+                        <td class="score"></td>
+                      </tr>
+                      <tr>
+                        <td>10.</td>
+                        <td class="score"></td>
+                      </tr>
+                    </table>
+                  </section>
                 </div>
-                <div class="work-button">
-                    <button type="button" class="work hover" id="work-button">
-                        <h3>Work</h3>
-                    </button>
-                    <div id="work-modal" class="work-modal">
-                        <div class="work-content">
-                            <span class="close">&times;</span>
-                            <div class="stay-to-work">
-                                <p>You could not afford to fly to your next location... You need to work and earn some money!<br>
-                                There are few places looking for help. If you choose to work and stay at the airport, ONE round will be used.</p>
-                            </div>
-                            <section class="work-box">
-                                <div>
-                                    <h3 class="work-header">Choose a job to work at:</h3>
-                                </div>
-                            </section>
-                            <section class="work-buttons">
-                                <div class="flower-button" style="margin-right: 0.5rem">
-                                    <p>The flower shop could need a hand. Click FLOWER to work at the flower shop.</p>
-                                    <button type="button" id="select-flower">FLOWER</button>
-                                </div>
-                                <div class="burger-button" style="margin-right: 0.5rem">
-                                    <p>You're going to be flipping some burgers. Click BURGER to work at the fastfood restaurant.</p>
-                                    <button type="button" id="select-burger">BURGER</button>
-                                </div>
-                                <div class="exchange-button">
-                                    <p>The currency exchange needs someone to count the bills. Click EXCHANGE to work at the currency exchange.</p>
-                                    <button type="button" id="select-exchange">EXCHANGE</button>
-                                </div>
-                            </section>
-                            <section>
-                                <div class="selected-job">
-                                    <p><span id="selected"></span></p>
-                                </div>
-                                <div class="continue">
-                                    <button type="button" id="continue">CONTINUE</button>
-                                </div>
-                            </section>
-                        </div>
-                    </div>
+              </div>
+            </li>
+            <li class="buttons">
+              <a id="leader-button" class="button hover">Leaderboard</a>
+              <div id="leader-modal" class="leader-modal">
+                <div class="leader-content">
+                  <span class="close">&times;</span>
+                  <section class="leader-scores">
+                    <h3>TOP 10 HIGH SCORES:</h3>
+                    <table id="leader-board-scores">
+                      <tr>
+                        <td>1.</td>
+                        <td class="user-name"></td>
+                        <td class="top-score"></td>
+                      </tr>
+                      <tr>
+                        <td>2.</td>
+                        <td class="user-name"></td>
+                        <td class="top-score"></td>
+                      </tr>
+                      <tr>
+                        <td>3.</td>
+                        <td class="user-name"></td>
+                        <td class="top-score"></td>
+                      </tr>
+                      <tr>
+                        <td>4.</td>
+                        <td class="user-name"></td>
+                        <td class="top-score"></td>
+                      </tr>
+                      <tr>
+                        <td>5.</td>
+                        <td class="user-name"></td>
+                        <td class="top-score"></td>
+                      </tr>
+                      <tr>
+                        <td>6.</td>
+                        <td class="user-name"></td>
+                        <td class="top-score"></td>
+                      </tr>
+                      <tr>
+                        <td>7.</td>
+                        <td class="user-name"></td>
+                        <td class="top-score"></td>
+                      </tr>
+                      <tr>
+                        <td>8.</td>
+                        <td class="user-name"></td>
+                        <td class="top-score"></td>
+                      </tr>
+                      <tr>
+                        <td>9.</td>
+                        <td class="user-name"></td>
+                        <td class="top-score"></td>
+                      </tr>
+                      <tr>
+                        <td>10.</td>
+                        <td class="user-name"></td>
+                        <td class="top-score"></td>
+                      </tr>
+                    </table>
+                  </section>
                 </div>
-                <div class="coincidence">
-                    <header>
-                        <h3>Coincidence</h3>
-                    </header>
+              </div>
+            </li>
+            <li class="buttons">
+              <a id="instruction-button" class="button hover">Instructions</a>
+              <div id="instruction-modal" class="instruction-modal">
+                <div class="instruction-content">
+                  <span class="close">&times;</span>
+                  <p style="text-align: center">
+                    Welcome to Chase The Rat!<br /><br /><em
+                      >This guide is not required, but may help you understand
+                      the game.</em
+                    ><br /><br />
+                    You'll need to enter an existing username and a PIN-code to
+                    play with your user OR<br />
+                    you can create new username and a PIN-code.<br /><br />
+                    In this game you'll travel between different airports,
+                    trying to find the Rat who owes you money.<br />
+                    The rat has done some airport-hopping and the game will give
+                    you clues of his route and final location.<br />
+                    Each game will draw a new route of five airports, the fifth
+                    being the current location of the Rat.<br />
+                    You'll need to unravel the clues and follow the route that
+                    the rat took.<br /><br />
+                    There are a total of ten rounds in each game for you to try
+                    to find the Rat and each time you travel you'll use one
+                    round.<br />
+                    You have a limited amount of money to spend on your trip and
+                    your emissions will alter your final score in the game.<br /><br />
+                    The game will give you your first clue and after unraveling
+                    it you can start travelling to the first airport.<br />
+                    If you get the given clue correct the game will give you a
+                    clue to reach the next airport.<br /><br />
+                    With the clues, you also have a chance to be given a
+                    positive OR negative coincidence.<br />
+                    If you solve the clue the possibility to get a positive
+                    coincidence is much higher<br />
+                    AND if you travel to the wrong airport you are more likely
+                    to experience negative coincidence.<br /><br />
+                    If you reach the final destination where the Rat is within
+                    the given rounds: <em>you'll win.</em><br /><br />
+                    After reaching the goal the game will calculate your final
+                    points:<br />
+                    <em
+                      >Your money * rounds left + Emission budget - actual
+                      emissions.</em
+                    ><br /><br />
+                    If you don't find the Rat within the ten rounds:
+                    <em>you'll lose.</em>
+                  </p>
+                </div>
+              </div>
+            </li>
+            <li class="buttons">
+              <a id="help-button" class="button hover">Help</a>
+              <div id="help-modal" class="help-modal">
+                <div class="help-content">
+                  <span class="close">&times;</span>
+                  <section style="margin-top: 1rem">
+                    <div class="help-menu-content">
+                      <button type="button" class="help-menu-button">
+                        INSTRUCTIONS
+                      </button>
+                      <p>
+                        Displays the rules of the game. You can click and view
+                        the INSTRUCTIONS during the game.
+                      </p>
+                    </div>
+                    <div class="help-menu-content">
+                      <button type="button" class="help-menu-button">
+                        LEADERBOARD
+                      </button>
+                      <p>Displays top 10 scores.</p>
+                    </div>
+                    <div class="help-menu-content">
+                      <button type="button" class="help-menu-button">
+                        PERSONAL
+                      </button>
+                      <p>Displays your own previous scores.</p>
+                    </div>
+                    <div class="help-menu-content">
+                      <button type="button" class="help-menu-button">
+                        EXIT
+                      </button>
+                      <p>
+                        Exits the game. If you click EXIT, the game will end.<br />
+                        You can go back to view the tutorial or log in with a
+                        different user.
+                      </p>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </li>
+            <li class="buttons">
+              <a id="exit-button" class="button hover">Exit</a>
+              <div class="exit-modal" id="exit-modal">
+                <div class="exit-content">
+                  <span class="close">&times;</span>
+                  <div>
                     <p>
-                        <span id="given-coincidence"></span>
+                      Are you sure you want to exit? <br />
+                      Click EXIT to end the game and return to log in page.
                     </p>
+                    <br />
+                    <a type="button" id="exit" onclick="exitToMain()">EXIT</a>
+                  </div>
                 </div>
-            </section>
-            <section class="status">
-                <table id="player-status">
-                    <tr>
-                        <td>Money left:</td>
-                        <td>CO2 emissions:</td>
-                        <td>Round:</td>
-                    </tr>
-                    <tr>
-                        <td id="money"></td>
-                        <td id="emissions"></td>
-                        <td id="round"></td>
-                    </tr>
-                </table>
-            </section>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+      <main>
+        <div class="elements">
+          <section class="hint">
+            <header>
+              <h3>Hint for your next location:</h3>
+            </header>
+            <p>
+              <span id="next-hint"></span>
+            </p>
+          </section>
+          <section class="box">
+            <div class="icao-buttons">
+              <button
+                type="button"
+                class="icao-button hover"
+                style="margin-bottom: 0.5rem"
+              >
+                -----------Icao + airport-----------
+              </button>
+              <button
+                type="button"
+                class="icao-button hover"
+                style="margin-bottom: 0.5rem"
+              >
+                -----------Icao + airport-----------
+              </button>
+              <button
+                type="button"
+                class="icao-button hover"
+                style="margin-bottom: 0.5rem"
+              >
+                -----------Icao + airport-----------
+              </button>
+              <button
+                type="button"
+                class="icao-button hover"
+                style="margin-bottom: 0.5rem"
+              >
+                -----------Icao + airport-----------
+              </button>
+              <button type="button" class="icao-button hover">
+                -----------Icao + airport-----------
+              </button>
+            </div>
+            <div class="work-button">
+              <button type="button" class="work hover" id="work-button">
+                <h3>Work</h3>
+              </button>
+              <div id="work-modal" class="work-modal">
+                <div class="work-content">
+                  <span class="close">&times;</span>
+                  <div class="stay-to-work">
+                    <p>
+                      You could not afford to fly to your next location... You
+                      need to work and earn some money!<br />
+                      There are few places looking for help. If you choose to
+                      work and stay at the airport, ONE round will be used.
+                    </p>
+                  </div>
+                  <section class="work-box">
+                    <div>
+                      <h3 class="work-header">Choose a job to work at:</h3>
+                    </div>
+                  </section>
+                  <section class="work-buttons">
+                    <div class="flower-button" style="margin-right: 0.5rem">
+                      <p>
+                        The flower shop could need a hand. Click FLOWER to work
+                        at the flower shop.
+                      </p>
+                      <button type="button" id="select-flower">FLOWER</button>
+                    </div>
+                    <div class="burger-button" style="margin-right: 0.5rem">
+                      <p>
+                        You're going to be flipping some burgers. Click BURGER
+                        to work at the fastfood restaurant.
+                      </p>
+                      <button type="button" id="select-burger">BURGER</button>
+                    </div>
+                    <div class="exchange-button">
+                      <p>
+                        The currency exchange needs someone to count the bills.
+                        Click EXCHANGE to work at the currency exchange.
+                      </p>
+                      <button type="button" id="select-exchange">
+                        EXCHANGE
+                      </button>
+                    </div>
+                  </section>
+                  <section>
+                    <div class="selected-job">
+                      <p><span id="selected"></span></p>
+                    </div>
+                    <div class="continue">
+                      <button type="button" id="continue">CONTINUE</button>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+            <div class="coincidence">
+              <header>
+                <h3>Coincidence</h3>
+              </header>
+              <p>
+                <span id="given-coincidence"></span>
+              </p>
+            </div>
+          </section>
+          <section class="status">
+            <table id="player-status">
+              <tr>
+                <td>Money left:</td>
+                <td>CO2 emissions:</td>
+                <td>Round:</td>
+              </tr>
+              <tr>
+                <td id="money"></td>
+                <td id="emissions"></td>
+                <td id="round"></td>
+              </tr>
+            </table>
+          </section>
         </div>
         <div class="game-map">
-            <section class="map">
-                <div id="map"></div>
-            </section>
+          <section class="map">
+            <div id="map"></div>
+          </section>
+        </div>
+        <div>
+          <button type="button" class="test-button">TEST</button>
+          <button type="button" class="test-button2">2 TEST</button>
         </div>
         <div id="winner-modal" class="winner-modal">
-            <div class="winner-content">
-                <h1 class="game-end">Congratulations! YOU WON!</h1>
-                <p class="your-points">YOUR POINTS:<span></span></p><br>
-                <p>Click RESET to play again or EXIT to go back to log in.</p>
-                <ul class="play-again">
-                    <li>
-                        <a type="button" id="exit" onclick="exitToMain()" style="margin-right: 1rem">EXIT</a>
-                    </li>
-                    <li>
-                        <a type="button" id="reset" href="">RESET</a>
-                    </li>
-                </ul>
-            </div>
+          <div class="winner-content">
+            <span class="close">&times;</span>
+            <h1 class="game-end">Congratulations! YOU WON!</h1>
+            <p class="your-points">YOUR POINTS:<span></span></p>
+            <br />
+            <p>Click RESET to play again or EXIT to go back to log in.</p>
+            <ul class="play-again">
+              <li>
+                <a
+                  type="button"
+                  id="exit"
+                  onclick="exitToMain()"
+                  style="margin-right: 1rem"
+                  >EXIT</a
+                >
+              </li>
+              <li>
+                <a type="button" id="reset">RESET</a>
+              </li>
+            </ul>
+          </div>
         </div>
         <div id="loser-modal" class="loser-modal">
-            <div class="loser-content">
-                <h1 class="game-end">You did not find the rat... YOU LOST!</h1>
-                <p>Click RESET to play again or EXIT to go back to log in.</p>
-                <ul class="play-again">
-                    <li>
-                        <a type="button" id="exit" onclick="exitToMain()" style="margin-right: 1rem">EXIT</a>
-                    </li>
-                    <li>
-                        <a type="button" id="reset" href="">RESET</a>
-                    </li>
-                </ul>
-            </div>
+          <div class="loser-content">
+            <span class="close">&times;</span>
+            <h1 class="game-end">You did not find the rat... YOU LOST!</h1>
+            <p>Click RESET to play again or EXIT to go back to log in.</p>
+            <ul class="play-again">
+              <li>
+                <a
+                  type="button"
+                  id="exit"
+                  onclick="exitToMain()"
+                  style="margin-right: 1rem"
+                  >EXIT</a
+                >
+              </li>
+              <li>
+                <a type="button" id="reset" href="">RESET</a>
+              </li>
+            </ul>
+          </div>
         </div>
-    </main>
-</div>
-</body>
-
+      </main>
+    </div>
+  </body>
 </html>

@@ -2,8 +2,11 @@
 
 // TÄRKEÄ: PELAAJAN TIEDOT OVAT LOKAALISTI TALLENNETTU TÄHÄN!
 let playerData = {};
-// ONKO PELI OHI, JA NÄYTETÄÄNKÖ VOITTOIKKUNA?
-let gameOver = false;
+// Jos playerData.final_score on olemassa, peli päättyy
+// Kaikkien pisteille
+let leaderboard = {};
+// Omille pisteille
+let personal_leaderboard = {};
 
 // Pelaajan vinkki seuraavaan kohteeseen
 const hint = document.querySelector("#next-hint");
@@ -24,10 +27,15 @@ const personalModal = document.querySelector("#personal-modal");
 const personalButton = document.querySelector("#personal-button");
 const personalSpan = document.getElementsByClassName("close")[0];
 
+const personalScores = document.querySelectorAll(".score");
+
 // Parhaiden pisteiden lista
 const leaderModal = document.querySelector("#leader-modal");
 const leaderButton = document.querySelector("#leader-button");
 const leaderSpan = document.getElementsByClassName("close")[1];
+
+const leaderboardNames = document.querySelectorAll(".user-name");
+const leaderboardScores = document.querySelectorAll(".top-score");
 
 // Instructions-nappula
 const instructionModal = document.querySelector("#instruction-modal");
@@ -43,7 +51,6 @@ const helpSpan = document.getElementsByClassName("close")[3];
 const exitModal = document.querySelector("#exit-modal");
 const exitButton = document.querySelector("#exit-button");
 const exitSpan = document.getElementsByClassName("close")[4];
-
 
 // Work-nappula
 const workModal = document.querySelector("#work-modal");
@@ -68,6 +75,12 @@ const continueGame = document.querySelector(".continue");
 continueGame.classList.add("hidden");
 
 const addMoney = document.querySelector("#continue");
+
+// Pelin voitto- ja häviämodaalit
+const winnerModal = document.querySelector("#winner-modal");
+const loserModal = document.querySelector(".loser-modal");
+
+const resetButton = document.querySelector("#reset");
 
 // Ikonit
 const blueIcon = L.divIcon({ className: "blue-icon" });
@@ -124,9 +137,8 @@ const gameLogic = {
         console.error("Error in work()", response.error);
       }
 
-      const response_json = response.json();
-      playerData.money = response_json.money;
-
+      const response_json = await response.json();
+      playerData = response_json;
       this.update();
     } catch (error) {
       console.error("Error in fetching work()", error);
@@ -135,20 +147,14 @@ const gameLogic = {
 
   async highScore(personal) {
     try {
-      if (personal) {
-        const response = await fetch(
-          "http://127.0.0.1:5000/highscore?personal=yes"
-        );
-      } else {
-        const response = await fetch(
-          "http://127.0.0.1:5000/highscore?personal=no"
-        );
-      }
+      const response = await fetch(
+        `http://127.0.0.1:5000/highscore?personal=${personal ? true : false}`
+      );
       if (!response.ok) {
         console.error("Error in highScore(personal)", response.error);
       }
 
-      response_json = response.json();
+      const response_json = await response.json();
 
       return response_json;
     } catch (error) {
@@ -160,9 +166,13 @@ const gameLogic = {
     // Päivitys alkaa siitä, että otetaan lokaalisti tallennettu pelaajan tieto käyttöön
     const data = playerData;
 
-    if (playerData.final_score) {
-      gameOver = true;
-      console.log("PELI OHI");
+    if (data.final_score) {
+      mapElement.classList.add("hidden");
+      winnerModal.style.display = "block";
+    }
+    if (playerData.round >= 10) {
+      mapElement.classList.add("hidden");
+      loserModal.style.display = "block";
     }
 
     // Tyhjennetään kartta täpistä
@@ -226,14 +236,35 @@ const gameLogic = {
     round.textContent = data.round;
     //kartta
   },
+  async reset() {
+    try {
+      const response = await fetch("http://127.0.0.1:5000/reset");
+      if (!response.ok) {
+        console.error("Error fetching reset()", response.error);
+      }
+
+      const response_json = await response.json();
+      playerData = response_json;
+
+      this.update();
+    } catch (error) {
+      console.error("Error in resert()", error);
+    }
+  },
 };
 
 gameLogic.fetchInfo();
 
-personalButton.onclick = function () {
+personalButton.onclick = async function () {
+  personal_leaderboard = await gameLogic.highScore(true);
+  console.log(personal_leaderboard);
   // Piilotetaan kartta
   mapElement.classList.add("hidden");
   personalModal.style.display = "block";
+
+  for (let i = 0; i < Object.keys(personal_leaderboard).length; i++) {
+    personalScores[i].textContent = Object.values(personal_leaderboard)[i];
+  }
 };
 
 personalSpan.onclick = function () {
@@ -248,10 +279,19 @@ window.onclick = function (event) {
   }
 };
 
-leaderButton.onclick = function () {
+leaderButton.onclick = async function () {
+  leaderboard = await gameLogic.highScore(false);
   // Piilotetaan kartta
   mapElement.classList.add("hidden");
   leaderModal.style.display = "block";
+
+  for (let i = 0; i < Object.keys(leaderboard).length; i++) {
+    const name = Object.keys(leaderboard)[i];
+    const points = Object.values(leaderboard)[i];
+
+    leaderboardNames[i].textContent = name;
+    leaderboardScores[i].textContent = points;
+  }
 };
 
 leaderSpan.onclick = function () {
@@ -321,7 +361,7 @@ window.onclick = function (event) {
 };
 
 function exitToMain() {
-  window.location = '../index.html'
+  window.location = "../index.html";
 }
 
 workButton.onclick = function () {
@@ -381,6 +421,7 @@ exchange.addEventListener("click", function (event) {
     "We will trust that you count the bills correctly! Take some money! <br> Click CONTINUE to save and add 175€ to your account.";
 });
 
-const winnerModal = document.querySelector("#winner-modal");
-const loserModal = document.querySelector('#loser-modal');
-
+resetButton.addEventListener("click", async (e) => {
+  e.preventDefault();
+  await gameLogic.reset();
+});
