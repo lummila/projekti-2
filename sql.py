@@ -3,7 +3,7 @@ from geopy import distance
 
 
 class Sql:
-    def __init__(self) -> None:
+    """def __init__(self) -> None:
         self.connect = mysql.connector.connect(
             host="127.0.0.1",
             port=3306,
@@ -11,17 +11,17 @@ class Sql:
             user="root",
             password="metropolia",
             autocommit=True,
-        )
+        )"""
 
-    """def __init__(self) -> None:
-    self.connect = mysql.connector.connect(
-        host="127.0.0.1",
-        port=3306,
-        database="velkajahti22",
-        user="root",
-        password="",
-        autocommit=True,
-    )"""
+    def __init__(self) -> None:
+        self.connect = mysql.connector.connect(
+            host="127.0.0.1",
+            port=3306,
+            database="velkajahti22",
+            user="root",
+            password="",
+            autocommit=True,
+    )
     """def __init__(self) -> None:
         self.connect = mysql.connector.connect(
             host="127.0.0.1",
