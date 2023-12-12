@@ -381,3 +381,26 @@ exchange.addEventListener("click", function (event) {
     "We will trust that you count the bills correctly! Take some money! <br> Click CONTINUE to save and add 175€ to your account.";
 });
 
+const testButton = document.querySelector('.test-button');
+const testButton2 = document.querySelector('.test-button2');
+
+const winnerModal = document.querySelector("#winner-modal");
+const winnerSpan = document.getElementsByClassName("close")[6];
+
+testButton.onclick = function () {
+  // Piilotetaan kartta
+  mapElement.classList.add("hidden");
+  winnerModal.style.display = "block";
+};
+
+winnerSpan.onclick = function () {
+  // Näytetään kartta taas
+  mapElement.classList.remove("hidden");
+  winnerModal.style.display = "none";
+};
+
+window.onclick = function (event) {
+  if (event.target == winnerModal) {
+    winnerModal.style.display = "none";
+  }
+};

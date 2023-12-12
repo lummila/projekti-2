@@ -297,6 +297,32 @@
                 <div id="map"></div>
             </section>
         </div>
+        <div>
+            <button type="button" class="test-button">TEST</button>
+            <button type="button" class="test-button2">2 TEST</button>
+        </div>
+        <div id="winner-modal" class="winner-modal">
+            <div class="winner-content">
+                <span class="close">&times;</span>
+                <h1 class="game-end">Congratulations! YOU WON!</h1>
+                <p class="your-points">YOUR POINTS:<span></span></p><br>
+                <p>Click RESET to play again or EXIT to go back to log in.</p>
+                <ul class="play-again">
+                    <li>
+                        <a type="button" id="exit" onclick="exitToMain()" style="margin-right: 1rem">EXIT</a>
+                    </li>
+                    <li>
+                        <a type="button" id="reset" href="">RESET</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="loser-modal" class="loser-modal">
+            <div class="loser-content">
+                <span class="close">&times;</span>
+                <h2 class="game-end">You did not find the rat... YOU LOST!</h2>
+            </div>
+        </div>
     </main>
 </div>
 </body>
