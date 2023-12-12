@@ -78,6 +78,7 @@ const addMoney = document.querySelector("#continue");
 
 // Pelin voitto- ja häviämodaalit
 const winnerModal = document.querySelector("#winner-modal");
+const yourPoints = document.querySelector(".your-points");
 const loserModal = document.querySelector(".loser-modal");
 
 const resetButton = document.querySelector("#reset");
@@ -167,6 +168,7 @@ const gameLogic = {
     const data = playerData;
 
     if (data.final_score) {
+      yourPoints.textContent = `Your points: ${playerData.final_score}`;
       mapElement.classList.add("hidden");
       winnerModal.style.display = "block";
     }
@@ -423,5 +425,8 @@ exchange.addEventListener("click", function (event) {
 
 resetButton.addEventListener("click", async (e) => {
   e.preventDefault();
+  console.log("HALOO");
+  loserModal.style.display = "none";
   await gameLogic.reset();
+  playerData.round = 1;
 });
