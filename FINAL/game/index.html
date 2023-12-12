@@ -320,7 +320,16 @@
         <div id="loser-modal" class="loser-modal">
             <div class="loser-content">
                 <span class="close">&times;</span>
-                <h2 class="game-end">You did not find the rat... YOU LOST!</h2>
+                <h1 class="game-end">You did not find the rat... YOU LOST!</h1>
+                <p>Click RESET to play again or EXIT to go back to log in.</p>
+                <ul class="play-again">
+                    <li>
+                        <a type="button" id="exit" onclick="exitToMain()" style="margin-right: 1rem">EXIT</a>
+                    </li>
+                    <li>
+                        <a type="button" id="reset" href="">RESET</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </main>
