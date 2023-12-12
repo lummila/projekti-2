@@ -388,14 +388,15 @@ addMoney.addEventListener("click", function (event) {
   jobElement.classList.add("hidden");
   continueGame.classList.add("hidden");
   mapElement.classList.remove("hidden");
+
+  gameLogic.work();
+
   workModal.style.display = "none";
 });
 
 flowerShop.addEventListener("click", function (event) {
   jobElement.classList.remove("hidden");
   continueGame.classList.remove("hidden");
-
-  gameLogic.work();
 
   selectedJob.innerHTML =
     "You decided to go and wrap some flowers! Here is some cash to keep you going! <br> Click CONTINUE to save and add 175€ to your account.";
@@ -405,8 +406,6 @@ burgerPlace.addEventListener("click", function (event) {
   jobElement.classList.remove("hidden");
   continueGame.classList.remove("hidden");
 
-  gameLogic.work();
-
   selectedJob.innerHTML =
     "You decided to work at the Burger Shack! Have some money! <br> Click CONTINUE to save and add 175€ to your account.";
 });
@@ -414,8 +413,6 @@ burgerPlace.addEventListener("click", function (event) {
 exchange.addEventListener("click", function (event) {
   jobElement.classList.remove("hidden");
   continueGame.classList.remove("hidden");
-
-  gameLogic.work();
 
   selectedJob.innerHTML =
     "We will trust that you count the bills correctly! Take some money! <br> Click CONTINUE to save and add 175€ to your account.";
