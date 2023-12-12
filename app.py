@@ -135,7 +135,7 @@ def work():
 @app.route("/highscore")
 def high_score():
     # Omat jos personal=yes
-    personal_score = True if request.args.get("personal") == "yes" else False
+    personal_score = True if request.args.get("personal") == "true" else False
 
     # Ilman globalia pelaaja on funktion sisäinen muuttuja johon ei pääse sen ulkopuolelta.
     global pelaaja
