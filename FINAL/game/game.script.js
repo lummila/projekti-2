@@ -2,8 +2,7 @@
 
 // TÄRKEÄ: PELAAJAN TIEDOT OVAT LOKAALISTI TALLENNETTU TÄHÄN!
 let playerData = {};
-// ONKO PELI OHI, JA NÄYTETÄÄNKÖ VOITTOIKKUNA?
-let gameOver = false;
+// Jos playerData.final_score on olemassa, peli päättyy
 
 // Pelaajan vinkki seuraavaan kohteeseen
 const hint = document.querySelector("#next-hint");
@@ -44,7 +43,6 @@ const exitModal = document.querySelector("#exit-modal");
 const exitButton = document.querySelector("#exit-button");
 const exitSpan = document.getElementsByClassName("close")[4];
 
-
 // Work-nappula
 const workModal = document.querySelector("#work-modal");
 const workButton = document.querySelector("#work-button");
@@ -68,6 +66,9 @@ const continueGame = document.querySelector(".continue");
 continueGame.classList.add("hidden");
 
 const addMoney = document.querySelector("#continue");
+
+const winnerModal = document.querySelector("#winner-modal");
+const loserModal = document.querySelector(".loser-modal");
 
 // Ikonit
 const blueIcon = L.divIcon({ className: "blue-icon" });
@@ -124,9 +125,8 @@ const gameLogic = {
         console.error("Error in work()", response.error);
       }
 
-      const response_json = response.json();
-      playerData.money = response_json.money;
-
+      const response_json = await response.json();
+      playerData = response_json;
       this.update();
     } catch (error) {
       console.error("Error in fetching work()", error);
@@ -148,7 +148,7 @@ const gameLogic = {
         console.error("Error in highScore(personal)", response.error);
       }
 
-      response_json = response.json();
+      response_json = await response.json();
 
       return response_json;
     } catch (error) {
@@ -160,9 +160,13 @@ const gameLogic = {
     // Päivitys alkaa siitä, että otetaan lokaalisti tallennettu pelaajan tieto käyttöön
     const data = playerData;
 
-    if (playerData.final_score) {
-      gameOver = true;
-      console.log("PELI OHI");
+    if (data.final_score) {
+      mapElement.classList.add("hidden");
+      winnerModal.style.display = "block";
+    }
+    if (playerData.round >= 10) {
+      mapElement.classList.add("hidden");
+      loserModal.style.display = "block";
     }
 
     // Tyhjennetään kartta täpistä
@@ -225,6 +229,21 @@ const gameLogic = {
     // Kierros
     round.textContent = data.round;
     //kartta
+  },
+  async reset() {
+    try {
+      const response = await fetch("http://127.0.0.1:5000/reset");
+      if (!response.ok) {
+        console.error("Error fetching reset()", response.error);
+      }
+
+      const response_json = await response.json();
+      playerData = response_json;
+
+      this.update();
+    } catch (error) {
+      console.error("Error in resert()", error);
+    }
   },
 };
 
@@ -321,7 +340,7 @@ window.onclick = function (event) {
 };
 
 function exitToMain() {
-  window.location = '../index.html'
+  window.location = "../index.html";
 }
 
 workButton.onclick = function () {
@@ -380,27 +399,3 @@ exchange.addEventListener("click", function (event) {
   selectedJob.innerHTML =
     "We will trust that you count the bills correctly! Take some money! <br> Click CONTINUE to save and add 175€ to your account.";
 });
-
-const testButton = document.querySelector('.test-button');
-const testButton2 = document.querySelector('.test-button2');
-
-const winnerModal = document.querySelector("#winner-modal");
-const winnerSpan = document.getElementsByClassName("close")[6];
-
-testButton.onclick = function () {
-  // Piilotetaan kartta
-  mapElement.classList.add("hidden");
-  winnerModal.style.display = "block";
-};
-
-winnerSpan.onclick = function () {
-  // Näytetään kartta taas
-  mapElement.classList.remove("hidden");
-  winnerModal.style.display = "none";
-};
-
-window.onclick = function (event) {
-  if (event.target == winnerModal) {
-    winnerModal.style.display = "none";
-  }
-};
