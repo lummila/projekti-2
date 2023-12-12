@@ -137,7 +137,7 @@ def work():
 @app.route("/highscore")
 def high_score():
     # Omat jos personal=yes
-    personal_score = True if request.args.get("personal") == "yes" else False
+    personal_score = True if request.args.get("personal") == "true" else False
 
     # Ilman globalia pelaaja on funktion sisäinen muuttuja johon ei pääse sen ulkopuolelta.
     global pelaaja
@@ -163,6 +163,7 @@ def high_score():
             output = {"Empty": "No high scores available"}
 
     output_json = json.dumps(output)
+    print(output_json)
 
     return Response(output_json, 200, mimetype="application/json")
 

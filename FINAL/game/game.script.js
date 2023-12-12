@@ -27,10 +27,15 @@ const personalModal = document.querySelector("#personal-modal");
 const personalButton = document.querySelector("#personal-button");
 const personalSpan = document.getElementsByClassName("close")[0];
 
+const personalScores = document.querySelectorAll(".score");
+
 // Parhaiden pisteiden lista
 const leaderModal = document.querySelector("#leader-modal");
 const leaderButton = document.querySelector("#leader-button");
 const leaderSpan = document.getElementsByClassName("close")[1];
+
+const leaderScoreNames = document.querySelectorAll(".user-name");
+const leaderScoreScores = document.querySelectorAll(".top-score");
 
 // Instructions-nappula
 const instructionModal = document.querySelector("#instruction-modal");
@@ -137,24 +142,16 @@ const gameLogic = {
 
   async highScore(personal) {
     try {
-      if (personal) {
-        const response = await fetch(
-          "http://127.0.0.1:5000/highscore?personal=yes"
-        );
-      } else {
-        const response = await fetch(
-          "http://127.0.0.1:5000/highscore?personal=no"
-        );
-      }
+      const response = await fetch(
+        `http://127.0.0.1:5000/highscore?personal=${personal ? true : false}`
+      );
       if (!response.ok) {
         console.error("Error in highScore(personal)", response.error);
       }
 
-      response_json = response.json();
+      const response_json = response.json();
 
-      personal
-        ? (personal_leaderboard = response_json)
-        : (leaderboard = response_json);
+      return response_json;
     } catch (error) {
       console.error("Error in highScore()", error);
     }
@@ -234,10 +231,17 @@ const gameLogic = {
 
 gameLogic.fetchInfo();
 
-personalButton.onclick = function () {
+personalButton.onclick = async function () {
+  personal_leaderboard = await gameLogic.highScore(true);
   // Piilotetaan kartta
   mapElement.classList.add("hidden");
   personalModal.style.display = "block";
+
+  for (let i = 0; i < Object.keys(personal_leaderboard).length; i++) {
+    const points = Object.values(personal_leaderboard)[i];
+
+    personalScores[i].textContent = points;
+  }
 };
 
 personalSpan.onclick = function () {
@@ -252,10 +256,21 @@ window.onclick = function (event) {
   }
 };
 
-leaderButton.onclick = function () {
+leaderButton.onclick = async function () {
+  leaderboard = await gameLogic.highScore(false);
   // Piilotetaan kartta
   mapElement.classList.add("hidden");
   leaderModal.style.display = "block";
+
+  for (let i = 0; i < Object.keys(leaderboard).length; i++) {
+    const name = Object.keys(leaderboard)[i];
+    const points = Object.values(leaderboard)[i];
+
+    console.log(name, points);
+
+    leaderScoreNames[i].textContent = name;
+    leaderScoreScores[i].textContent = points;
+  }
 };
 
 leaderSpan.onclick = function () {
