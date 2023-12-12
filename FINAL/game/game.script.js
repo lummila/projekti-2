@@ -81,8 +81,6 @@ const winnerModal = document.querySelector("#winner-modal");
 const yourPoints = document.querySelector(".your-points");
 const loserModal = document.querySelector(".loser-modal");
 
-const resetButton = document.querySelector("#reset");
-
 // Ikonit
 const blueIcon = L.divIcon({ className: "blue-icon" });
 const greenIcon = L.divIcon({ className: "green-icon" });
@@ -194,12 +192,6 @@ const gameLogic = {
       e.textContent = `${airports[icao].airport_name}, ${airports[icao].country_name}`;
       e.onclick = () => gameLogic.fly(icao);
     });
-    // Karttapiste nykyiselle sijainnille
-    const marker = L.marker(data.location.coordinates);
-    marker.bindPopup(`You are here: ${data.location.airport_name}`);
-    marker.openPopup();
-    marker.setIcon(blueIcon);
-    markers.addLayer(marker);
 
     //for looppi joka laittaa täpät kartalle
     for (const i in airports) {
@@ -221,6 +213,12 @@ const gameLogic = {
       dot.bindPopup(popupContent);
       markers.addLayer(dot);
     }
+    // Karttapiste nykyiselle sijainnille
+    const marker = L.marker(data.location.coordinates);
+    marker.bindPopup(`You are here: ${data.location.airport_name}`);
+    marker.openPopup();
+    marker.setIcon(blueIcon);
+    markers.addLayer(marker);
     //const group = new L.featureGroup(markerArray);
     //map.fitBounds([markerArray]);
     // Laitetaan kaikki luodut täpät esille kartalle
@@ -421,12 +419,4 @@ exchange.addEventListener("click", function (event) {
 
   selectedJob.innerHTML =
     "We will trust that you count the bills correctly! Take some money! <br> Click CONTINUE to save and add 175€ to your account.";
-});
-
-resetButton.addEventListener("click", async (e) => {
-  e.preventDefault();
-  console.log("HALOO");
-  loserModal.style.display = "none";
-  await gameLogic.reset();
-  playerData.round = 1;
 });
