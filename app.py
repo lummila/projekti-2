@@ -95,7 +95,10 @@ def fly():
     else:
         flight = pelaaja.fly(destination)
         if not flight:
-            output = {"ERROR": "Not enough money"}
+            output = pelaaja.update()
+            output[
+                "coincidence"
+            ] = "You don't have enough money! Consider going to work."
         else:
             output = pelaaja.update()
             output["coincidence"] = pelaaja.coincidence(pelaaja.can_travel)

@@ -57,19 +57,12 @@ const handleCredentials = {
       const response_json = await response.json();
       console.log(response_json);
 
-      if (response_json.ok) {
-        // Assuming the server returns a JSON object with a 'statusCode' property
-        if (response.ok) {
-          // Registration successful
-          return true;
-        } else {
-          // Registration failed, server returned a non-200 status code
-          console.error("Registration failed:", response.status);
-          return false;
-        }
+      if (!Object.keys(response_json).includes("ERROR")) {
+        // Registration successful
+        return true;
       } else {
         // Non-success HTTP status code
-        console.error("Registration failed:", response.status);
+        console.error("Registration failed:", response.error);
         return false;
       }
     } catch (error) {
