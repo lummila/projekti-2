@@ -4,6 +4,9 @@
 let playerData = {};
 // ONKO PELI OHI, JA NÄYTETÄÄNKÖ VOITTOIKKUNA?
 let gameOver = false;
+// Huippupistetaulukot omille ja globaaleille
+let leaderboard = {};
+let personal_leaderboard = {};
 
 // Pelaajan vinkki seuraavaan kohteeseen
 const hint = document.querySelector("#next-hint");
@@ -43,7 +46,6 @@ const helpSpan = document.getElementsByClassName("close")[3];
 const exitModal = document.querySelector("#exit-modal");
 const exitButton = document.querySelector("#exit-button");
 const exitSpan = document.getElementsByClassName("close")[4];
-
 
 // Work-nappula
 const workModal = document.querySelector("#work-modal");
@@ -150,7 +152,9 @@ const gameLogic = {
 
       response_json = response.json();
 
-      return response_json;
+      personal
+        ? (personal_leaderboard = response_json)
+        : (leaderboard = response_json);
     } catch (error) {
       console.error("Error in highScore()", error);
     }
@@ -321,7 +325,7 @@ window.onclick = function (event) {
 };
 
 function exitToMain() {
-  window.location = '../index.html'
+  window.location = "../index.html";
 }
 
 workButton.onclick = function () {
@@ -380,4 +384,3 @@ exchange.addEventListener("click", function (event) {
   selectedJob.innerHTML =
     "We will trust that you count the bills correctly! Take some money! <br> Click CONTINUE to save and add 175€ to your account.";
 });
-
