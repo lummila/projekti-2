@@ -27,6 +27,7 @@ main {
 
 .hover:hover {
   color: #dbeae7;
+  cursor: pointer;
 }
 
 .page-header {
@@ -129,7 +130,7 @@ ul {
   border-radius: 6px;
   border: 1px solid #392e3e;
   color: #392e3e;
-  background-color: #b164b4;
+  background-color: #d297d7;
   padding: 1rem;
 }
 
