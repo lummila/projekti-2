@@ -154,14 +154,15 @@ html, body {
 }
 
 .aboutPop p {
-    width: 40%;
+    width: 60%;
     margin: auto;
-    padding-top: 10rem;
+    padding-top: 5rem;
+    padding-bottom: 4rem;
     font-family: "Georgia Pro Black", verdana, sans-serif;
 }
 
 .aboutPop h2 {
-    padding-top: 4rem;
+    padding-top: 7rem;
     font-family: "Georgia Pro Black", verdana, sans-serif
 }
 
@@ -197,13 +198,13 @@ html, body {
 .instructionsPop p {
     width: 80%;
     margin: auto;
-    padding-top: 5rem;
+    padding-top: 4rem;
     font-family: "Georgia Pro Black", verdana, sans-serif;
     padding-bottom: 3rem;
 }
 
 .instructionsPop h2 {
-    padding-top: 2rem;
+    padding-top: 1rem;
     font-family: "Georgia Pro Black", verdana, sans-serif
 }
 
@@ -249,7 +250,6 @@ html, body {
     background-color: #DBEAE7;
     border: 15px outset #85C094;
     border-radius: 8px;
-    font-family: inherit;
     box-shadow: 3px 3px 7px 3px #B164B4;
     font-family: "Georgia Pro Black", verdana, sans-serif
 }
