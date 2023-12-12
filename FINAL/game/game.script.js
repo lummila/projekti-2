@@ -29,20 +29,27 @@ const leaderModal = document.querySelector("#leader-modal");
 const leaderButton = document.querySelector("#leader-button");
 const leaderSpan = document.getElementsByClassName("close")[1];
 
-// Help-nappulan elementit
-const helpModal = document.querySelector("#help-modal");
-const helpButton = document.querySelector("#help-button");
-const helpSpan = document.getElementsByClassName("close")[3];
-
 // Instructions-nappula
 const instructionModal = document.querySelector("#instruction-modal");
 const instructionButton = document.querySelector("#instruction-button");
 const instructionSpan = document.getElementsByClassName("close")[2];
 
+// Help-nappulan elementit
+const helpModal = document.querySelector("#help-modal");
+const helpButton = document.querySelector("#help-button");
+const helpSpan = document.getElementsByClassName("close")[3];
+
+// EXIT-nappula
+const exitModal = document.querySelector("#exit-modal");
+const exitButton = document.querySelector("#exit-button");
+const exitSpan = document.getElementsByClassName("close")[4];
+
+
 // Work-nappula
 const workModal = document.querySelector("#work-modal");
 const workButton = document.querySelector("#work-button");
-const workSpan = document.getElementsByClassName("close")[4];
+const workSpan = document.getElementsByClassName("close")[5];
+
 const jobElement = document.querySelector(".selected-job");
 jobElement.classList.add("hidden");
 
@@ -295,6 +302,28 @@ window.onclick = function (event) {
   }
 };
 
+exitButton.onclick = function () {
+  // Piilotetaan kartta
+  mapElement.classList.add("hidden");
+  exitModal.style.display = "block";
+};
+
+exitSpan.onclick = function () {
+  // Näytetään kartta taas
+  mapElement.classList.remove("hidden");
+  exitModal.style.display = "none";
+};
+
+window.onclick = function (event) {
+  if (event.target == exitModal) {
+    exitModal.style.display = "none";
+  }
+};
+
+function exitToMain() {
+  window.location = '../index.html'
+}
+
 workButton.onclick = function () {
   // Piilotetaan kartta
   mapElement.classList.add("hidden");
@@ -351,3 +380,4 @@ exchange.addEventListener("click", function (event) {
   selectedJob.innerHTML =
     "We will trust that you count the bills correctly! Take some money! <br> Click CONTINUE to save and add 175€ to your account.";
 });
+

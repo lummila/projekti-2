@@ -312,7 +312,7 @@ ul {
 #select-flower:hover,
 #select-burger:hover,
 #select-exchange:hover,
-#continue:hover #continue:hover,
+#continue:hover,
 #exit:hover {
   color: #85c094;
 }
@@ -371,6 +371,7 @@ ul {
   background-color: #b164b4;
   padding: 0.5rem;
   color: #dbeae7;
+  margin: auto;
 }
 
 #leader-board-scores {
