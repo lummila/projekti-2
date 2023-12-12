@@ -200,16 +200,11 @@ const gameLogic = {
       dot.setIcon(greenIcon);
       dot.bindPopup(airports[i].airport_name);
       markers.addLayer(dot);
-      //markerArray += airports[i].coordinates;
       //Tekee näppäimen, joka aukeaa klikkauksella
       const popupContent = document.createElement("div");
       const h4 = document.createElement("p");
       h4.innerHTML = airports[i].airport_name;
       popupContent.append(h4);
-      //const flyButton = document.createElement('button');
-      //flyButton.classList.add('button');
-      //flyButton.innerHTML = `Fly here`;
-      //popupContent.append(flyButton);
       dot.bindPopup(popupContent);
       markers.addLayer(dot);
     }
@@ -219,8 +214,6 @@ const gameLogic = {
     marker.openPopup();
     marker.setIcon(blueIcon);
     markers.addLayer(marker);
-    //const group = new L.featureGroup(markerArray);
-    //map.fitBounds([markerArray]);
     // Laitetaan kaikki luodut täpät esille kartalle
     map.addLayer(markers);
     // Lennättää näkymän nykyiseen sijaintiin
