@@ -27,6 +27,7 @@ main {
 
 .hover:hover {
   color: #dbeae7;
+  cursor: pointer;
 }
 
 .page-header {
@@ -55,14 +56,18 @@ ul {
   padding: 0.5rem;
 }
 
-.button {
+.button,
+.help-menu-button {
   color: #392e3e;
   padding: 1rem;
-  display: block;
   background-color: #e99b5d;
   text-decoration: none;
   border-radius: 6px;
   border: 1px solid #dbeae7;
+}
+
+.button {
+  display: block;
 }
 
 .hint {
@@ -74,7 +79,7 @@ ul {
 }
 
 .icao-buttons {
-  width: 50%;
+  min-width: 50%;
   margin-right: 1rem;
 }
 
@@ -87,7 +92,8 @@ ul {
   box-shadow: #392e3e 3px 3px 5px;
   border: 1px solid #392e3e;
   font-family: "Georgia Pro Black", verdana, sans-serif;
-  display: flex;
+  display: inline-flex;
+  justify-content: center;
   width: 100%;
 }
 
@@ -113,7 +119,6 @@ ul {
   background-color: #b164b4;
   text-align: center;
   font-family: "Georgia Pro Black", verdana, sans-serif;
-
   min-width: 100%;
 }
 
@@ -125,7 +130,7 @@ ul {
   border-radius: 6px;
   border: 1px solid #392e3e;
   color: #392e3e;
-  background-color: #b164b4;
+  background-color: #d297d7;
   padding: 1rem;
 }
 
@@ -178,7 +183,10 @@ ul {
 .leader-modal,
 .help-modal,
 .instruction-modal,
-.work-modal {
+.work-modal,
+.exit-modal,
+.winner-modal,
+.loser-modal {
   display: none;
   position: fixed;
   z-index: 1;
@@ -190,15 +198,22 @@ ul {
   background-color: #dbeae7;
 }
 
-.work-modal {
-  margin-top: 8%;
+.winner-modal {
+  background-color: #a9e5b6;
+}
+
+.loser-modal {
+  background-color: #f17f7f;
 }
 
 .personal-content,
 .leader-content,
 .help-content,
 .instruction-content,
-.work-content {
+.work-content,
+.exit-content,
+.winner-content,
+.loser-content {
   background-color: #85c094;
   margin: auto;
   padding: 2rem;
@@ -207,6 +222,60 @@ ul {
   width: 80%;
   color: #392e3e;
   line-height: 2rem;
+}
+
+.work-content {
+  margin-top: 1rem;
+}
+
+.personal-content {
+  width: 30%;
+  margin-top: 1rem;
+}
+
+.leader-content {
+  width: 40%;
+  margin-top: 1rem;
+}
+
+.instruction-content {
+  font-size: 0.8rem;
+  line-height: 1.5rem;
+}
+
+.help-content {
+  margin-top: 2rem;
+}
+
+.exit-content {
+  width: 40%;
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.winner-content {
+  width: 80%;
+  background-color: #357654;
+  color: #DBEAE7;
+  text-align: center;
+  border: 5px solid #d141d9;
+  box-shadow: #9e04a2 5px 5px 10px;
+  margin-top: 10%;
+}
+
+.loser-content {
+  width: 80%;
+  background-color: #f55e5e;
+  color: #392E3E;
+  text-align: center;
+  border: 5px solid #392E3E;
+  box-shadow: rgba(0, 0, 0, 0.62) 5px 5px 10px;
+  margin-top: 10%;
+}
+
+#exit,
+#reset {
+  text-decoration: none;
 }
 
 .close {
@@ -268,7 +337,10 @@ ul {
 
 #select-flower,
 #select-burger,
-#select-exchange {
+#select-exchange,
+#continue,
+#exit,
+#reset {
   background-color: #392e3e;
   border: 1px solid #dbeae7;
   color: #dbeae7;
@@ -279,14 +351,86 @@ ul {
 
 #select-flower:hover,
 #select-burger:hover,
-#select-exchange:hover {
+#select-exchange:hover,
+#continue:hover,
+#exit:hover,
+#reset:hover {
   color: #85c094;
 }
 
+#continue {
+  margin-top: 1rem;
+}
+
 .selected-job {
-  background-color: #392e3e;
-  color: #dbeae7;
+  background-color: #dbeae7;
+  color: #392e3e;
+  border-radius: 6px;
+  border: 1px solid #392e3e;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+}
+
+/* Leaflet icons */
+.blue-icon {
+  background-color: #2474ff;
+  border-radius: 50%;
+  border: 5px solid rgba(255, 255, 255, 0.5);
+}
+
+.green-icon {
+  background-color: #27ba35;
+  border-radius: 50%;
+  border: 5px solid rgba(255, 255, 255, 0.5);
+}
+
+/* HELP_MENU */
+
+.help-menu-button {
+  font-family: "Georgia Pro Black", verdana, sans-serif;
+  margin-bottom: 0.5rem;
+  margin-right: 1rem;
+  width: 20%;
+}
+
+.help-menu-content {
+  display: flex;
+}
+
+/* PERSONAL SCORES TABLE */
+
+.personal-scores,
+.leader-scores {
+  color: #392e3e;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+#your-personal-scores,
+#leader-board-scores {
   border-radius: 6px;
   border: 1px solid #dbeae7;
-  padding: 1rem;
+  background-color: #b164b4;
+  padding: 0.5rem;
+  color: #dbeae7;
+  margin: auto;
+}
+
+#leader-board-scores {
+  background-color: #357654;
+}
+
+#your-personal-scores td:first-child,
+#your-personal-scores td:nth-child(2),
+#leader-board-scores td:first-child,
+#leader-board-scores td:nth-child(2),
+#leader-board-scores td:nth-child(3) {
+  border: 1px solid #392e3e;
+  border-radius: 6px;
+  padding: 0.5rem;
+}
+
+.play-again {
+  display: flex;
+  padding: 2rem;
+  justify-content: center;
 }
