@@ -255,12 +255,14 @@ html, body {
 
 .loginBody {
     background-color: #392E3E;
+    font-family: "Georgia Pro Black", verdana, sans-serif;
 }
 
 .loginForm input {
     height: 25px;
     display: block;
     margin: auto;
+    font-family: "Georgia Pro Black", verdana, sans-serif;
     border: 3px solid #357654;
     border-radius: 15px;
 
@@ -276,12 +278,12 @@ html, body {
 .logSubmit {
     display: flex;
     margin: 1rem auto auto;
-    font-family: inherit;
+    font-family: "Georgia Pro Black", verdana, sans-serif;
 }
 
 .logSubmit input {
     border-radius: 14px;
-    font-family: inherit;
+    font-family: "Georgia Pro Black", verdana, sans-serif;
 }
 
 .navBar2 {
