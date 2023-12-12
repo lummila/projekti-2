@@ -63,11 +63,13 @@ def register():
 
     if not register:
         output = {"ERROR": "Username already exists."}
+        status_code = 400
     else:
         output = pelaaja.update()
+        status_code = 200
 
     output_json = json.dumps(output)
-    return Response(output_json, 200, mimetype="application/json")
+    return Response(output_json, status_code, mimetype="application/json")
 
 
 # /update
@@ -170,7 +172,9 @@ def reset():
     # Ilman globalia pelaaja on funktion sisäinen muuttuja johon ei pääse sen ulkopuolelta.
     global pelaaja
 
+    name = pelaaja.name
     pelaaja = Player()
+    pelaaja.name = name
 
     output = json.dumps({"Success": "Game reset"})
 
