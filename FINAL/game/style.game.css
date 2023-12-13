@@ -229,7 +229,7 @@ ul {
 }
 
 .personal-content {
-  width: 30%;
+  width: 20%;
   margin-top: 1rem;
 }
 
@@ -401,22 +401,19 @@ ul {
 .personal-scores,
 .leader-scores {
   color: #392e3e;
-  padding: 0.5rem;
   text-align: center;
 }
 
 #your-personal-scores,
 #leader-board-scores {
   border-radius: 6px;
-  border: 1px solid #dbeae7;
-  background-color: #b164b4;
-  padding: 0.5rem;
-  color: #dbeae7;
+  background-color: #c17bc4;
+  color: #392e3e;
   margin: auto;
 }
 
 #leader-board-scores {
-  background-color: #357654;
+  background-color: #4d9a73;
 }
 
 #your-personal-scores td:first-child,
@@ -424,7 +421,7 @@ ul {
 #leader-board-scores td:first-child,
 #leader-board-scores td:nth-child(2),
 #leader-board-scores td:nth-child(3) {
-  border: 1px solid #392e3e;
+  border: 1px solid #dbeae7;
   border-radius: 6px;
   padding: 0.5rem;
 }
