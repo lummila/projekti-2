@@ -215,11 +215,14 @@ const gameLogic = {
       flybutton.innerHTML = `Fly here`;
       flybutton.onclick = () => gameLogic.fly(icao);
       //loopataan a-variaabelilla, jossa on numero koska i:ssä on objekti ja ei looppaa
-      a += 1;
+      if (a<5) {
+        a += 1;
+      }
       popupContent.append(flybutton);
       dot.bindPopup(popupContent);
       markers.addLayer(dot);
     }
+    a=0;
     // Karttapiste nykyiselle sijainnille
     const marker = L.marker(data.location.coordinates);
     marker.bindPopup(`You are here: ${data.location.airport_name}`);
