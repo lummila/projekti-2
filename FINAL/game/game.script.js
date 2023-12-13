@@ -201,19 +201,20 @@ const gameLogic = {
       dot.setIcon(greenIcon);
       dot.bindPopup(airports[i].airport_name);
       markers.addLayer(dot);
+      // Otetaan ylös tämänhetkisen iteraation ICAO-koodi
+      const icao = Object.keys(airports)[a];
+      console.log(icao);
       //Tekee näppäimen, joka aukeaa klikkauksella
       const popupContent = document.createElement("div");
-      const h4 = document.createElement("p");
-      h4.innerHTML = airports[i].airport_name;
-      popupContent.append(h4);
+      const flybuttonpara = document.createElement("p");
+      flybuttonpara.innerHTML = airports[i].airport_name + ", " + airports[i].country_name;
+      popupContent.append(flybuttonpara);
       //tehdään näppäin lento-toiminnolle
       const flybutton = document.createElement('button');
       flybutton.classList.add('button');
       flybutton.innerHTML = `Fly here`;
-      // Otetaan ylös tämänhetkisen iteraation ICAO-koodi
-      const icao = Object.keys(airports)[a];
-      console.log(icao);
       flybutton.onclick = () => gameLogic.fly(icao);
+      //loopataan a-variaabelilla, jossa on numero koska i:ssä on objekti ja ei looppaa
       a += 1;
       popupContent.append(flybutton);
       dot.bindPopup(popupContent);
