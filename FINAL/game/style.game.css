@@ -431,3 +431,7 @@ ul {
   padding: 2rem;
   justify-content: center;
 }
+
+button {
+  cursor : pointer;
+}
