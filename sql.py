@@ -3,7 +3,7 @@ from geopy import distance
 
 
 class Sql:
-    """def __init__(self) -> None:
+    def __init__(self) -> None:
         self.connect = mysql.connector.connect(
             host="127.0.0.1",
             port=3306,
@@ -11,17 +11,17 @@ class Sql:
             user="root",
             password="metropolia",
             autocommit=True,
-        )"""
+        )
 
-    def __init__(self) -> None:
+    """def __init__(self) -> None:
         self.connect = mysql.connector.connect(
             host="127.0.0.1",
             port=3306,
             database="velkajahti22",
             user="root",
             password="",
-            autocommit=True,
-    )
+            autocommit=True,"""
+    # )
     """def __init__(self) -> None:
         self.connect = mysql.connector.connect(
             host="127.0.0.1",
@@ -39,6 +39,7 @@ class Sql:
         result = cursor.fetchall()
         cursor.close()
 
+        # print(result)
         return result
 
     # Tiedon vienti tietokantaan
@@ -131,7 +132,7 @@ class Sql:
 
     # Palauttaa max. 10 riviä huippupisteitä laskevassa järjestyksessä
     def high_score(self):
-        sql = "select screen_name, points from goal order by points desc limit 10;"
+        sql = "select * from goal order by points desc limit 10;"
 
         # Lista tupleja, joissa nimi ja pisteet
         return self.pull(sql)
@@ -139,7 +140,7 @@ class Sql:
     # Palauttaa max. 10 riviä huippupisteitä pyydetyltä pelaajalta laskevassa järjestyksessä
     def personal_high_score(self, username: str):
         sql = "select screen_name, points from goal "
-        sql += f"where screen_name = '{username}' order by points desc limit 10;"
+        sql += f"where screen_name = '{username}' order by points desc limit 1;"
 
         # Lista tupleja, joissa nimi ja pisteet
         return self.pull(sql)

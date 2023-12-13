@@ -159,8 +159,6 @@ class Player(Rotta):
                 dest_hint = x
                 break
 
-        # HUOM: Testijuttu
-        # print(dest_hint)
         # Hae SQL:stä vinkki
         return self.pull_hint(dest_hint)
 

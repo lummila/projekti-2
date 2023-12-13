@@ -258,6 +258,7 @@ personalButton.onclick = async function () {
   for (let i = 0; i < Object.keys(personal_leaderboard).length; i++) {
     personalScores[i].textContent = Object.values(personal_leaderboard)[i];
   }
+  personal_leaderboard = {};
 };
 
 personalSpan.onclick = function () {
@@ -285,6 +286,7 @@ leaderButton.onclick = async function () {
     leaderboardNames[i].textContent = name;
     leaderboardScores[i].textContent = points;
   }
+  leaderboard = {};
 };
 
 leaderSpan.onclick = function () {

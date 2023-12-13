@@ -102,10 +102,10 @@ def fly():
         else:
             output = pelaaja.update()
             output["coincidence"] = pelaaja.coincidence(pelaaja.can_travel)
-            print(output["coincidence"])
+            # print(output["coincidence"])
 
     # HUOM JOS PELAAJAN SIJAINTI ON SAMA KUIN ROTAN VIIMEINEN = PELI ON VOITETTU!
-    print(pelaaja.location, pelaaja.rotta_destination_list[4])
+    # print(pelaaja.location, pelaaja.rotta_destination_list[4])
     if pelaaja.location == pelaaja.rotta_destination_list[4]:
         # Pelaajan pisteet tallennetaan tietokantaan ja pisteet palautetaan
         final_score = pelaaja.game_over()
@@ -149,21 +149,29 @@ def high_score():
 
         # Jos omia huippupisteitä on olemassa
         if len(scores) > 0:
-            for entry in scores:
-                output[entry[0]] = entry[1]
+            output[scores[0][0]] = scores[0][1]
         else:
             output = {"Empty": "No high scores available"}
     else:
         scores = pelaaja.high_score()
+        # print(scores)
 
         # Jos huippupisteitä on olemassa
         if len(scores) > 0:
             for entry in scores:
-                output[entry[0]] = entry[1]
+                name = str(entry[0])
+                points = entry[1]
+
+                if name in output.keys() and output[name] < points:
+                    output[name] = points
+                elif name not in output.keys():
+                    output[name] = points
         else:
             output = {"Empty": "No high scores available"}
 
+    # print(output)
     output_json = json.dumps(output)
+    # print(output_json)
 
     return Response(output_json, 200, mimetype="application/json")
 
