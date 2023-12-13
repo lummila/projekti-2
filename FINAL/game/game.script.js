@@ -194,6 +194,7 @@ const gameLogic = {
     });
 
     //for looppi joka laittaa täpät kartalle
+    let a = 0;
     for (const i in airports) {
       const dot = L.marker(airports[i].coordinates);
       //väri
@@ -205,6 +206,16 @@ const gameLogic = {
       const h4 = document.createElement("p");
       h4.innerHTML = airports[i].airport_name;
       popupContent.append(h4);
+      //tehdään näppäin lento-toiminnolle
+      const flybutton = document.createElement('button');
+      flybutton.classList.add('button');
+      flybutton.innerHTML = `Fly here`;
+      // Otetaan ylös tämänhetkisen iteraation ICAO-koodi
+      const icao = Object.keys(airports)[a];
+      console.log(icao);
+      flybutton.onclick = () => gameLogic.fly(icao);
+      a += 1;
+      popupContent.append(flybutton);
       dot.bindPopup(popupContent);
       markers.addLayer(dot);
     }
