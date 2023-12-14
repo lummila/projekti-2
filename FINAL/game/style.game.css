@@ -1,8 +1,8 @@
-html,
-body {
+body,
+html {
   margin: 0;
   padding: 0;
-  background-color: #dbeae7;
+  background-color: #a49ba6;
   font-family: "Georgia Pro Black", verdana, sans-serif;
 }
 
@@ -15,9 +15,9 @@ main {
 }
 
 .container {
-  height: auto;
   width: 100%;
-  background-color: #dbeae7;
+  height: auto;
+  background-color: #a49ba6;
 }
 
 .flex-wrap {
@@ -32,7 +32,7 @@ main {
 
 .page-header {
   background-color: #392e3e;
-  color: #dbeae7;
+  color: #cbbecc;
   display: flex;
   justify-content: space-between;
   border-radius: 6px;
@@ -63,7 +63,6 @@ ul {
   background-color: #e99b5d;
   text-decoration: none;
   border-radius: 6px;
-  border: 1px solid #dbeae7;
 }
 
 .button {
@@ -195,7 +194,7 @@ ul {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: #dbeae7;
+  background-color: rgba(109, 92, 122, 0.56);
 }
 
 .winner-modal {
@@ -214,7 +213,7 @@ ul {
 .exit-content,
 .winner-content,
 .loser-content {
-  background-color: #85c094;
+  background-color: #a9d7b6;
   margin: auto;
   padding: 2rem;
   border: 1px solid #392e3e;
@@ -224,18 +223,15 @@ ul {
   line-height: 2rem;
 }
 
-.work-content {
-  margin-top: 1rem;
+.personal-content,
+.leader-content,
+.exit-content {
+  width: 50%;
+  margin-top: 2rem;
 }
 
-.personal-content {
-  width: 20%;
-  margin-top: 1rem;
-}
-
-.leader-content {
-  width: 40%;
-  margin-top: 1rem;
+.exit-content {
+  text-align: center;
 }
 
 .instruction-content {
@@ -243,14 +239,9 @@ ul {
   line-height: 1.5rem;
 }
 
-.help-content {
+.help-content,
+.work-content {
   margin-top: 2rem;
-}
-
-.exit-content {
-  width: 40%;
-  margin-top: 3rem;
-  text-align: center;
 }
 
 .winner-content {
@@ -273,8 +264,7 @@ ul {
   margin-top: 10%;
 }
 
-#exit,
-#reset {
+#exit {
   text-decoration: none;
 }
 
@@ -396,7 +386,7 @@ ul {
   display: flex;
 }
 
-/* PERSONAL SCORES TABLE */
+/* SCORES TABLE */
 
 .personal-scores,
 .leader-scores {
@@ -407,22 +397,24 @@ ul {
 #your-personal-scores,
 #leader-board-scores {
   border-radius: 6px;
-  background-color: #c17bc4;
+  background-color: #85c094;
   color: #392e3e;
   margin: auto;
 }
 
-#leader-board-scores {
-  background-color: #4d9a73;
+#your-personal-scores {
+  padding: 2rem;
+  font-size: large;
+  width: 80%;
+  border: 1px solid #392e3e;
 }
 
-#your-personal-scores td:first-child,
-#your-personal-scores td:nth-child(2),
+
 #leader-board-scores td:first-child,
 #leader-board-scores td:nth-child(2),
 #leader-board-scores td:nth-child(3) {
-  border: 1px solid #dbeae7;
-  border-radius: 6px;
+  border: 0.5px solid #392e3e;
+  border-radius: 2px;
   padding: 0.5rem;
 }
 
