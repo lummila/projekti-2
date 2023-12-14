@@ -84,6 +84,7 @@ const loserModal = document.querySelector(".loser-modal");
 // Ikonit
 const blueIcon = L.divIcon({ className: "blue-icon" });
 const greenIcon = L.divIcon({ className: "green-icon" });
+const redIcon = L.divIcon({className: "red-icon"});
 
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 500,
@@ -122,6 +123,7 @@ const gameLogic = {
       const response_json = await response.json();
 
       playerData = response_json;
+
       this.update();
     } catch (error) {
       console.error("Error in fly()", error);
@@ -427,3 +429,4 @@ exchange.addEventListener("click", function (event) {
   selectedJob.innerHTML =
     "We will trust that you count the bills correctly! Take some money! <br> Click CONTINUE to save and add 175€ to your account.";
 });
+

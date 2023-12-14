@@ -373,6 +373,12 @@ ul {
   border: 5px solid rgba(255, 255, 255, 0.5);
 }
 
+.red-icon {
+  background-color: red;
+  border-radius: 50%;
+  border: 5px solid rgba(255, 255, 255, 0.5);
+}
+
 /* HELP_MENU */
 
 .help-menu-button {
@@ -426,4 +432,12 @@ ul {
 
 button {
   cursor : pointer;
+}
+
+.correctAirport {
+  background-color: #85c094;
+}
+
+.wrongAirport {
+  background-color: #f55e5e;
 }
