@@ -2,7 +2,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background-color: #dbeae7;
+  background-color: #a49ba6;
   font-family: "Georgia Pro Black", verdana, sans-serif;
 }
 
@@ -17,7 +17,7 @@ main {
 .container {
   height: auto;
   width: 100%;
-  background-color: #dbeae7;
+  background-color: #a49ba6;
 }
 
 .flex-wrap {
@@ -32,7 +32,7 @@ main {
 
 .page-header {
   background-color: #392e3e;
-  color: #dbeae7;
+  color: #cbbecc;
   display: flex;
   justify-content: space-between;
   border-radius: 6px;
@@ -63,7 +63,6 @@ ul {
   background-color: #e99b5d;
   text-decoration: none;
   border-radius: 6px;
-  border: 1px solid #dbeae7;
 }
 
 .button {
@@ -408,7 +407,6 @@ ul {
 #your-personal-scores,
 #leader-board-scores {
   border-radius: 6px;
-  border: 1px solid #dbeae7;
   background-color: #b164b4;
   padding: 0.5rem;
   color: #dbeae7;
