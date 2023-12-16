@@ -43,6 +43,7 @@ const handleCredentials = {
         return false;
       }
     } catch (error) {
+      // process caught an error and returns a false, console logs the error
       console.error("Login failed", error);
       return false;
     }
@@ -66,13 +67,14 @@ const handleCredentials = {
         return false;
       }
     } catch (error) {
+      // operation caught an error, returns false and console logs the error
       console.error("Registration failed", error);
       return false;
     }
   },
 };
 
-function hideFunction() {
+function hideFunction() {  // hides the password from the user and shows it when checkbox is clicked
   const pass = document.getElementById("query-pass");
   if (pass.type === "password") {
     pass.type = "text";
@@ -83,21 +85,21 @@ function hideFunction() {
 
 let aboutPopup = document.getElementById("aboutPop");
 
-function openAboutPop() {
+function openAboutPop() { // opens a pop up with a class that turns it visible
   aboutPopup.classList.add("openAbout");
 }
 
-function closeAboutPop() {
+function closeAboutPop() {  // removes the previous class and uses the standard hidden visibility
   aboutPopup.classList.remove("openAbout");
 }
 
 let instrPop = document.getElementById("instructionsPop");
 
-function openInstrPop() {
+function openInstrPop() {  // opens a pop-up with a class that turns the pop up visible
   instrPop.classList.add("openInstr");
 }
 
-function closeInstrPop() {
+function closeInstrPop() { // removes the previous class, so the pop up uses the standard hidden visibility
   instrPop.classList.remove("openInstr");
 }
 
@@ -106,7 +108,7 @@ function checkPin() {
   const pin = passwordInput.value;
   const username = usernameInput.value;
 
-  // Match PIN to exactly 4 digits (no letters)
+  // Match PIN to exactly 4 digits (no letters) with a Regular Expression
   const pinRegex = /\D/g;
 
   // Check if PIN and username are not empty, otherwise return false
@@ -122,7 +124,7 @@ function checkPin() {
   return true;
 }
 
-function displayErrorMessage(message) {
+function displayErrorMessage(message) {  // function used to present error messages in the html
   const messageBox = document.getElementById("messageBox");
   messageBox.innerText = message;
   messageBox.style.color = "red";
@@ -133,41 +135,41 @@ async function loginToGame() {
   const pinIsValid = checkPin();
 
   console.log(pinIsValid);
-  if (pinIsValid) {
+  if (pinIsValid) {  // if the PIN is valid, proceed to try to log the user in
     const loginSuccess = await handleCredentials.login();
 
-    if (loginSuccess) {
+    if (loginSuccess) {  // changes HTML to the main game if login-method returns 'true'
       window.location.href = getGameURL();
-    } else {
+    } else { // user entered wrong password etc.
       displayErrorMessage("Check credentials");
     }
-  } else {
+  } else {  // the pinCheck returned false
     displayErrorMessage("Invalid credentials");
   }
 }
 
-function getGameURL() {
+function getGameURL() {  // function to change the html file to the main game
   return "game/index.html";
 }
 
 async function registerAccount() {
   const pinIsValid = checkPin();
 
-  if (pinIsValid) {
+  if (pinIsValid) { // if the pin is valid, proceed to try to register the user
     const registrationSuccess = await handleCredentials.register();
 
-    if (registrationSuccess) {
+    if (registrationSuccess) {  // changes HTML to the main game if register-method returns 'true'
       displaySuccessMessage("Account created");
       window.location.href = getGameURL();
-    } else {
+    } else {  // else notify the player of the username being taken
       displayErrorMessage("Username taken");
     }
-  } else {
+  } else {  // user entered invalid credentials and the checkPin returned 'false'
     displayErrorMessage("Check credentials");
   }
 }
 
-function displaySuccessMessage(message) {
+function displaySuccessMessage(message) {  // displays a message of successful registration
   displayMessage(message, "green");
 }
 
@@ -175,7 +177,7 @@ function displayErrorMessage(message) {
   displayMessage(message, "red");
 }
 
-function displayMessage(message, color) {
+function displayMessage(message, color) {  // displays message in html about login instances
   const messageBox = document.getElementById("messageBox");
   messageBox.innerText = message;
   messageBox.style.color = color;
