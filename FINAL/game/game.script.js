@@ -164,6 +164,7 @@ const gameLogic = {
   },
 
   update() {
+    let a = 0;
     // Päivitys alkaa siitä, että otetaan lokaalisti tallennettu pelaajan tieto käyttöön
     const data = playerData;
 
@@ -196,7 +197,6 @@ const gameLogic = {
     });
 
     //for looppi joka laittaa täpät kartalle
-    let a = 0;
     for (const i in airports) {
       const dot = L.marker(airports[i].coordinates);
       //väri
