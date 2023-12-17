@@ -2,7 +2,7 @@ import random
 import math
 from sql import Sql
 
-
+# Positiiviset sattumat
 POS_COINCIDENCES = [
     "Nice! You found a 100€ bill on the airport floor.\n(100€ will be added to your account)",
     "You were helpful to a lost elderly. For the kind act he rewarded you with a 50€ bill!\n(50€ will be added to "
@@ -14,6 +14,7 @@ POS_COINCIDENCES = [
     "Nothing of note has happened.",
 ]
 
+# Negatiiviset sattumat
 NEG_COINCIDENCES = [
     "The airport lost your luggage... You'll have to wait one night at the airport.\n(One turn is used)",
     "Your flight was canceled, because of a raging storm. Your replacing flight leaves tomorrow morning.\n(One turn "
@@ -39,6 +40,7 @@ ROUND_4 = ["LSZH", "LIRN", "LFPO", "EGLL", "EIDW"]
 ROUND_5 = ["LEBL", "LPPT", "GMMX", "HECA", "GCLP"]
 
 
+# Rotan konstruktori, perii Sql:n tietokantahakuja varten.
 class Rotta(Sql):
     def __init__(self) -> None:
         # Tämä tuottaa .connect ominaisuuden, joka on SQL-yhteyden käynnistys.
@@ -65,10 +67,12 @@ class Rotta(Sql):
             self.rotta_emissions += emission * 115
 
 
+# Pelaajan luokka, joka perii Rotan ja Sql:n. Sisältää kaikki ominaisuudet ja metodit pelin pelausta varten.
 class Player(Rotta):
     connection_id = 0
 
     def __init__(self) -> None:
+        # Luo self.rotta_emissions ja self.rotta_destination_list
         Rotta.__init__(self)
         # Käyttäjätunnuksen nimi
         self.name = ""
@@ -99,9 +103,11 @@ class Player(Rotta):
         # Lennon emissiot kiloina, kilometrit * 115 / 1000
         emissions = math.floor(kilometers * 115 / 1000)
 
+        # Jos pelaajalla ei ole tarpeeksi rahaa, metodi päättyy ja palauttaa False.
         if self.money < price:
             return False
 
+        # Jos kaikki on kunnossa, päivitetään pelaajan tiedot ja palautetaan True.
         self.location = destination
         self.money -= price
         self.emissions += emissions
@@ -109,11 +115,13 @@ class Player(Rotta):
 
         return True
 
+    # Työskentelymetodi, lisätään pelaajalle rahaa ja yksi kierros. Ei varsinaisesti tarvitse palauttaa mitään.
     def work(self) -> int:
         self.money += 175
         self.round += 1
         return self.money
 
+    # Palauttaa sanakirjan, jossa pelaajan tämänhetkinen tilanne.
     def update(self) -> dict:
         # Listataan pelaajalle mahdolliset lentokohteet
         destinations = self.possible_locations(self.location, self.can_travel)
@@ -159,16 +167,20 @@ class Player(Rotta):
                 dest_hint = x
                 break
 
-        # Hae SQL:stä vinkki
+        # Hae SQL:stä vinkki ja palauta se tekstinä
         return self.pull_hint(dest_hint)
 
-    def coincidence(self, positive):
+    # Katsoo pelaajan tilanteen ja arpoo sattuman tapahtuvaksi.
+    def coincidence(self, positive: bool):
+        # Painoarvot positiivisille ja negatiivisille
         weights = [80, 20] if positive else [20, 80]
+        # Valitsee yhden tekstin annetuilla painoarvoilla kahdesta listasta.
         choice = random.choice(
             random.choices([POS_COINCIDENCES, NEG_COINCIDENCES], weights=weights)[0]
         )
-        print(choice)
+        # print(choice)
 
+        # Käy läpi molemmat listat löytääkseen oikean tekstin, ja tekee operaation sen perusteella.
         for index, text in enumerate(POS_COINCIDENCES):
             if choice == text:
                 if index == 0:
@@ -192,18 +204,20 @@ class Player(Rotta):
                     self.money = self.money - 50 if self.money >= 50 else 0
                 elif index == 4:
                     self.emissions += 10000
+        # Palauttaa tekstin.
         return choice
 
-    def rotta(self):
-        return [self.rotta_destination_list, self.rotta_emissions]
-
+    # Peli päättyy
     def game_over(self):
+        # Lasketaan viimeiset pisteet
         final_score = math.floor(
             self.money * (10 - self.round if self.round < 10 else 1)
             + (self.rotta_emissions - self.emissions) / 1000
         )
 
+        # Pusketaan tietokantaan joko nolla tai pelaajan pisteet
         result = self.push_score(self.name, final_score if final_score > 0 else 0)
+        # Result palauttaa booleanin onnistumisen mukaan
         if result:
             return final_score
         else:

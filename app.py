@@ -12,19 +12,14 @@ CORS(app)
 pelaaja = Player()
 
 
-# Tämä on koodieditoria varten luotu funktio, joka varmistaa että annetut ehdot ovat tekstiä.
-# Muuten editori kohtelee näitä tuntemattomina tyyppeinä
-def stringify_credentials(username, password):
-    return str(username), str(password)
-
-
 # Kirjautuminen
 # /login?username=_&password=_
 @app.route("/login")
 def login():
     # Käyttäjänimi ja PIN-koodi otetaan ehdoista
-    username, pin_code = stringify_credentials(
-        request.args.get("username"), request.args.get("password")
+    username, pin_code = (
+        str(request.args.get("username")),
+        str(request.args.get("password")),
     )
 
     # Ilman globalia pelaaja on funktion sisäinen muuttuja johon ei pääse sen ulkopuolelta.
@@ -34,9 +29,11 @@ def login():
     pelaaja = Player()
     # Login palauttaa True jos kirjautuminen onnistuu
     login = pelaaja.login(username, pin_code)
+    # Kirjautuminen epäonnistui
     if not login:
         output = {"ERROR": "No user information found. Please check you credentials."}
         status_code = 400
+    # Kirjautuminen onnistui
     else:
         pelaaja.update()
         output = {"username": pelaaja.name, "password": pin_code}
@@ -49,8 +46,9 @@ def login():
 # /register?username=_&password=_
 @app.route("/register")
 def register():
-    username, pin_code = stringify_credentials(
-        request.args.get("username"), request.args.get("password")
+    username, pin_code = (
+        str(request.args.get("username")),
+        str(request.args.get("password")),
     )
 
     # Ilman globalia pelaaja on funktion sisäinen muuttuja johon ei pääse sen ulkopuolelta.
@@ -90,18 +88,27 @@ def fly():
     # Ilman globalia pelaaja on funktion sisäinen muuttuja johon ei pääse sen ulkopuolelta.
     global pelaaja
 
+    # Pelaaja yrittää lentää samaan maahan, missä on tällä hetkellä.
     if pelaaja.location == destination:
+        # Pelaajan tiedot ovat samat kuin edellisellä kierroksella.
         output = pelaaja.update()
+        status_code = 200
     else:
+        # Kutsutaan fly()-metodi kohteeseen. Palauttaa booleanin.
         flight = pelaaja.fly(destination)
+        # Pelaajalla ei ole rahaa tähän lentoon.
         if not flight:
             output = pelaaja.update()
+            # Yliajetaan update()n sattumaominaisuus.
             output[
                 "coincidence"
             ] = "You don't have enough money! Consider going to work."
+            status_code = 200
         else:
             output = pelaaja.update()
+            # Luodaan pelaajalle sattumateksti riippuen siitä, onko hän oikeassa paikassa.
             output["coincidence"] = pelaaja.coincidence(pelaaja.can_travel)
+            status_code = 200
             # print(output["coincidence"])
 
     # HUOM JOS PELAAJAN SIJAINTI ON SAMA KUIN ROTAN VIIMEINEN = PELI ON VOITETTU!
@@ -112,11 +119,18 @@ def fly():
 
         # Viedään käyttäjälle kaikki tiedot ja uusi pistemäärä
         output = pelaaja.update()
-        # Käyttöliittymän tulee tarkistaa, sisältääkö json final_scoren
-        output["final_score"] = final_score
+        status_code = 200
+
+        # Jos game_over() ei onnistu, ei ole pisteitä mitä näyttää
+        if not final_score:
+            output["final_score"] = "ERROR calculating points"
+            status_code = 400
+        else:
+            # Käyttöliittymä tarkistaa, sisältääkö json final_scoren
+            output["final_score"] = final_score
 
     output_json = json.dumps(output)
-    return Response(output_json, 200, mimetype="application/json")
+    return Response(output_json, status_code, mimetype="application/json")
 
 
 # /work
@@ -144,11 +158,13 @@ def high_score():
     global pelaaja
 
     output = {}
+    # Palautetaan nykyisen käyttäjän huippupistemäärä
     if personal_score:
         scores = pelaaja.personal_high_score(pelaaja.name)
 
         # Jos omia huippupisteitä on olemassa
         if len(scores) > 0:
+            # Palautetaan vain ensimmäinen rivi = suurin pistemäärä
             output[scores[0][0]] = scores[0][1]
         else:
             output = {"Empty": "No high scores available"}
@@ -159,14 +175,18 @@ def high_score():
         # Jos huippupisteitä on olemassa
         if len(scores) > 0:
             for entry in scores:
+                # Ensimmäinen indeksi on nimi, toinen on pistemäärä
                 name = str(entry[0])
                 points = entry[1]
 
+                # Jos pelaajan nimi on jo listalla, mutta vähemmällä pistemäärällä, korvataan se isommalla pistemäärällä
                 if name in output.keys() and output[name] < points:
                     output[name] = points
+                # Jos nimeä ei ole pistelistalla, laitetaan se sille.
                 elif name not in output.keys():
                     output[name] = points
         else:
+            # Ei pisteitä saatavilla.
             output = {"Empty": "No high scores available"}
 
     # print(output)
@@ -176,5 +196,6 @@ def high_score():
     return Response(output_json, 200, mimetype="application/json")
 
 
+# Appin käynnistys
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=5000, use_reloader=True)

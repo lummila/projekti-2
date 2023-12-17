@@ -1,44 +1,36 @@
 import mysql.connector
 from geopy import distance
 
+SQL_HOST = "127.0.0.1"
+SQL_PORT = 3306
+SQL_DATABASE = "velkajahti"
+SQL_USER = "root"
+SQL_PASSWORD = "metropolia"
+
 
 class Sql:
     def __init__(self) -> None:
-        """self.connect = mysql.connector.connect(
-            host="127.0.0.1",
-            port=3306,
-            database="velkajahti",
-            user="root",
-            password="metropolia",
-            autocommit=True,
-        )"""
-
-    def __init__(self) -> None:
         self.connect = mysql.connector.connect(
-            host="127.0.0.1",
-            port=3306,
-            database="velkajahti22",
-            user="root",
-            password="",
+            host=SQL_HOST,
+            port=SQL_PORT,
+            database=SQL_DATABASE,
+            user=SQL_USER,
+            password=SQL_PASSWORD,
             autocommit=True,
-    )
-    """def __init__(self) -> None:
-        self.connect = mysql.connector.connect(
-            host="127.0.0.1",
-            port=3306,
-            database="velkajahti",
-            user="root",
-            password="Challenger-1971",
-            autocommit=True,
-        )"""
+        )
 
     # Tiedon tuonti tietokannasta
     def pull(self, sql_code: str):
+        # Luodaan kursori.
         cursor = self.connect.cursor()
+        # Toteutetaan annettu SQL-koodi
         cursor.execute(sql_code)
+        # Tallennetaan tulokset
         result = cursor.fetchall()
+        # Suljetaan kursori.
         cursor.close()
 
+        # Palautetaan haetut rivit
         # print(result)
         return result
 
@@ -46,9 +38,11 @@ class Sql:
     def push(self, sql_code: str) -> int:
         cursor = self.connect.cursor()
         cursor.execute(sql_code)
+        # Tallennetaan muutettujen rivien määrä
         rows = cursor.rowcount
         cursor.close()
 
+        # Palautetaan muutettujen rivien määrä
         return rows
 
     # Kirjautumisfunktio
